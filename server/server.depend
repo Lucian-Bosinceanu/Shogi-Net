@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1514900819 source:/home/lucian/Desktop/proiect/shogi-net/server/main.cpp
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<errno.h>
+	<unistd.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<signal.h>
+	<thread>
+	<pthread.h>
+	<iostream>
+
+1514904717 source:/home/lucian/Desktop/proiect/shogi-net/server/loginComponent.cpp
+	"loginComponent.h"
+	<stdlib.h>
+	<fstream>
+
+1514902483 /home/lucian/Desktop/proiect/shogi-net/server/loginComponent.h
+	<string>
+	<vector>
+	"UserData.h"
+
+1514904836 /home/lucian/Desktop/proiect/shogi-net/server/UserData.h
+	<string>
+	<iostream>
+
+1514904915 source:/home/lucian/Desktop/proiect/shogi-net/server/UserData.cpp
+	"UserData.h"
+	<iostream>
+
