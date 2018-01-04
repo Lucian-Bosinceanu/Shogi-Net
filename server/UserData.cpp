@@ -15,6 +15,8 @@ UserData::UserData(){
     this->password = "";
     this->nrMatches = 0;
     this->nrVictories = 0;
+    this->userIsLoggedIn = false;
+    this->clientDescriptor = -1;
 }
 
 istream& operator >> (istream& in, UserData& userData)

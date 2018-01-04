@@ -37,12 +37,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="GameManager.cpp" />
+		<Unit filename="GameManager.h" />
+		<Unit filename="LobbyManager.cpp" />
+		<Unit filename="LobbyManager.h" />
 		<Unit filename="UserData.cpp" />
 		<Unit filename="UserData.h" />
 		<Unit filename="loginComponent.cpp" />
 		<Unit filename="loginComponent.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="userData.h" />
+		<Unit filename="userDatabase.txt" />
 		<Extensions>
 			<code_completion />
 			<debugger />

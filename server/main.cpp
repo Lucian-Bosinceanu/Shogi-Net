@@ -10,9 +10,10 @@
 #include <thread>
 #include <pthread.h>
 #include <iostream>
+#include "LobbyManager.h"
 
 /* portul folosit */
-#define PORT 2900
+#define PORT 2906
 
 using namespace std;
 
@@ -25,22 +26,25 @@ typedef struct thData{
 }thData;
 
 
-  thread th[100];
-  //pthread_t th[100];    //Identificatorii thread-urilor care se vor crea
-	int i=0;
+thread th[100];
+//pthread_t th[100];    //Identificatorii thread-urilor care se vor crea
+int i=0;
 
-//static void *treat(void *); /* functia executata de fiecare thread ce realizeaza comunicarea cu clientii */
 static void treat(void *); /* functia executata de fiecare thread ce realizeaza comunicarea cu clientii */
-void raspunde(void *);
+void serveAuthentication(void *);
+void serveLobby(void *);
+void serveGame(int client1, int client2);
+void endGame(int client1, int client2);
+
+loginComponent* loginComp;
+LobbyManager* lobbyManager;
+
 
 int main ()
 {
   struct sockaddr_in server;	// structura folosita de server
   struct sockaddr_in from;
-  int nr;		//mesajul primit de trimis la client
   int sd;		//descriptorul de socket
-  int pid;
-
 
   /* crearea unui socket */
   if ((sd = socket (AF_INET, SOCK_STREAM, 0)) == -1)
@@ -77,6 +81,11 @@ int main ()
       perror ("[server]Eroare la listen().\n");
       return errno;
     }
+
+
+  loginComp = new loginComponent();
+  lobbyManager = new LobbyManager(loginComp);
+
   /* servim in mod concurent clientii...folosind thread-uri */
   while (1)
     {
@@ -109,48 +118,71 @@ int main ()
 
 	}//while
 };
-static void treat(void * arg)
-{
-		struct thData tdL;
-		tdL= *((struct thData*)arg);
-		printf ("[thread]- %d - Asteptam mesajul...\n", tdL.idThread);
-		fflush (stdout);
-		pthread_detach(pthread_self()); //?
-        //th[tdL.idThread].detach();
-		raspunde((struct thData*)arg);
-		/* am terminat cu acest client, inchidem conexiunea */
-		close ((intptr_t)arg);
-		//return(NULL);
+static void treat(void * arg){
 
+struct thData tdL;
+tdL= *((struct thData*)arg);
+printf ("[thread]- %d - Asteptam mesajul...\n", tdL.idThread);
+fflush (stdout);
+pthread_detach(pthread_self()); //?
+//th[tdL.idThread].detach();
+serveAuthentication(arg);
 };
 
+void serveAuthentication(void* arg) {
 
-void raspunde(void *arg)
+struct thData tdL;
+tdL= *((struct thData*)arg);
+
+if (loginComp->authenticateUser(tdL.cl))
+    serveLobby((struct thData*)arg);
+    else
+    {
+    //loginComp->logoutUser(tdL.cl);
+     /* am terminat cu acest client, inchidem conexiunea */
+     close ((intptr_t)arg);
+     //return(NULL);
+    }
+
+}
+
+void serveLobby(void *arg)
 {
-    int nr, i=0;
 	struct thData tdL;
+	int result=0;
 	tdL= *((struct thData*)arg);
-	if (read (tdL.cl, &nr,sizeof(int)) <= 0)
-			{
-			  printf("[Thread %d]\n",tdL.idThread);
-			  perror ("Eroare la read() de la client.\n");
 
-			}
+	result = lobbyManager->treatClient(tdL.cl);
 
-	printf ("[Thread %d]Mesajul a fost receptionat...%d\n",tdL.idThread, nr);
+	if ( result == EXIT)
+        {
+        loginComp->logoutUser(tdL.cl);
+        serveAuthentication(arg);
+        return;
+        //close((intptr_t)arg);
+        }
+        else
+        if ( result == JOINER)
+            {
+            cout<<"The thread of client "<<tdL.cl<<" has been closed because he has joined a game.\n";
+            return;
+            }
+            else
+            {
+            serveGame(tdL.cl,result);
+            endGame(tdL.cl,result);
+            }
+}
 
-		      /*pregatim mesajul de raspuns */
-		      nr++;
-	printf("[Thread %d]Trimitem mesajul inapoi...%d\n",tdL.idThread, nr);
+void serveGame(int client1,int client2) {
 
+cout<<client1<<" and "<<client2<<" have played a game!\n";
+}
 
-		      /* returnam mesajul clientului */
-	 if (write (tdL.cl, &nr, sizeof(int)) <= 0)
-		{
-		 printf("[Thread %d] ",tdL.idThread);
-		 perror ("[Thread]Eroare la write() catre client.\n");
-		}
-	else
-		printf ("[Thread %d]Mesajul a fost trasmis cu succes.\n",tdL.idThread);
+void endGame(int client1, int client2) {
 
+loginComp->logoutUser(client1);
+loginComp->logoutUser(client2);
+close(client1);
+close(client2);
 }

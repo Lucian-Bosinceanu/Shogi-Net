@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1514900819 source:/home/lucian/Desktop/proiect/shogi-net/server/main.cpp
+1515095621 source:/home/lucian/Desktop/proiect/shogi-net/server/main.cpp
 	<sys/types.h>
 	<sys/socket.h>
 	<netinet/in.h>
@@ -12,22 +12,46 @@
 	<thread>
 	<pthread.h>
 	<iostream>
+	"LobbyManager.h"
 
-1514904717 source:/home/lucian/Desktop/proiect/shogi-net/server/loginComponent.cpp
+1515095473 source:/home/lucian/Desktop/proiect/shogi-net/server/loginComponent.cpp
 	"loginComponent.h"
-	<stdlib.h>
+	<unistd.h>
 	<fstream>
+	<cstring>
 
-1514902483 /home/lucian/Desktop/proiect/shogi-net/server/loginComponent.h
+1515084949 /home/lucian/Desktop/proiect/shogi-net/server/loginComponent.h
 	<string>
 	<vector>
 	"UserData.h"
 
-1514904836 /home/lucian/Desktop/proiect/shogi-net/server/UserData.h
+1514992597 /home/lucian/Desktop/proiect/shogi-net/server/UserData.h
 	<string>
 	<iostream>
 
-1514904915 source:/home/lucian/Desktop/proiect/shogi-net/server/UserData.cpp
+1514992462 source:/home/lucian/Desktop/proiect/shogi-net/server/UserData.cpp
 	"UserData.h"
 	<iostream>
+
+1515087266 source:/home/lucian/Desktop/proiect/shogi-net/server/GameManager.cpp
+	"GameManager.h"
+
+1515000647 source:/home/lucian/Desktop/proiect/shogi-net/server/Game.cpp
+	"Game.h"
+
+1515001622 /home/lucian/Desktop/proiect/shogi-net/server/Game.h
+
+1515088418 /home/lucian/Desktop/proiect/shogi-net/server/GameManager.h
+	<set>
+	"Game.h"
+	"loginComponent.h"
+	<string>
+	<vector>
+
+1515093311 source:/home/lucian/Desktop/proiect/shogi-net/server/LobbyManager.cpp
+	"LobbyManager.h"
+	<unistd.h>
+
+1515089357 /home/lucian/Desktop/proiect/shogi-net/server/LobbyManager.h
+	"GameManager.h"
 

@@ -11,6 +11,7 @@ class UserData {
     int nrMatches;
     int nrVictories;
     bool userIsLoggedIn;
+    int clientDescriptor;
 
     public:
     UserData();
@@ -26,9 +27,10 @@ class UserData {
     string getUsername() {return username;};
     string getPassword() {return password;};
     bool getLoginStatus() {return userIsLoggedIn;};
+    int getClientDescriptor() {return clientDescriptor;};
 
-    void login() {this->userIsLoggedIn=true;};
-    void logout() {this->userIsLoggedIn=false;};
+    void login(int clientDescriptor) {this->userIsLoggedIn=true; this->clientDescriptor = clientDescriptor;};
+    void logout() {this->userIsLoggedIn=false; this->clientDescriptor = -1; };
 
     //UserData& operator = (const UserData &userData);
     friend istream& operator >> (istream& in, UserData& userData);
