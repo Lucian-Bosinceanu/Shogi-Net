@@ -39,10 +39,16 @@
 		</Compiler>
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
+		<Unit filename="GameBoard.cpp" />
+		<Unit filename="GameBoard.h" />
+		<Unit filename="GameLogic.cpp" />
+		<Unit filename="GameLogic.h" />
 		<Unit filename="GameManager.cpp" />
 		<Unit filename="GameManager.h" />
 		<Unit filename="LobbyManager.cpp" />
 		<Unit filename="LobbyManager.h" />
+		<Unit filename="ShogiPiece.cpp" />
+		<Unit filename="ShogiPiece.h" />
 		<Unit filename="UserData.cpp" />
 		<Unit filename="UserData.h" />
 		<Unit filename="loginComponent.cpp" />

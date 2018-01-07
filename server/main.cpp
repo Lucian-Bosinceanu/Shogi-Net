@@ -116,6 +116,7 @@ int main ()
 	//pthread_create(&th[i], NULL, &treat, td);
     th[i] = thread(treat,td);
 
+    loginComp->updateDatabase();
 	}//while
 };
 static void treat(void * arg){

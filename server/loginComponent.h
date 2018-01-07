@@ -37,4 +37,5 @@ class loginComponent {
     UserData* findUserByClient(int clientDescriptor);
     bool authenticateUser(int clientDescriptor);
     void logoutUser(int clientDescriptor) { findUserByClient(clientDescriptor)->logout();};
+    void updateDatabase();
 };

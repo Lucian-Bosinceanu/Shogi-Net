@@ -24,9 +24,22 @@ for (i=1;i<=userCount;i++)
     userDatabase.push_back(user);
     }
 
-//fin.close();
+fin.close();
+
 }
 
+void loginComponent::updateDatabase(){
+
+cout<<"Updating User Database\n";
+fout<<userDatabase.size()<<'\n';
+cout<<userDatabase.size()<<'\n';
+
+for (auto it : userDatabase)
+    {
+        fout<<*it<<'\n';
+        cout<<*it<<'\n';
+    }
+}
 
 bool loginComponent::areValidCredentials(string username, string password, string confirmPassword){
 
@@ -55,6 +68,8 @@ for (auto it : userDatabase)
     fout<<it<<'\n';
 
 userDatabase.clear();
+fin.close();
+fout.close();
 }
 
 void loginComponent::addNewUser(string username, string password){

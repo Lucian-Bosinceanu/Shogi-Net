@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1515095621 source:/home/lucian/Desktop/proiect/shogi-net/server/main.cpp
+1515154446 source:/home/lucian/Desktop/proiect/shogi-net/server/main.cpp
 	<sys/types.h>
 	<sys/socket.h>
 	<netinet/in.h>
@@ -14,13 +14,13 @@
 	<iostream>
 	"LobbyManager.h"
 
-1515095473 source:/home/lucian/Desktop/proiect/shogi-net/server/loginComponent.cpp
+1515154740 source:/home/lucian/Desktop/proiect/shogi-net/server/loginComponent.cpp
 	"loginComponent.h"
 	<unistd.h>
 	<fstream>
 	<cstring>
 
-1515084949 /home/lucian/Desktop/proiect/shogi-net/server/loginComponent.h
+1515153799 /home/lucian/Desktop/proiect/shogi-net/server/loginComponent.h
 	<string>
 	<vector>
 	"UserData.h"
@@ -54,4 +54,20 @@
 
 1515089357 /home/lucian/Desktop/proiect/shogi-net/server/LobbyManager.h
 	"GameManager.h"
+
+1515265156 source:/home/lucian/Desktop/proiect/shogi-net/server/GameBoard.cpp
+	"GameBoard.h"
+
+1515249296 source:/home/lucian/Desktop/proiect/shogi-net/server/GameLogic.cpp
+
+1515251731 /home/lucian/Desktop/proiect/shogi-net/server/GameBoard.h
+	"ShogiPiece.h"
+	<map>
+
+1515264841 /home/lucian/Desktop/proiect/shogi-net/server/ShogiPiece.h
+	<vector>
+	<string>
+
+1515265164 source:/home/lucian/Desktop/proiect/shogi-net/server/ShogiPiece.cpp
+	"ShogiPiece.h"
 
