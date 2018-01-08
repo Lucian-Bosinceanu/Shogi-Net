@@ -58,3 +58,13 @@ for ( auto it : gameInstances )
 
 return false;
 }
+
+Game* GameManager::findGameByClientDescriptors(int client1, int client2){
+
+for (auto it : gameInstances)
+    if (it->getHost() == client1 && it->getJoiner() == client2)
+        return it;
+
+return NULL;
+
+}

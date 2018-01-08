@@ -86,6 +86,12 @@ while (1) {
 
 }
 
+void LobbyManager::terminateGame(int client1,int client2){
+
+Game* gameToTerminate = gameManager->findGameByClientDescriptors(client1,client2);
+gameManager->removeGame(gameToTerminate);
+}
+
 void LobbyManager::sendGameList(int clientDescriptor){
 
 vector<string> gameList;

@@ -11,6 +11,7 @@
 #include <pthread.h>
 #include <iostream>
 #include "LobbyManager.h"
+#include "GameServer.h"
 
 /* portul folosit */
 #define PORT 2906
@@ -34,7 +35,7 @@ static void treat(void *); /* functia executata de fiecare thread ce realizeaza 
 void serveAuthentication(void *);
 void serveLobby(void *);
 void serveGame(int client1, int client2);
-void endGame(int client1, int client2);
+void endGame(int winnerClient, int defeatedClient);
 
 loginComponent* loginComp;
 LobbyManager* lobbyManager;
@@ -165,25 +166,36 @@ void serveLobby(void *arg)
         else
         if ( result == JOINER)
             {
-            cout<<"The thread of client "<<tdL.cl<<" has been closed because he has joined a game.\n";
+            cout<<"The thread of client "<<tdL.cl<<" has been closed because he/she has joined a game.\n";
             return;
             }
             else
-            {
             serveGame(tdL.cl,result);
-            endGame(tdL.cl,result);
-            }
 }
 
 void serveGame(int client1,int client2) {
 
-cout<<client1<<" and "<<client2<<" have played a game!\n";
+    int winner, defeated;
+    GameServer* gameServer = new GameServer(client1,client2);
+
+    cout<<client1<<" and "<<client2<<" are playing a game!\n";
+
+    winner = gameServer->serve();
+    defeated = client1 ^ client2 ^ winner;
+
+    lobbyManager->terminateGame(client1,client2);
+    endGame(winner,defeated);
 }
 
-void endGame(int client1, int client2) {
+void endGame(int winnerClient, int defeatedClient) {
 
-loginComp->logoutUser(client1);
-loginComp->logoutUser(client2);
-close(client1);
-close(client2);
+loginComp->findUserByClient(winnerClient)->incrementMatches();
+loginComp->findUserByClient(winnerClient)->incrementVictories();
+
+loginComp->findUserByClient(defeatedClient)->incrementMatches();
+
+loginComp->logoutUser(winnerClient);
+loginComp->logoutUser(defeatedClient);
+close(winnerClient);
+close(defeatedClient);
 }

@@ -1,4 +1,5 @@
 #include "GameBoard.h"
+#include <unordered_set>
 
 using namespace std;
 
@@ -91,22 +92,25 @@ if (player==UPPLAYER)
 
 }
 
-void GameBoard::removePieceFromHand(bool player, string pieceName) {
+ShogiPiece* GameBoard::removePieceFromHand(bool player, string pieceName) {
 
+ShogiPiece* result;
 multimap<string,ShogiPiece*>::iterator piece;
 
 if (player == UPPLAYER)
     {
     piece = upHandPieces.find(pieceName);
+    result = piece->second;
     upHandPieces.erase(piece);
     }
     else
     {
     piece = downHandPieces.find(pieceName);
+    result = piece->second;
     downHandPieces.erase(piece);
     }
 
-
+return result;
 }
 
 bool GameBoard::isPositionOnBoard(Position position){
@@ -124,3 +128,60 @@ ShogiPiece* GameBoard::getPieceAtPosition(Position position) {
 
     return board[position.lin][position.col];
 }
+
+bool GameBoard::isPromotionZone(Position position, short int side){
+
+if (side == UP)
+    return position.col <= 3;
+    else
+    return position.col >= 7;
+}
+
+void GameBoard::movePiece(Position from, Position to) {
+
+    board[to.lin][to.col] =  board[from.lin][from.col];
+    board[from.lin][from.col] = NULL;
+}
+
+ void GameBoard::dropPiece(ShogiPiece* piece, Position dropPosition) {
+
+    board[dropPosition.lin][dropPosition.col] = piece;
+ }
+
+ unordered_set<ShogiPiece*> GameBoard::getPiecesOfPlayer(short int orientation) {
+
+    unordered_set<ShogiPiece*> result;
+    int i,j;
+    for (i=1;i<=9;i++)
+        for (j=1;j<=9;j++)
+            if (board[i][j]->getOrientation() == orientation )
+                result.insert(board[i][j]);
+    return result;
+ }
+
+ unordered_set<Position*> GameBoard::getAllPossibleMovementLocationsForPieceFrom(Position piecePosition) {
+
+    unordered_set<Position*> result;
+    ShogiPiece* piece = board[piecePosition.lin][piecePosition.col];
+    Position possiblePosition;
+    short int pieceOrientation = piece->getOrientation();
+    bool promotionStatus = piece->getPromotionStatus();
+    vector<Position> movementRules = piece->getMovementRules(promotionStatus);
+    int i;
+
+    if (!piece->isRangedPiece())
+        {
+            for (i = 0; i<= movementRules.size();i++)
+                {
+                    possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
+                    possiblePosition.col = piecePosition.col + pieceOrientation*movementRules[i].col;
+                    if (isPositionOnBoard(possiblePosition))
+                        if (getPieceAtPosition(possiblePosition) == NULL ||
+                           ( (getPieceAtPosition(possiblePosition) != NULL) && (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) )
+                           )
+                            result.insert(&possiblePosition);
+                }
+        }
+
+    return result;
+ }

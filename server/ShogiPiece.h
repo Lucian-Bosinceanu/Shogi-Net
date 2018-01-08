@@ -22,8 +22,8 @@ class ShogiPiece {
 
     private:
     string pieceName;
-    vector<Position> movement;
-    vector<Position> promotedMovement;
+    vector<Position> movement[2];
+    //vector<Position> promotedMovement;
     Position position;
     short orientation;  //piece orientation is given by the direction in which the piece head points to.
     bool promotionStatus;
@@ -36,10 +36,14 @@ class ShogiPiece {
     void moveTo(short int lin,short int col);
     void moveTo(Position place);
 
+    vector<Position> getMovementRules(bool promotionStatus);
     Position getPosition();
     short int getOrientation();
     bool getPromotionStatus();
     string getName();
+    void switchOrientation();
 
     void promote();
+
+    bool isRangedPiece();
 };

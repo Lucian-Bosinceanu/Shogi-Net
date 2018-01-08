@@ -1,5 +1,7 @@
 #include "ShogiPiece.h"
 #include <map>
+#include <vector>
+#include <unordered_set>
 
 #define UPPLAYER true  //player orientation is given by piece orientation. The Up player is actually the one at the bottom of the board.
 #define DOWNPLAYER false
@@ -17,8 +19,16 @@ class GameBoard {
     GameBoard();
     ~GameBoard();
     void addPieceInHand(bool player,ShogiPiece* piece);
-    void removePieceFromHand(bool player, string pieceName);
+    ShogiPiece* removePieceFromHand(bool player, string pieceName);
+
     bool isPositionOnBoard(Position position);
+    bool isPromotionZone(Position position, short int side);
+
+    void movePiece(Position from, Position to);
     ShogiPiece* getPieceAtPosition(int lin, int col);
     ShogiPiece* getPieceAtPosition(Position position);
+    void dropPiece(ShogiPiece* piece, Position dropPosition);
+
+    unordered_set<Position*> getAllPossibleMovementLocationsForPieceFrom(Position piecePosition);
+    unordered_set<ShogiPiece*> getPiecesOfPlayer(short int orientation);
 };

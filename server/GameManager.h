@@ -21,6 +21,7 @@ class GameManager {
     void removeGame(Game* game) {gameInstances.erase(game); };
     vector<string> retrieveWaitingGames();
     bool joinGameByUsername(string username, int JoinerDescriptor);
+    Game* findGameByClientDescriptors(int client1, int client2);
 
     ~GameManager();
 };
