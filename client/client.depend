@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1515095842 source:/home/lucian/Desktop/proiect/shogi-net/client/main.cpp
+1515458362 source:/home/lucian/Desktop/proiect/shogi-net/client/main.cpp
 	<sys/types.h>
 	<sys/socket.h>
 	<netinet/in.h>
@@ -12,4 +12,36 @@
 	<arpa/inet.h>
 	<string.h>
 	<iostream>
+	"GameAPI.h"
+
+1515538944 source:/home/lucian/Desktop/proiect/shogi-net/client/GameAPI.cpp
+	"GameAPI.h"
+	<iostream>
+
+1515529687 /home/lucian/Desktop/proiect/shogi-net/client/GameAPI.h
+	"GameLogic.h"
+	<unistd.h>
+
+1515529927 /home/lucian/Desktop/proiect/shogi-net/client/GameLogic.h
+	"GameBoard.h"
+
+1515529991 /home/lucian/Desktop/proiect/shogi-net/client/GameBoard.h
+	"ShogiPiece.h"
+	<map>
+	<vector>
+	<unordered_set>
+
+1515498456 /home/lucian/Desktop/proiect/shogi-net/client/ShogiPiece.h
+	<vector>
+	<string>
+
+1515533574 source:/home/lucian/Desktop/proiect/shogi-net/client/GameBoard.cpp
+	"GameBoard.h"
+	<unordered_set>
+
+1515529966 source:/home/lucian/Desktop/proiect/shogi-net/client/GameLogic.cpp
+	"GameLogic.h"
+
+1515498545 source:/home/lucian/Desktop/proiect/shogi-net/client/ShogiPiece.cpp
+	"ShogiPiece.h"
 

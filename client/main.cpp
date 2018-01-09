@@ -15,6 +15,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <iostream>
+#include "GameAPI.h"
 
 #define MAX_RESPONSE_LENGTH 4096
 #define MAX_COMMAND_LENGTH 128
@@ -35,6 +36,7 @@ int connectToServer();
 void closeConnection();
 int authentication();
 int lobby();
+int gameMenu(bool status);
 void mainMenu();
 
 int main (int argc, char *argv[]){
@@ -222,8 +224,17 @@ while (1){
 
     cout<<"[Response: Lobby]"<<response<<'\n';
 
-    if ( response[0] == '^' )
-        break;
+    if ( response[0] == HOST_FLAG )
+        {
+         gameMenu(HOST);
+         return 1;
+        }
+
+    if ( response[0] == GUEST_FLAG )
+        {
+         gameMenu(GUEST);
+         return 1;
+        }
 
     if (strcmp(response,"Exiting lobby. Returned to login screen.") == 0)
         {
@@ -231,4 +242,16 @@ while (1){
         return 1;
         }
 }
+}
+
+int gameMenu(bool status){
+
+    bool result;
+    GameManager* gameManager = new GameManager(sd);
+
+    result = gameManager->playGame(status);
+    gameManager->displayEndGameScreen(result);
+
+    //TODO Return to main menu through button
+    return 1;
 }
