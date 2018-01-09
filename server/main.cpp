@@ -178,7 +178,7 @@ void serveGame(int client1,int client2) {
     int winner, defeated;
     GameServer* gameServer = new GameServer(client1,client2);
 
-    cout<<client1<<" and "<<client2<<" are playing a game!\n";
+    cout<<"[main::serverGame()]"<<client1<<" and "<<client2<<" are playing a game!\n";
 
     winner = gameServer->serve();
     defeated = client1 ^ client2 ^ winner;
@@ -188,6 +188,8 @@ void serveGame(int client1,int client2) {
 }
 
 void endGame(int winnerClient, int defeatedClient) {
+
+cout<<"[server main::endGame()] I am ending the game between "<<winnerClient<<" and "<<defeatedClient<<'\n';
 
 loginComp->findUserByClient(winnerClient)->incrementMatches();
 loginComp->findUserByClient(winnerClient)->incrementVictories();

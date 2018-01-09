@@ -2,6 +2,7 @@
 
 #define PROGRESS true
 #define DONE false
+
 #define COMMAND_MAX_SIZE 64
 
 using namespace std;
@@ -42,6 +43,7 @@ class GameServer{
 
     public:
     GameServer(int client1Descriptor,int client2Descriptor);
+    ~GameServer();
     int serve();
 
 };

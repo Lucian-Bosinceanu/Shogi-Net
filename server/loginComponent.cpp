@@ -186,12 +186,14 @@ char unexpected[]="Unexpected error or unknown command.";
 char successV[]="Success!";
 char backM[]="Returning to main menu.";
 string response;
+int commandLength;
 
 while (1)
     {
-    if (read (clientDescriptor, &command,COMMAND_MAX_SIZE) <= 0)
+    if ( (commandLength = read (clientDescriptor, &command,COMMAND_MAX_SIZE) )<= 0)
        perror ("Eroare la read() de la client la auntentificare.\n");
 
+    command[commandLength] = 0;
     response = interpret(string(command),clientDescriptor);
     cout<<"[Server: Authentication] Proccessing command "<<command<<'\n';
     cout<<response<<'\n';

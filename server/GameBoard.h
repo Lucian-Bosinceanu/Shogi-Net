@@ -18,8 +18,8 @@ class GameBoard {
     public:
     GameBoard();
     ~GameBoard();
-    void addPieceInHand(bool player,ShogiPiece* piece);
-    ShogiPiece* removePieceFromHand(bool player, string pieceName);
+    void addPieceInHand(short int player,ShogiPiece* piece);
+    ShogiPiece* removePieceFromHand(short int player, string pieceName);
 
     bool isPositionOnBoard(Position position);
     bool isPromotionZone(Position position, short int side);

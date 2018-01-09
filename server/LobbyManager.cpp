@@ -1,12 +1,13 @@
 #include "LobbyManager.h"
 #include <unistd.h>
-
+#include <iostream>
 
 using namespace std;
 
 int LobbyManager::treatClient(int clientDescriptor) {
 
 char command[COMMAND_MAX_SIZE];
+int commandLength;
 string commandString, username;
 string hostCommand("host");
 string exitCommand("exit");
@@ -17,15 +18,16 @@ string refreshCommand("refresh");
 //sendGameList(clientDescriptor);
 
 char host[] = "^Someone has joined the game!";
-char join[] = "^Joining the game.";
+char join[] = "$Joining the game.";
 char error[] = "Game does not exist. Please refresh.";
 char exit[] = "Exiting lobby. Returned to login screen.";
 
 while (1) {
 
-    if (read (clientDescriptor, &command,COMMAND_MAX_SIZE) <= 0)
+    if ( ( commandLength = read (clientDescriptor, &command,COMMAND_MAX_SIZE) ) <= 0)
         perror ("Eroare la read() de la client la lobby.\n");
 
+    command[commandLength] = 0;
     commandString = string(command);
 
     if (commandString.find(refreshCommand) != std::string::npos)
@@ -90,6 +92,7 @@ void LobbyManager::terminateGame(int client1,int client2){
 
 Game* gameToTerminate = gameManager->findGameByClientDescriptors(client1,client2);
 gameManager->removeGame(gameToTerminate);
+cout<<"[LobbyManager::terminateGame()] The game between "<<client1<<" and "<<client2<<" has been terminated!\n";
 }
 
 void LobbyManager::sendGameList(int clientDescriptor){

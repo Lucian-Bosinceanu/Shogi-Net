@@ -1,6 +1,7 @@
 #include "GameServer.h"
 #include <unistd.h>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -10,7 +11,13 @@ GameServer::GameServer(int client1Descriptor,int client2Descriptor) {
     gameLogic = new GameLogic();
     client1 = client1Descriptor;
     client2 = client2Descriptor;
+    gameStatus = PROGRESS;
 
+}
+
+GameServer::~GameServer(){
+
+    gameLogic->~GameLogic();
 }
 
 int GameServer::serve(){
@@ -18,11 +25,15 @@ int GameServer::serve(){
     int movingPlayer, opponent;
     string command,result;
     movingPlayer = client1;
-    movingPlayer = client2;
-    short int orientation=UP;
+    opponent = client2;
+    short int orientation=UPPLAYER;
+
+    cout<<"[GameServer::serve()] I have started to serve the game between "<<client1<<" and "<<client2<<'\n';
 
     while (gameStatus == PROGRESS) {
 
+        cout<<"-------------------------------------------------------------------------------\n";
+        cout<<"[GameServer::serve()] I am waiting for "<<movingPlayer<<" to make a move.\n";
         command = getMoveFromCurrentPlayer(movingPlayer);
         result = interpret(command,orientation);
         sendResponseToOpponent(opponent,result);
@@ -30,6 +41,8 @@ int GameServer::serve(){
         orientation = -1*orientation;
     }
 
+    cout<<"[GameServer::serve()] The game is over. Client "<<winner<<" has won the game!\n";
+    sendResponseToOpponent(winner ^ client1 ^ client2,"lose");
     return this->winner;
 }
 
@@ -38,10 +51,12 @@ string GameServer::interpret(string command, short int orientation) {
 
     CommandData* commandData = extractDataFromCommand(command, orientation);
 
+    cout<<"[GameServer::interpret()] I am interpreting command: "<<command<<'\n';
+
     if (command == "quit")
         {
             gameStatus = DONE;
-            winner = setWinner(orientation);
+            setWinner(-1*orientation);
             return "win";
         }
 
@@ -69,6 +84,8 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
     string piecePosition;
     CommandData* result = new CommandData;
 
+    cout<<"[GameServer::extractDataFromCommand] I am extracting data from command "<<command<<'\n';
+
     result->orientation = orientation;
     result->isCheck = false;
     result->isCheckMate = false;
@@ -91,9 +108,17 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
             pieceNameAndPosition = command.substr(5);
             pieceName = pieceNameAndPosition.substr(0,pieceNameAndPosition.find(" "));
             piecePosition = pieceNameAndPosition.substr(pieceName.length()+1);
+
+            cout<<"[GameServer::extractDataFromCommand] pieceNameAndPosition:"<<pieceNameAndPosition<<'\n';
+            cout<<"[GameServer::extractDataFromCommand] pieceName:"<<pieceName<<'\n';
+            cout<<"[GameServer::extractDataFromCommand] piecePosition:"<<piecePosition<<'\n';
+
             result->to.lin = piecePosition[0] - '0';
             result->to.col = piecePosition[2] - '0';
             result->droppedPieceName = pieceName;
+
+            cout<<"[GameServer::extractDataFromCommand] Result position= "<<result->to.lin<<' '<<result->to.col<<'\n';
+
         }
 
     if ( command.find(promotionString) != std::string::npos )
@@ -104,9 +129,11 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
 
 void GameServer::solveCommand(CommandData* command) {
 
+    cout<<"[GameServer::solveCommand] I am solving the command above.\n";
     if (command->moveType == "move")
         {
-            gameLogic->movePiece(command->from,command->to);
+            cout<<"[GameServer::solveCommand] I am solving a move command.\n";
+            gameLogic->movePiece(command->from,command->to,command->orientation);
 
             if (command->isPromotion)
                 gameLogic->promotePiece(command->to);
@@ -114,8 +141,10 @@ void GameServer::solveCommand(CommandData* command) {
 
     if (command->moveType == "drop")
         {
-            if (gameLogic->dropPiece(command->droppedPieceName,command->from,command->orientation) == INVALID_DROP)
+            cout<<"[GameServer::solveCommand] I am solving a drop command.\n";
+            if (gameLogic->dropPiece(command->droppedPieceName,command->to,command->orientation) == INVALID_DROP)
                 {
+                cout<<"[GameServer::solveCommand] The game is over due to illegal pawn drop.\n";
                 command->isWin = true;
                 gameStatus = DONE;
                 setWinner(-1*command->orientation);
@@ -124,25 +153,32 @@ void GameServer::solveCommand(CommandData* command) {
 
         }
 
+    cout<<"[GameServer::solveCommand] I am checking if this move has cheked the opposing king.\n";
     if (gameLogic->isCheckFromPiece(command->to))
                 {
+                cout<<"[GameServer::solveCommand] The king is checked. I am verifying if the king is checkmated.\n";
                 if (gameLogic->isKingCheckMated(-1*command->orientation))
                     {
                     command->isCheckMate = true;
+                    command->isCheck = true;
                     command->isLose = true;
                     gameStatus = DONE;
                     setWinner(command->orientation);
                     }
-                    else
-                    command->isCheck = true;
                 }
 
+    cout<<"[GameServer::solveCommand] I am done solving this move.\n";
 }
 
 void GameServer::mirrorCommandPositions(CommandData* command) {
 
+    cout<<"[GameServer::mirrorCommandPositions] I am mirroring position "<<command->from.lin<<' '<<command->from.col<<" -> ";
     command->from = gameLogic->getMirroredPosition(command->from);
+    cout<<command->from.lin<<' '<<command->from.col<<'\n';
+
+    cout<<"[GameServer::mirrorCommandPositions] I am mirroring position "<<command->to.lin<<' '<<command->to.col<<" -> ";
     command->to = gameLogic->getMirroredPosition(command->to);
+    cout<<command->to.lin<<' '<<command->to.col<<'\n';
 }
 
 string GameServer::getCommandFromCommandData(CommandData* command) {
@@ -152,6 +188,7 @@ string GameServer::getCommandFromCommandData(CommandData* command) {
     result.append(command->moveType);
     result.append(" ");
 
+    cout<<"[GameServer::getCommandFromCommandData()] I am trying to obtain a string from the command above\n.";
 
     if (command->moveType == "move")
         {
@@ -167,6 +204,8 @@ string GameServer::getCommandFromCommandData(CommandData* command) {
 
     if (command->moveType == "drop")
         {
+            result.append(command->droppedPieceName);
+            result.append(" ");
             result.append(to_string(command->to.lin));
             result.append(" ");
             result.append(to_string(command->to.col));
@@ -177,29 +216,41 @@ string GameServer::getCommandFromCommandData(CommandData* command) {
         result.append("promote ");
 
     if (command->isCheck)
-        result.append("check ");
-
-    if (command->isCheckMate)
         {
-            result.append("checkmate");
-            if (command->isWin)
-                result.append("win ");
-            if (command->isLose)
-                result.append("lose ");
+            if (command->isCheckMate)
+            {
+                result.append("checkmate ");
+                if (command->isWin)
+                    result.append("win ");
+                if (command->isLose)
+                    result.append("lose ");
+            }
+            else
+            result.append("check ");
         }
 
+    if (command->isWin)
+        result.append("win ");
+    if (command->isLose)
+        result.append("lose ");
+
+    cout<<"[GameServer::getCommandFromCommandData()] My output is: "<<result<<'\n';
     return result;
 }
 
 string GameServer::getMoveFromCurrentPlayer(int clientDescriptor) {
 
     char command[COMMAND_MAX_SIZE];
+    char commandLength;
     string commandString;
 
-    if (read (clientDescriptor, &command,COMMAND_MAX_SIZE) <= 0)
+    if ( ( commandLength = read (clientDescriptor, &command,COMMAND_MAX_SIZE) ) <= 0)
             perror ("Eroare la read() de la client la lobby.\n");
 
+    command[commandLength] = 0;
     commandString = string(command);
+
+    cout<<"[GameServer::getMoveFromCurrentPlayer()] I have received move: "<<command<<" from client "<<clientDescriptor<<" with length "<<commandString.size()<<'\n';
 
     return commandString;
 }
@@ -208,9 +259,11 @@ void GameServer::sendResponseToOpponent(int clientDescriptor, string response) {
 
 char* responseToClient = new char[response.size()+1];
 copy(response.begin(),response.end(),responseToClient);
-responseToClient[response.size()+1]=0;
+responseToClient[response.size()]=0;
 
-if (write (clientDescriptor, responseToClient, sizeof(responseToClient)) <= 0)
+cout<<"[GameServer::sendResponseToOpponent()] I am sending this move "<<responseToClient<<" to client "<<clientDescriptor<<'\n';
+
+if (write (clientDescriptor, responseToClient, response.size()) <= 0)
     perror ("[Thread]Eroare la write() catre client.\n");
 
 }

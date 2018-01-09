@@ -25,7 +25,7 @@ class GameLogic {
     bool isKingCheckMated(short int kingOrientation);
 
     Position getMirroredPosition(Position position);
-    void movePiece(Position from, Position to);
-    void capturePiece(Position capturedPiece);
+    void movePiece(Position from, Position to, short int playerOrientation);
+    void capturePiece(Position capturedPiece, short int playerOrientation);
     void promotePiece(Position promotedPiece);
 };

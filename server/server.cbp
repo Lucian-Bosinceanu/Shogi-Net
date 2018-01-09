@@ -45,6 +45,8 @@
 		<Unit filename="GameLogic.h" />
 		<Unit filename="GameManager.cpp" />
 		<Unit filename="GameManager.h" />
+		<Unit filename="GameServer.cpp" />
+		<Unit filename="GameServer.h" />
 		<Unit filename="LobbyManager.cpp" />
 		<Unit filename="LobbyManager.h" />
 		<Unit filename="ShogiPiece.cpp" />
