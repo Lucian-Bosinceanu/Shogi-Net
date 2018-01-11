@@ -33,12 +33,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Button.cpp" />
+		<Unit filename="Button.h" />
 		<Unit filename="GameAPI.cpp" />
 		<Unit filename="GameAPI.h" />
 		<Unit filename="GameBoard.cpp" />
 		<Unit filename="GameBoard.h" />
+		<Unit filename="GameGUI.cpp" />
+		<Unit filename="GameGUI.h" />
 		<Unit filename="GameLogic.cpp" />
 		<Unit filename="GameLogic.h" />
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h" />
 		<Unit filename="ShogiPiece.cpp" />
 		<Unit filename="ShogiPiece.h" />
 		<Unit filename="main.cpp" />

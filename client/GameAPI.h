@@ -1,5 +1,6 @@
 #include "GameLogic.h"
 #include <unistd.h>
+#include "GameGUI.h"
 
 #define HOST true
 #define GUEST false
@@ -15,6 +16,7 @@
 
 #define MAX_RESPONSE_LENGTH 64
 #define MAX_COMMAND_LENGTH 64
+
 
 using namespace std;
 
@@ -54,6 +56,7 @@ class GameManager {
     GameManager(int serverSocket);
     ~GameManager();
 
+    GameBoard* getGameBoard();
     bool playGame(bool status);
     void displayEndGameScreen(bool result);
 };

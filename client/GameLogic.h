@@ -21,4 +21,6 @@ class GameLogic {
     unordered_set<Position*> getAllPossibleMovementLocationsForPieceFrom(Position piecePosition);
     vector<string> getUpHandPieces();
     vector<string> getDownHandPieces();
+
+    GameBoard* getGameBoard();
 };

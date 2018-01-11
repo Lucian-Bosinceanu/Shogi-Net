@@ -16,6 +16,7 @@
 #include <string.h>
 #include <iostream>
 #include "GameAPI.h"
+#include <SFML/Graphics.hpp>
 
 #define MAX_RESPONSE_LENGTH 4096
 #define MAX_COMMAND_LENGTH 128
@@ -30,6 +31,8 @@ int port;
 int sd;			// descriptorul de socket
 struct sockaddr_in server;	// structura folosita pentru conectare
 bool isConnectionClosed;
+GameGUI* gameGUI;
+
 
 int initConnection(char *argv[]);
 int connectToServer();
@@ -38,6 +41,7 @@ int authentication();
 int lobby();
 int gameMenu(bool status);
 void mainMenu();
+
 
 int main (int argc, char *argv[]){
 
@@ -49,6 +53,8 @@ if (argc != 3)
 }
 
 initConnection(argv);
+//window.create(sf::VideoMode(1600,900),"Shogi Net Client");
+gameGUI = new GameGUI();
 
 mainMenu();
 //lobby();
@@ -60,7 +66,55 @@ void mainMenu(){
 string command;
 
 cout<<"[client: Main Menu]Enter command: ";
-cin>>command;
+//cin>>command;
+
+cout<<"[main mainMenu] Window adress: "<<gameGUI->getWindow()<<'\n';
+gameGUI->getWindow()->clear(sf::Color::White);
+gameGUI->drawMenu("main");
+gameGUI->getWindow()->display();
+
+
+Button* playButton = new Button("play",1000,600,150,100,"Play" );
+playButton->draw(gameGUI->getWindow());
+
+//gameGUI->drawMenu("menu");
+
+//sf::RectangleShape rectangle(sf::Vector2f(120, 50));
+//gameGUI->getWindow()->draw(rectangle);
+
+while (gameGUI->getWindow()->isOpen())
+    {
+        sf::Event event;
+        while (gameGUI->getWindow()->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                gameGUI->getWindow()->close();
+                closeConnection();
+            }
+
+            if (event.type == sf::Event::TextEntered)
+            {
+                if (event.text.unicode < 128)
+                    std::cout << "ASCII character typed: " << static_cast<char>(event.text.unicode) << std::endl;
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == sf::Mouse::Right)
+                    {
+                        std::cout << "the right button was pressed" << std::endl;
+                        std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+                        std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+                    }
+                }
+
+        gameGUI->getWindow()->clear(sf::Color::White);
+        gameGUI->drawMenu("main");
+        gameGUI->getWindow()->display();
+        }
+
+    }
 
 if (!command.compare("start"))
     {
@@ -249,9 +303,11 @@ int gameMenu(bool status){
     bool result;
     GameManager* gameManager = new GameManager(sd);
 
+    //gameGUI.setGameBoard(gameManager->getGameBoard());
     result = gameManager->playGame(status);
     gameManager->displayEndGameScreen(result);
 
     //TODO Return to main menu through button
+    mainMenu();
     return 1;
 }

@@ -245,3 +245,9 @@ void GameManager::updateGameState(string command) {
         else
         cout<<"You have lost the game!\n";
  }
+
+
+ GameBoard* GameManager::getGameBoard() {
+
+    return gameLogic->getGameBoard();
+ }

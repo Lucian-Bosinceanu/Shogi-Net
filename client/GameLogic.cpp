@@ -77,3 +77,8 @@ vector<string> GameLogic::getDownHandPieces() {
 
     return gameBoard->getHandPiecesOfPlayer(DOWN);
 }
+
+GameBoard* GameLogic::getGameBoard() {
+
+    return gameBoard;
+}
