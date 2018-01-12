@@ -23,12 +23,14 @@ class GameBoard {
 
     bool isPositionOnBoard(Position position);
     bool isPromotionZone(Position position, short int side);
+    bool columnHasPawn(int column, short int orientation);
 
     void movePiece(Position from, Position to);
     ShogiPiece* getPieceAtPosition(int lin, int col);
     ShogiPiece* getPieceAtPosition(Position position);
     void dropPiece(ShogiPiece* piece, Position dropPosition);
 
+    vector<Position*> getDropablePositions(string pieceName,short int orientation);
     vector<string> getHandPiecesOfPlayer(short int playerOrientation);
     unordered_set<Position*> getAllPossibleMovementLocationsForPieceFrom(Position piecePosition);
     unordered_set<ShogiPiece*> getPiecesOfPlayer(short int orientation);

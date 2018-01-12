@@ -1,19 +1,30 @@
 #include "GameAPI.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
-GameManager::GameManager(int serverSocket) {
+GameManager::GameManager(int serverSocket,GameGUI* gameGUI) {
 
     gameLogic = new GameLogic();
     gameStatus = PROGRESS;
     gameResult = DEFEAT;
     this->serverSocket = serverSocket;
+    this->gameGUI = gameGUI;
 }
 
 bool GameManager::playGame(bool status) {
 
     string moveString, response;
+    sf::RenderWindow* window = gameGUI->getWindow();
+
+    window->clear(sf::Color::White);
+    gameGUI->drawMenu("game");
+    gameGUI->drawBoard();
+    drawPieces();
+    gameGUI->getWindow()->display();
+
+
     if (status == HOST)
         {
             cout<<"[GameManager::playGame()] The game has started. I am the host. I move first.\n";
@@ -88,31 +99,139 @@ string GameManager::getResponseFromServer() {
 
 string GameManager::getMoveFromUser() {
 
-    char userInput[MAX_COMMAND_LENGTH];
-    vector<string> piecesName;
+    string result;
+    //char userInput[MAX_COMMAND_LENGTH];
+    //vector<string> piecesName;
 
-    cout<<"You have the following pieces in your hand: \n";
-    piecesName = gameLogic->getUpHandPieces();
+    sf::RenderWindow* window = gameGUI->getWindow();
+    sf::Event event;
+    window->clear(sf::Color::White);
+    gameGUI->drawMenu("game");
+    gameGUI->drawBoard();
+    drawPieces();
+    gameGUI->getWindow()->display();
+    int lin,col;
+    int lin2,col2;
+    int pos,i;
+    string pieceName;
+    GameBoard* gameBoard = getGameBoard();
+    vector<Position*> highlightedPositions;
+    vector<string> handPieces = gameLogic->getUpHandPieces();
 
-    for (auto it: piecesName)
-        cout<<it<<'\n';
+    while (window->isOpen())
+        {
 
-    piecesName.clear();
+            while (window->pollEvent(event))
+            {
 
-    cout<<"Your enemy has the following pieces in their hand: \n";
+                if (event.mouseButton.button == sf::Mouse::Left)
+                    {
 
-    piecesName = gameLogic->getDownHandPieces();
+                    if(gameGUI->getMenu("game")->isButtonPressed("forfeit",event.mouseButton.x,event.mouseButton.y))
+                        return string("quit");
 
-    for (auto it: piecesName)
-        cout<<it<<'\n';
 
-    piecesName.clear();
+                    if (gameGUI->isBoardClicked(event.mouseButton.x,event.mouseButton.y))
+                        {
+                            //result = "move ";
 
-    cout<<"[Client: Game] Enter move: ";
-    //cin>>userInput;
-    cin.getline(userInput,MAX_COMMAND_LENGTH);
+                            col = gameGUI->getBoardClickedPositionX(event.mouseButton.x,event.mouseButton.y);
+                            lin = gameGUI->getBoardClickedPositionY(event.mouseButton.x,event.mouseButton.y);
 
-    return string(userInput);
+                            if (gameBoard->getPieceAtPosition(lin,col) == NUL)
+                                continue;
+
+                            if (gameBoard->getPieceAtPosition(lin,col)->getOrientation() == DOWN)
+                                continue;
+
+                            highlightPositions(BOARD,{ {lin,col} });
+                            highlightedPositions = gameBoard->getAllPossibleMovementLocationsForPieceFrom(lin,col);
+                            highlightPositions(BOARD,highlightedPositions);
+
+                            while (window->pollEvent(event))
+                                   {
+                                        if (event.mouseButton.button == sf::Mouse::Left)
+                                            {
+
+                                                if (gameGUI->isBoardClicked(event.mouseButton.x,event.mouseButton.y))
+                                                    {
+                                                        col2 = gameGUI->getBoardClickedPositionX(event.mouseButton.x,event.mouseButton.y);
+                                                        lin2 = gameGUI->getBoardClickedPositionY(event.mouseButton.x,event.mouseButton.y);
+
+                                                        if (lin == lin2 && col == col2)
+                                                            continue;
+
+                                                        for (auto it : highlightedPositions)
+                                                            if (it->lin == lin2 && it->col == col2)
+                                                                {
+                                                                    result = string("move ") + to_string(lin) + " " + to_string(col) + " " + to_string(lin2) + " " + to_string(col2);
+                                                                    return result;
+                                                                }
+                                                    }
+
+                                                break;
+                                            }
+
+
+                                   }
+
+                            for (auto it : highlightedPositions)
+                                delete *it;
+
+                        }
+
+                    if (gameGUI->isHandClicked(event.mouseButton.x,event.mouseButton.y))
+                        {
+                            pos = gameGUI->getHandClickedPiecePosition(event.mouseButton.x,event.mouseButton.y);
+
+                            i = 0;
+                            for (auto it : handPieces)
+                                {
+                                    if (i == pos)
+                                        {
+                                            pieceName = it;
+                                            break;
+                                        }
+
+                                    i++;
+                                }
+
+                            highlightedPositions = gameBoard->getDropablePositions(pieceName,UP);
+                            //highlightPositions(HAND,{ {lin,col} });
+                            highlightPositions(BOARD,highlightedPositions);
+
+                            while (window->pollEvent(event))
+                                   {
+                                        if (event.mouseButton.button == sf::Mouse::Left)
+                                            {
+
+                                                if (gameGUI->isBoardClicked(event.mouseButton.x,event.mouseButton.y))
+                                                    {
+                                                        col2 = gameGUI->getBoardClickedPositionX(event.mouseButton.x,event.mouseButton.y);
+                                                        lin2 = gameGUI->getBoardClickedPositionY(event.mouseButton.x,event.mouseButton.y);
+
+                                                        for (auto it : highlightedPositions)
+                                                            if (it->lin == lin2 && it->col == col2)
+                                                                {
+                                                                    result = string("drop ") + pieceName + " " + to_string(lin2) + " " + to_string(col2);
+                                                                    return result;
+                                                                }
+                                                    }
+
+                                                break;
+                                            }
+
+
+                                   }
+
+                            for (auto it : highlightedPositions)
+                                delete *it;
+                        }
+                    }
+
+            }
+        }
+
 }
 
 
@@ -235,15 +354,18 @@ void GameManager::updateGameState(string command) {
 
  void GameManager::warnCheck() {
 
- cout<<"You are in check.\n";
+// cout<<"You are in check.\n";
+ gameGUI->getMenu("game")->getButtonByName("status")->setText("CHECK!");
  }
 
  void GameManager::displayEndGameScreen(bool result) {
 
     if (result == VICTORY)
-        cout<<"You have won the game!\n";
+        gameGUI->getMenu("game")->getButtonByName("status")->setText("WINNER!");
+        //cout<<"You have won the game!\n";
         else
-        cout<<"You have lost the game!\n";
+        gameGUI->getMenu("game")->getButtonByName("status")->setText("DEFEATED!");
+        //cout<<"You have lost the game!\n";
  }
 
 
@@ -251,3 +373,135 @@ void GameManager::updateGameState(string command) {
 
     return gameLogic->getGameBoard();
  }
+
+
+ void GameManager::drawPieces() {
+
+    int i,j;
+    int pieceOffsetX = gameGUI->getPieceOffsetX();
+    int pieceOffsetY = gameGUI->getPieceOffsetY();
+    int boardOriginX = gameGUI->getBoardPositionX();
+    int boardOriginY = gameGUI->getBoardPositionY();
+
+    ShogiPiece* piece;
+    string pieceName;
+    GameBoard* gameBoard = getGameBoard();
+    vector<sf::Sprite> sprites;
+    sf::Sprite spriteToDraw;
+    map< string,vector<sf::Sprite> > piecesSprites = gameGUI->getPiecesSprites();
+
+    for (i=1;i<=9;i++)
+        for (j=1;j<=9;j++)
+            {
+                piece = gameBoard->getPieceAtPosition(i,j);
+                if (piece!=NULL)
+                    {
+                        pieceName = piece->getName();
+                        sprites = piecesSprites.find(pieceName)->second;
+
+                        //for (auto it = piecesSprites.find(pieceName).second.begin() ; it <= piecesSprites.find(pieceName).second.end();i++)
+                        //    sprites.push_back(it);
+
+                        if (pieceName!="king")
+                            spriteToDraw = sprites[piece->getPromotionStatus()];
+                            else
+                            {
+                            if (piece->getOrientation() == UPPLAYER)
+                                spriteToDraw = sprites[0];
+                                else
+                                spriteToDraw = sprites[1];
+                            }
+
+                        spriteToDraw.rotate( (piece->getOrientation() == UPPLAYER) ? 90 : 270 );
+                        spriteToDraw.setPosition(boardOriginX + (j-1)*pieceOffsetX,boardOriginY+ (i-1)*pieceOffsetY);
+                        gameGUI->getWindow()->draw(spriteToDraw);
+
+                        sprites.clear();
+                    }
+            }
+
+    drawPlayerHand(UP);
+    drawPlayerHand(DOWN);
+
+ }
+
+ void GameManager::drawPlayerHand(short int orientation) {
+
+    int angle,positions=0;
+    int i=1,j=1;
+    int pieceOffsetX = gameGUI->getPieceOffsetX();
+    int pieceOffsetY = gameGUI->getPieceOffsetY();
+    int handPositionX;
+    int handPositionY;
+    vector<string> pieces;
+    vector<sf::Sprite> sprites;
+    sf::Sprite spriteToDraw;
+    map< string,vector<sf::Sprite> > piecesSprites = gameGUI->getPiecesSprites();
+
+    if (orientation == UP)
+        {
+        angle = 90;
+        pieces = gameLogic->getUpHandPieces();
+        handPositionX = gameGUI->getUpHandPositionX();
+        handPositionY = gameGUI->getUpHandPositionY();
+        }
+        else
+        {
+        angle = 270;
+        pieces = gameLogic->getDownHandPieces();
+        handPositionX = gameGUI->getDownHandPositionX();
+        handPositionY = gameGUI->getDownHandPositionY();
+        }
+
+    for (auto it : pieces)
+        {
+            positions++;
+            sprites = piecesSprites.find(it)->second;
+            spriteToDraw = sprites[0];
+            spriteToDraw.rotate(angle);
+            spriteToDraw.setPosition(handPositionX + (j-1)*pieceOffsetX,handPositionY+ (i-1)*pieceOffsetY);
+            gameGUI->getWindow()->draw(spriteToDraw);
+
+            i++;
+            if (i == 5)
+                {
+                    i = 1;
+                    j++;
+                }
+
+            if (positions == 16)
+                return;
+        }
+
+}
+
+void GameManager::highlightPositions(int where,vector<Position*> positions) {
+
+    sf::RectangleShape rectangle;
+    rectangle.setFillColor(sf::Color(0,153,0,128));
+
+    int pieceOffsetX = gameGUI->getPieceOffsetX();
+    int pieceOffsetY = gameGUI->getPieceOffsetY();
+
+    int originX;
+    int originY;
+
+    if (where == HAND)
+        {
+        originX = gameGUI->getUpHandPositionX();
+        originY = gameGUI->getUpHandPositionY();
+        }
+
+    if (where == BOARD)
+        {
+        originX = gameGUI->getBoardPositionX();
+        originY = gameGUI->getBoardPositionY();
+        }
+
+    for (auto it : positions)
+        if ( getGameBoard()->getPieceAtPosition(*it)->getName() != "king" )
+        {
+            rectangle.setPosition( originX + (it.col-1)*pieceOffsetX, originY + (it.lin-1)*pieceOffsetY );
+            gameGUI->getWindow()->draw(rectangle);
+        }
+}

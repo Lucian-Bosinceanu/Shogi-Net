@@ -26,4 +26,5 @@ class Button {
     bool isClicked(int x,int y);
     void draw(sf::RenderWindow* windowWhereToDraw);
     string getName();
+    void setText(string text);
 };

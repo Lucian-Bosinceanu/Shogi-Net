@@ -17,6 +17,9 @@
 #define MAX_RESPONSE_LENGTH 64
 #define MAX_COMMAND_LENGTH 64
 
+#define HAND 123
+#define BOARD 124
+
 
 using namespace std;
 
@@ -37,6 +40,7 @@ class GameManager {
 
     private:
     GameLogic* gameLogic;
+    GameGUI* gameGUI;
     bool gameStatus;
     bool gameResult;
     int serverSocket;
@@ -52,8 +56,12 @@ class GameManager {
     void warnCheck();
     void updateGameState(string command);
 
+    void drawPieces();
+    void drawPlayerHand(short int orientation);
+    void highlightPositions(int where,vector<Position*> positions);
+
     public:
-    GameManager(int serverSocket);
+    GameManager(int serverSocket,GameGUI* gameGUI);
     ~GameManager();
 
     GameBoard* getGameBoard();

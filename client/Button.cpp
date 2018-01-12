@@ -64,13 +64,18 @@ void Button::centerTextInButtonBox() {
 
     textSf.setPosition(textX,textY);
 
-    cout<<"Button: "<<x<<' '<<y<<' '<<x+width<<' '<<y+height<<'\n';
+    /*cout<<"Button: "<<x<<' '<<y<<' '<<x+width<<' '<<y+height<<'\n';
     cout<<"Text center: "<<textX<<' '<<textY<<'\n';
     cout<<"Text origin: "<<textSf.getOrigin().x<<' '<<textSf.getOrigin().y<<'\n';
-    cout<<"Text size: "<<textSf.getCharacterSize()<<' '<< textWidth<<' '<<textHeight<<'\n';
+    cout<<"Text size: "<<textSf.getCharacterSize()<<' '<< textWidth<<' '<<textHeight<<'\n';*/
 }
 
 string Button::getName() {
 
     return buttonName;
+}
+
+void Button::setText(string text) {
+
+    textSf.setString(text);
 }

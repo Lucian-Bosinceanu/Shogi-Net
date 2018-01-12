@@ -10,11 +10,12 @@ class Menu {
     vector<Button*> buttons;
     sf::RenderWindow* window;
 
-    Button* getButtonByName(string buttonName);
 
     public:
+    Button* getButtonByName(string buttonName);
     string getName() {return name;};
     Menu(string name, vector<Button*> buttons, sf::RenderWindow* window);
     void drawMenu();
     bool isButtonPressed(string name, int x, int y);
+    void setButtonText(string buttonName, string text);
 };

@@ -37,10 +37,14 @@ GameGUI* gameGUI;
 int initConnection(char *argv[]);
 int connectToServer();
 void closeConnection();
-int authentication();
+int loginMenu();
+int registerMenu();
 int lobby();
 int gameMenu(bool status);
 void mainMenu();
+
+int sendCommandToServer(int serverSocket, string command);
+string getResponseFromServer(int serverSocket);
 
 
 int main (int argc, char *argv[]){
@@ -61,73 +65,6 @@ mainMenu();
 
 }
 
-void mainMenu(){
-
-string command;
-
-cout<<"[client: Main Menu]Enter command: ";
-//cin>>command;
-
-cout<<"[main mainMenu] Window adress: "<<gameGUI->getWindow()<<'\n';
-gameGUI->getWindow()->clear(sf::Color::White);
-gameGUI->drawMenu("main");
-gameGUI->getWindow()->display();
-
-
-Button* playButton = new Button("play",1000,600,150,100,"Play" );
-playButton->draw(gameGUI->getWindow());
-
-//gameGUI->drawMenu("menu");
-
-//sf::RectangleShape rectangle(sf::Vector2f(120, 50));
-//gameGUI->getWindow()->draw(rectangle);
-
-while (gameGUI->getWindow()->isOpen())
-    {
-        sf::Event event;
-        while (gameGUI->getWindow()->pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                gameGUI->getWindow()->close();
-                closeConnection();
-            }
-
-            if (event.type == sf::Event::TextEntered)
-            {
-                if (event.text.unicode < 128)
-                    std::cout << "ASCII character typed: " << static_cast<char>(event.text.unicode) << std::endl;
-            }
-
-            if (event.type == sf::Event::MouseButtonPressed)
-                {
-                    if (event.mouseButton.button == sf::Mouse::Right)
-                    {
-                        std::cout << "the right button was pressed" << std::endl;
-                        std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-                        std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-                    }
-                }
-
-        gameGUI->getWindow()->clear(sf::Color::White);
-        gameGUI->drawMenu("main");
-        gameGUI->getWindow()->display();
-        }
-
-    }
-
-if (!command.compare("start"))
-    {
-    connectToServer();
-    cout<<"\n";
-    authentication();
-    }
-    else
-    {
-    closeConnection();
-    return;
-    }
-}
 
 int initConnection(char* argv[]){
 
@@ -154,7 +91,6 @@ server.sin_port = htons (port);
 int connectToServer(){
 
 cout<<"Connected to server.\n";
-cin.get();
 
 if ((sd = socket (AF_INET, SOCK_STREAM, 0)) == -1)
 {
@@ -183,125 +119,352 @@ if (isConnectionClosed == false)
     }
 }
 
-int authentication(){
 
-char command[MAX_COMMAND_LENGTH];
-char response[MAX_RESPONSE_LENGTH];
-int responseLength;
-int comparison;
-string responseString;
 
-while (1){
-    cout<<"[client: Authentication]Enter command: ";
+int sendCommandToServer(int serverSocket, string command) {
 
-    cin.clear();
-    cin.getline(command,MAX_COMMAND_LENGTH);
-    cin.clear();
+    char* commandChar = new char[command.size()+1];
+    copy(command.begin(),command.end(),commandChar);
+    commandChar[command.size()]=0;
 
-    cout.clear();
-    if (write(sd,&command,sizeof(command)) <= 0)
+    if (write(serverSocket,commandChar,command.size()) <= 0)
         {
         perror ("[client]Eroare la write() spre server in autentificare.\n");
         return errno;
         }
 
-    if ( (responseLength = read (sd, &response,MAX_RESPONSE_LENGTH) ) < 0)
-        {
-          perror ("[client]Eroare la read() de la server.\n");
-          return errno;
-        }
+}
+string getResponseFromServer(int serverSocket) {
+
+    char response[MAX_RESPONSE_LENGTH];
+    int responseLength;
+    string responseString;
+
+    if ( ( responseLength = read (serverSocket, &response,MAX_RESPONSE_LENGTH) ) <= 0)
+            perror ("Eroare la read() de la client la lobby.\n");
 
     response[responseLength] = 0;
-    responseString=response;
+    responseString = string(response);
 
-    cout<<"[Response: Authentication]"<<responseString<<'\n';
-
-    comparison = responseString.compare("Success!");
-
-    if (comparison == 0)
-        {
-        lobby();
-        return 1;
-        }
-
-    if ( strcmp(response,"Returning to main menu.") ==0 )
-        {
-            closeConnection();
-            mainMenu();
-            return 0;
-        }
+    return responseString;
 }
 
-cout<<"Am terminat\n";
+void mainMenu(){
+
+string command;
+sf::Event event;
+
+cout<<"[client: Main Menu]Enter command: ";
+
+gameGUI->getWindow()->clear(sf::Color::White);
+gameGUI->drawMenu("main");
+gameGUI->getWindow()->display();
+
+while (gameGUI->getWindow()->isOpen())
+    {
+        while (gameGUI->getWindow()->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                gameGUI->getWindow()->close();
+                closeConnection();
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+                        if (gameGUI->getMenu("main")->isButtonPressed("play",event.mouseButton.x,event.mouseButton.y))
+                            {
+                            connectToServer();
+                            cout<<"\n";
+                            loginMenu();
+                            return;
+                            }
+
+                        if (gameGUI->getMenu("main")->isButtonPressed("exit",event.mouseButton.x,event.mouseButton.y))
+                            {
+                            closeConnection();
+                            gameGUI->getWindow()->close();
+                            return;
+                            }
+                    }
+                }
+
+        gameGUI->getWindow()->clear(sf::Color::White);
+        gameGUI->drawMenu("main");
+        gameGUI->getWindow()->display();
+        }
+
+    }
+
+}
+
+int loginMenu(){
+
+string commandString;
+string response;
+string username, password;
+sf::Event event;
+
+cout<<"Am ajuns in login\n";
+
+gameGUI->getWindow()->clear(sf::Color::White);
+gameGUI->drawMenu("login");
+gameGUI->getWindow()->display();
+
+cout<<"[client: login]Enter command: ";
+
+while (gameGUI->getWindow()->isOpen())
+    {
+        while (gameGUI->getWindow()->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                gameGUI->getWindow()->close();
+                closeConnection();
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+
+                        if (gameGUI->getMenu("login")->isButtonPressed("username",event.mouseButton.x,event.mouseButton.y))
+                            username = gameGUI->getInputFromClient(gameGUI->getMenu("login"),gameGUI->getMenu("login")->getButtonByName("username"),VISIBLE);
+
+                        if (gameGUI->getMenu("login")->isButtonPressed("password",event.mouseButton.x,event.mouseButton.y))
+                            password = gameGUI->getInputFromClient(gameGUI->getMenu("login"),gameGUI->getMenu("login")->getButtonByName("password"),HIDDEN);
+
+                        if (gameGUI->getMenu("login")->isButtonPressed("login",event.mouseButton.x,event.mouseButton.y))
+                            {
+                                commandString = string("login ") + username + string(" ") + password;
+                                sendCommandToServer(sd,commandString);
+                                response = getResponseFromServer(sd);
+
+                                if (!response.compare("Success!"))
+                                    {
+                                        lobby();
+                                        return 1;
+                                    }
+                                    else
+                                    {
+                                        gameGUI->getMenu("login")->setButtonText("warning",response);
+                                    }
+                            }
+
+                        if (gameGUI->getMenu("login")->isButtonPressed("registerL",event.mouseButton.x,event.mouseButton.y))
+                            {
+                                registerMenu();
+                                return 1;
+                            }
+
+                        if (gameGUI->getMenu("login")->isButtonPressed("back",event.mouseButton.x,event.mouseButton.y))
+                            {
+                                sendCommandToServer(sd,string("back"));
+                                response = getResponseFromServer(sd);
+
+                                cout<<"[Login Menu] Response from server when back: "<<response<<"|\n";
+
+                                if (!response.compare("Returning to main menu."))
+                                    {
+                                        cout<<"[Login Menu] Returning to main menu.\n";
+                                        closeConnection();
+                                        mainMenu();
+                                        return 1;
+                                    }
+                            }
+                    }
+                }
+
+        gameGUI->getWindow()->clear(sf::Color::White);
+        gameGUI->drawMenu("login");
+        gameGUI->getWindow()->display();
+        }
+
+    }
+
+}
+
+int registerMenu(){
+
+string commandString;
+string response;
+string username, password, confirmPassword;
+
+
+gameGUI->getWindow()->clear(sf::Color::White);
+gameGUI->drawMenu("register");
+gameGUI->getWindow()->display();
+
+cout<<"[client: login]Enter command: ";
+
+while (gameGUI->getWindow()->isOpen())
+    {
+        sf::Event event;
+        while (gameGUI->getWindow()->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                gameGUI->getWindow()->close();
+                closeConnection();
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+
+                        if (gameGUI->getMenu("register")->isButtonPressed("username",event.mouseButton.x,event.mouseButton.y))
+                            username = gameGUI->getInputFromClient(gameGUI->getMenu("register"),gameGUI->getMenu("register")->getButtonByName("username"),VISIBLE);
+
+                        if (gameGUI->getMenu("register")->isButtonPressed("password",event.mouseButton.x,event.mouseButton.y))
+                            password = gameGUI->getInputFromClient(gameGUI->getMenu("register"),gameGUI->getMenu("register")->getButtonByName("password"),HIDDEN);
+
+                        if (gameGUI->getMenu("register")->isButtonPressed("confirmPass",event.mouseButton.x,event.mouseButton.y))
+                            confirmPassword= gameGUI->getInputFromClient(gameGUI->getMenu("register"),gameGUI->getMenu("register")->getButtonByName("confirmPass"),HIDDEN);
+
+                        if (gameGUI->getMenu("register")->isButtonPressed("registerR",event.mouseButton.x,event.mouseButton.y))
+                            {
+                                commandString = string("register ") + username + string(" ") + password + string(" ") + confirmPassword;
+                                sendCommandToServer(sd,commandString);
+                                response = getResponseFromServer(sd);
+
+                                if (!response.compare("Success!"))
+                                    {
+                                        lobby();
+                                        return 1;
+                                    }
+                                    else
+                                    {
+                                        gameGUI->getMenu("register")->setButtonText("warning",response);
+                                    }
+                            }
+
+
+                        if (gameGUI->getMenu("register")->isButtonPressed("back",event.mouseButton.x,event.mouseButton.y))
+                            {
+                                sendCommandToServer(sd,string("back"));
+                                response = getResponseFromServer(sd);
+
+                                if (!response.compare("Returning to main menu."))
+                                    {
+                                        closeConnection();
+                                        mainMenu();
+                                        return 1;
+                                    }
+                            }
+                    }
+                }
+
+        gameGUI->getWindow()->clear(sf::Color::White);
+        gameGUI->drawMenu("register");
+        gameGUI->getWindow()->display();
+        }
+
+    }
 
 }
 
 int lobby(){
-    // mesajul trimis
-char command[MAX_COMMAND_LENGTH];
-char refresh[] = "refresh";
-char response[MAX_RESPONSE_LENGTH];
-int responseLength;
 
-if (write(sd,&refresh,sizeof(refresh)) <= 0)
+string commandString;
+string response;
+string hostCommand = string("host");
+string refreshCommand = string("refresh");
+string backCommand = string("exit");
+string playerName = "?";
+sf::Event event;
+
+gameGUI->getWindow()->clear(sf::Color::White);
+gameGUI->drawMenu("lobby");
+gameGUI->getWindow()->display();
+
+sendCommandToServer(sd,refreshCommand);
+response = getResponseFromServer(sd);
+gameGUI->getMenu("lobby")->setButtonText("gameList",response);
+
+while (gameGUI->getWindow()->isOpen())
     {
-    perror ("[client]Eroare la write() spre server in autentificare.\n");
-    return errno;
+        while (gameGUI->getWindow()->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                gameGUI->getWindow()->close();
+                closeConnection();
+            }
+
+           if (event.mouseButton.button == sf::Mouse::Left)
+                {
+
+                if (gameGUI->getMenu("lobby")->isButtonPressed("host",event.mouseButton.x,event.mouseButton.y))
+                    {
+                        sendCommandToServer(sd,hostCommand);
+                        response = getResponseFromServer(sd);
+
+                        if ( response[0] == HOST_FLAG )
+                            {
+                             gameMenu(HOST);
+                             return 1;
+                            }
+                    }
+
+                if(gameGUI->getMenu("lobby")->isButtonPressed("refresh",event.mouseButton.x,event.mouseButton.y))
+                    {
+                        sendCommandToServer(sd,refreshCommand);
+                        response = getResponseFromServer(sd);
+
+                        gameGUI->getMenu("lobby")->setButtonText("gameList",response);
+                    }
+
+                if(gameGUI->getMenu("lobby")->isButtonPressed("playerSelect",event.mouseButton.x,event.mouseButton.y))
+                    playerName = gameGUI->getInputFromClient(gameGUI->getMenu("lobby"),gameGUI->getMenu("lobby")->getButtonByName("playerSelect"),VISIBLE);
+
+                if (gameGUI->getMenu("lobby")->isButtonPressed("join",event.mouseButton.x,event.mouseButton.y))
+                    {
+                        commandString = string("join ") + playerName;
+                        sendCommandToServer(sd,commandString);
+                        response = getResponseFromServer(sd);
+
+                        if ( response[0] == GUEST_FLAG )
+                            {
+                             gameMenu(GUEST);
+                             return 1;
+                            }
+                            else
+                            gameGUI->getMenu("lobby")->getButtonByName("warning")->setText(response);
+
+                    }
+
+                if (gameGUI->getMenu("lobby")->isButtonPressed("back",event.mouseButton.x,event.mouseButton.y))
+                    {
+                        sendCommandToServer(sd,backCommand);
+                        response = getResponseFromServer(sd);
+
+                        if (!response.compare("Exiting lobby. Returned to login screen."))
+                                    {
+                                        closeConnection();
+                                        mainMenu();
+                                        return 1;
+                                    }
+
+                    }
+
+                }
+
+        gameGUI->getWindow()->clear(sf::Color::White);
+        gameGUI->drawMenu("lobby");
+        gameGUI->getWindow()->display();
+
+        }
     }
 
-cout<<"List of available games:\n";
-if ( (responseLength = read (sd, &response,MAX_RESPONSE_LENGTH) ) < 0)
-    {
-      perror ("[client]Eroare la read() de la server.\n");
-      return errno;
-    }
-
-response[responseLength] = 0;
-
-cout<<response;
-
-while (1){
-    cout<<"[client: Lobby]Enter command: ";
-    cin.getline(command,MAX_RESPONSE_LENGTH);
-    if (write(sd,&command,sizeof(command)) <= 0)
-        {
-        perror ("[client]Eroare la write() spre server in autentificare.\n");
-        return errno;
-        }
-    if ( (responseLength = read (sd, &response,MAX_RESPONSE_LENGTH) ) < 0)
-        {
-          perror ("[client]Eroare la read() de la server.\n");
-          return errno;
-        }
-
-    response[responseLength] = 0;
-
-    cout<<"[Response: Lobby]"<<response<<'\n';
-
-    if ( response[0] == HOST_FLAG )
-        {
-         gameMenu(HOST);
-         return 1;
-        }
-
-    if ( response[0] == GUEST_FLAG )
-        {
-         gameMenu(GUEST);
-         return 1;
-        }
-
-    if (strcmp(response,"Exiting lobby. Returned to login screen.") == 0)
-        {
-        authentication();
-        return 1;
-        }
-}
 }
 
 int gameMenu(bool status){
 
     bool result;
-    GameManager* gameManager = new GameManager(sd);
+    GameManager* gameManager = new GameManager(sd,gameGUI);
 
     //gameGUI.setGameBoard(gameManager->getGameBoard());
     result = gameManager->playGame(status);
@@ -311,3 +474,4 @@ int gameMenu(bool status){
     mainMenu();
     return 1;
 }
+

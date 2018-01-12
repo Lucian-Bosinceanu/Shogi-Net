@@ -34,3 +34,15 @@ Button* Menu::getButtonByName(string buttonName) {
 
     return NULL;
 }
+
+
+void Menu::setButtonText(string buttonName, string text) {
+
+    for (auto it : buttons)
+        if (it->getName() == buttonName)
+            {it->setText(text);
+            return;
+            }
+
+
+}

@@ -317,3 +317,46 @@ void GameBoard::movePiece(Position from, Position to) {
 
     return result;
  }
+
+ bool GameBoard::columnHasPawn(int column, short int orientation) {
+
+    for (i=1;i<=9;i++)
+        if (board[i][column]!=NULL)
+            if ( board[i][column]->getName()=="pawn" && board[i][column]->getOrientation() == orientation )
+                return true;
+
+    return false;
+ }
+
+ vector<Position*> GameBoard::getDropablePositions(string pieceName,short int orientation) {
+
+    int i,j;
+    Position* position;
+    vector<Position*> result;
+
+    if (pieceName!="pawn")
+        {
+            for (i=1;i<=9;i++)
+                for (j=1;j<=9;j++)
+                    if (board[i][j] == NULL)
+                        {
+                        position = new position{i,j};
+                        result.push_back(position);
+                        }
+
+            return result;
+        }
+
+    for (j=1;j<=9;j++)
+        if (!columnHasPawn(j,orientation))
+            {
+            for (i=i;i<=9;i++)
+                if (board[i][j] == NULL)
+                        {
+                        position = new position{i,j};
+                        result.push_back(position);
+                        }
+            }
+
+    return result;
+ }
