@@ -25,7 +25,10 @@ char exit[] = "Exiting lobby. Returned to login screen.";
 while (1) {
 
     if ( ( commandLength = read (clientDescriptor, &command,COMMAND_MAX_SIZE) ) <= 0)
-        perror ("Eroare la read() de la client la lobby.\n");
+        {
+            perror ("Eroare la read() de la client la lobby.\n");
+            return DISCONNECTED;
+        }
 
     command[commandLength] = 0;
     commandString = string(command);
@@ -47,7 +50,10 @@ while (1) {
                 if (game->getGameStatus() == READY)
                     {
                         if (write (clientDescriptor, &host, sizeof(host)) <= 0)
-                            perror ("[Thread]Eroare la write() catre client.\n");
+                            {
+                                perror ("[LobbyManager::treatClient]Eroare la write() catre client.\n");
+                                return DISCONNECTED;
+                            }
                         return game->getJoiner();
                     }
             }
@@ -60,13 +66,19 @@ while (1) {
             if (gameManager->joinGameByUsername(username,clientDescriptor))
                 {
                     if (write (clientDescriptor, &join, sizeof(join)) <= 0)
-                            perror ("[Thread]Eroare la write() catre client.\n");
+                            {
+                                perror ("[LobbyManager::treatClient]Eroare la write() catre client.\n");
+                                return DISCONNECTED;
+                            }
                     return JOINER;
                 }
                 else
                 {
                     if (write (clientDescriptor, &error, sizeof(error)) <= 0)
-                            perror ("[Thread]Eroare la write() catre client.\n");
+                            {
+                                perror ("[LobbyManager::treatClient]Eroare la write() catre client.\n");
+                                return DISCONNECTED;
+                            }
                     continue;
                 }
 
@@ -81,7 +93,10 @@ while (1) {
     if ( commandString.find(exitCommand) !=std::string::npos )
         {
         if (write (clientDescriptor, &exit, sizeof(exit)) <= 0)
-                            perror ("[Thread]Eroare la write() catre client.\n");
+                            {
+                                perror ("[LobbyManager::treatClient]Eroare la write() catre client.\n");
+                                return DISCONNECTED;
+                            }
         return EXIT;
         }
 }

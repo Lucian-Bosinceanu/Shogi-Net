@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #define JOINER -2
 #define EXIT -1
+#define DISCONNECTED -3
 
 
 using namespace std;

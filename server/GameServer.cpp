@@ -13,6 +13,10 @@ GameServer::GameServer(int client1Descriptor,int client2Descriptor) {
     client2 = client2Descriptor;
     gameStatus = PROGRESS;
 
+    winCommandSent = false;
+    loseCommandSent = false;
+    isWinByCheckmate = false;
+
 }
 
 GameServer::~GameServer(){
@@ -42,10 +46,38 @@ int GameServer::serve(){
     }
 
     cout<<"[GameServer::serve()] The game is over. Client "<<winner<<" has won the game!\n";
-    sendResponseToOpponent(winner ^ client1 ^ client2,"lose");
+    //sendResponseToOpponent(winner ^ client1 ^ client2,"lose");
+    sendLastResponse();
     return this->winner;
 }
 
+
+void GameServer::sendLastResponse(){
+
+    int lastMessageReceiver = lastSender ^ client1 ^ client2;
+
+    cout<<"[GameServer::sendLastResponse()] I am sending the last response to client: "<<lastMessageReceiver<<'\n';
+
+    if (isWinByCheckmate)
+        {
+        cout<<"[GameServer::sendLastResponse()] The game is over due to checkmate. I am sending the winner a win command.\n";
+        sendResponseToOpponent(winner,string("win"));
+        return;
+        }
+
+    if (winCommandSent)
+        {
+        cout<<"[GameServer::sendLastResponse()] Client "<<lastSender<<" has received a win command. Thus, I am sending a lose command to client "<<lastMessageReceiver<<'\n';
+        sendResponseToOpponent(lastMessageReceiver,string("lose"));
+        return;
+        }
+
+    if (loseCommandSent)
+        {
+        cout<<"[GameServer::sendLastResponse()] Client "<<lastSender<<" has received a lose command. Thus, I am sending a win command to client "<<lastMessageReceiver<<'\n';
+        sendResponseToOpponent(lastMessageReceiver,string("win"));
+        }
+}
 
 string GameServer::interpret(string command, short int orientation) {
 
@@ -57,6 +89,7 @@ string GameServer::interpret(string command, short int orientation) {
         {
             gameStatus = DONE;
             setWinner(-1*orientation);
+            winCommandSent = true;
             return "win";
         }
 
@@ -79,6 +112,7 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
     string moveString = "move";
     string promotionString = "promote";
     string dropString = "drop";
+    string loseString = "lose";
     string pieceNameAndPosition;
     string pieceName;
     string piecePosition;
@@ -121,6 +155,9 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
 
         }
 
+    if (command.find(loseString) != std::string::npos  )
+        result->isWin = true;
+
     if ( command.find(promotionString) != std::string::npos )
         result->isPromotion = true;
 
@@ -157,10 +194,10 @@ void GameServer::solveCommand(CommandData* command) {
     if (gameLogic->isCheckFromPiece(command->to))
                 {
                 cout<<"[GameServer::solveCommand] The king is checked. I am verifying if the king is checkmated.\n";
+                command->isCheck = true;
                 if (gameLogic->isKingCheckMated(-1*command->orientation))
                     {
                     command->isCheckMate = true;
-                    command->isCheck = true;
                     command->isLose = true;
                     gameStatus = DONE;
                     setWinner(command->orientation);
@@ -220,20 +257,32 @@ string GameServer::getCommandFromCommandData(CommandData* command) {
             if (command->isCheckMate)
             {
                 result.append("checkmate ");
+                isWinByCheckmate = true;
                 if (command->isWin)
+                    {
                     result.append("win ");
+                    winCommandSent = true;
+                    }
                 if (command->isLose)
+                    {
                     result.append("lose ");
+                    loseCommandSent = true;
+                    }
             }
             else
             result.append("check ");
         }
 
     if (command->isWin)
+        {
         result.append("win ");
+        winCommandSent = true;
+        }
     if (command->isLose)
+        {
         result.append("lose ");
-
+        loseCommandSent = true;
+        }
     cout<<"[GameServer::getCommandFromCommandData()] My output is: "<<result<<'\n';
     return result;
 }
@@ -241,11 +290,15 @@ string GameServer::getCommandFromCommandData(CommandData* command) {
 string GameServer::getMoveFromCurrentPlayer(int clientDescriptor) {
 
     char command[COMMAND_MAX_SIZE];
-    char commandLength;
+    int commandLength;
     string commandString;
 
     if ( ( commandLength = read (clientDescriptor, &command,COMMAND_MAX_SIZE) ) <= 0)
-            perror ("Eroare la read() de la client la lobby.\n");
+            {
+                perror ("[GameServer::getCommandFromCommandData]Eroare la read() de la client.\n");
+                gameStatus = DONE;
+                return "quit";
+            }
 
     command[commandLength] = 0;
     commandString = string(command);
@@ -264,8 +317,13 @@ responseToClient[response.size()]=0;
 cout<<"[GameServer::sendResponseToOpponent()] I am sending this move "<<responseToClient<<" to client "<<clientDescriptor<<'\n';
 
 if (write (clientDescriptor, responseToClient, response.size()) <= 0)
-    perror ("[Thread]Eroare la write() catre client.\n");
+    {
+        perror ("[GameServer::getCommandFromCommandData]Eroare la write() catre client.\n");
+        gameStatus = DONE;
+        winner = client1 ^ client2 ^ clientDescriptor;
+    }
 
+lastSender = clientDescriptor;
 }
 
 void GameServer::swapPlayers(int& player1, int& player2) {

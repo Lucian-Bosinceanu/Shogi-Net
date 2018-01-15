@@ -29,6 +29,10 @@ class GameServer{
     int client2;
     bool gameStatus;
     int winner;
+    int lastSender;
+    bool winCommandSent;
+    bool loseCommandSent;
+    bool isWinByCheckmate;
 
     string interpret(string command, short int orientation);
     string getMoveFromCurrentPlayer(int clientDescriptor);
@@ -40,6 +44,7 @@ class GameServer{
     void mirrorCommandPositions(CommandData* command);
     string getCommandFromCommandData(CommandData* command);
     void setWinner(short int orientation);
+    void sendLastResponse();
 
     public:
     GameServer(int client1Descriptor,int client2Descriptor);

@@ -191,7 +191,10 @@ int commandLength;
 while (1)
     {
     if ( (commandLength = read (clientDescriptor, &command,COMMAND_MAX_SIZE) )<= 0)
-       perror ("Eroare la read() de la client la auntentificare.\n");
+       {
+       perror ("[loginComponent::authenticateUser] Eroare la read() de la client la auntentificare.\n");
+       return false;
+       }
 
     command[commandLength] = 0;
     response = interpret(string(command),clientDescriptor);
@@ -201,38 +204,53 @@ while (1)
     if (!response.compare("back"))
         {
             if ( write (clientDescriptor, &backM, sizeof(backM)) <= 0)
-                    perror ("[Thread]Eroare la write() catre client.\n");
+                    perror ("[loginComponent::authenticateUser]Eroare la write() catre client.\n");
             return false;
         }
 
     if (!response.compare("ok"))
         {
             if ( write (clientDescriptor, &successV, sizeof(successV)) <= 0)
-                perror ("[Thread]Eroare la write() catre client.\n");
+                {
+                    perror ("[loginComponent::authenticateUser]Eroare la write() catre client.\n");
+                    return false;
+                }
             return true;
         }
 
     if (!response.compare("logged"))
         {
             if (write (clientDescriptor, &logged, sizeof(logged)) <= 0)
-                perror ("[Thread]Eroare la write() catre client.\n");
+                {
+                    perror ("[loginComponent::authenticateUser]Eroare la write() catre client.\n");
+                    return false;
+                }
         }
 
     if (!response.compare("invalid"))
         {
             if (write (clientDescriptor, &invalid, sizeof(invalid)) <= 0)
-                perror ("[Thread]Eroare la write() catre client.\n");
+                {
+                    perror ("[loginComponent::authenticateUser]Eroare la write() catre client.\n");
+                    return false;
+                }
         }
 
     if (!response.compare("inexistent"))
         {
             if (write (clientDescriptor, &inexistent, sizeof(inexistent)) <= 0)
-                perror ("[Thread]Eroare la write() catre client.\n");
+                {
+                    perror ("[loginComponent::authenticateUser]Eroare la write() catre client.\n");
+                    return false;
+                }
         }
         else
         {
             if (write (clientDescriptor, &unexpected, sizeof(unexpected)) <= 0)
-                perror ("[Thread]Eroare la write() catre client.\n");
+                {
+                    perror ("[loginComponent::authenticateUser]Eroare la write() catre client.\n");
+                    return false;
+                }
         }
     }
 

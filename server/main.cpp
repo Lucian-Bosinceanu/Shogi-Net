@@ -156,6 +156,12 @@ void serveLobby(void *arg)
 
 	result = lobbyManager->treatClient(tdL.cl);
 
+	if (result == DISCONNECTED)
+        {
+        loginComp->logoutUser(tdL.cl);
+        return;
+        }
+
 	if ( result == EXIT)
         {
         loginComp->logoutUser(tdL.cl);

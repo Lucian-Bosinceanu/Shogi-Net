@@ -9,7 +9,7 @@ GameBoard::GameBoard() {
     int i,j;
     vector<Position> pawnMovement = { {-1,0}};
     vector<Position> goldenGeneralMovement = { {-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,0} };
-    vector<Position> lanceMovement = { {1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}, {7,0}, {8,0} };
+    vector<Position> lanceMovement = { {-1,0}, {-2,0}, {-3,0}, {-4,0}, {-5,0}, {-6,0}, {-7,0}, {-8,0} };
     vector<Position> knightMovement = { {-2,-1}, {-2,1} };
     vector<Position> silverGeneralMovement = { {-1,-1}, {-1,0}, {-1,1}, {1,-1}, {1,1} };
     vector<Position> kingMovement = { {-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1} };
@@ -46,10 +46,10 @@ GameBoard::GameBoard() {
             board[7][i] = new ShogiPiece("pawn",pawnMovement,goldenGeneralMovement,7,i,UP);
         }
 
-    board[1][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{2,0,7},1,1,DOWN);
-    board[1][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{2,0,7},1,9,DOWN);
-    board[9][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{2,0,7},9,1,UP);
-    board[9][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{2,0,7},9,9,UP);
+    board[1][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},1,1,DOWN);
+    board[1][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},1,9,DOWN);
+    board[9][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},9,1,UP);
+    board[9][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},9,9,UP);
 
     board[1][2] = new ShogiPiece("knight",knightMovement,goldenGeneralMovement,1,2,DOWN);
     board[1][8] = new ShogiPiece("knight",knightMovement,goldenGeneralMovement,1,8,DOWN);
@@ -155,9 +155,9 @@ ShogiPiece* GameBoard::getPieceAtPosition(Position position) {
 bool GameBoard::isPromotionZone(Position position, short int side){
 
 if (side == UP)
-    return position.col <= 3;
+    return position.lin <= 3;
     else
-    return position.col >= 7;
+    return position.lin >= 7;
 }
 
 void GameBoard::movePiece(Position from, Position to) {
@@ -191,21 +191,21 @@ void GameBoard::movePiece(Position from, Position to) {
 
  unordered_set<Position*> GameBoard::getAllPossibleMovementLocationsForPieceFrom(Position piecePosition) {
 
-    cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am here.\n";
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am here.\n";
     unordered_set<Position*> result;
     ShogiPiece* piece = board[piecePosition.lin][piecePosition.col];
 
-    cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for piece from "<<piecePosition.lin<<' '<<piecePosition.col<<", which is a "
-    <<piece->getName()<<" oriented "<<piece->getOrientation()<<'\n';
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for piece from "<<piecePosition.lin<<' '<<piecePosition.col<<", which is a "
+    //piece->getName()<<" oriented "<<piece->getOrientation()<<'\n';
 
     Position possiblePosition;
     Position* elementToInsert;
     short int pieceOrientation = piece->getOrientation();
     bool promotionStatus = piece->getPromotionStatus();
 
-    cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am loading movement rules. \n";
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am loading movement rules. \n";
     vector<Position> movementRules = piece->getMovementRules(promotionStatus);
-    cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Movement rules loaded. \n";
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Movement rules loaded. \n";
 
     int i,dir;
     int flagLowerBound = 0, flagUpperBound = 0;
@@ -215,7 +215,7 @@ void GameBoard::movePiece(Position from, Position to) {
 
     if (!piece->isRangedPiece() || (piece->getName() == "lance" && piece->getPromotionStatus() == PROMOTED))
         {
-            cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a non-ranged piece or for a promoted lance. \n";
+            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a non-ranged piece or for a promoted lance. \n";
 
             for (i = 0; i < movementRules.size();i++)
                 {
@@ -232,17 +232,17 @@ void GameBoard::movePiece(Position from, Position to) {
                             }
                 }
 
-            cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
+            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
             return result;
         }
 
-    cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a rook or a bishop. \n";
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a rook or a bishop. \n";
 
     vector<int> directions = piece->getDirectionFlags();
 
     if ( (piece->getName() == "rook" || piece->getName() == "bishop") && piece->getPromotionStatus() == PROMOTED )
         {
-            cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Which is also promoted. \n";
+            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Which is also promoted. \n";
             for (i = 0; i<= 4;i++)
                     {
                         possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
@@ -296,6 +296,6 @@ void GameBoard::movePiece(Position from, Position to) {
                     }
             }
 
-    cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
     return result;
  }
