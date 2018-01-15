@@ -101,6 +101,7 @@ if ((sd = socket (AF_INET, SOCK_STREAM, 0)) == -1)
 if (connect (sd, (struct sockaddr *) &server,sizeof (struct sockaddr)) == -1)
     {
           perror ("[client]Eroare la connect().\n");
+          exit(1);
           return errno;
     }
 
@@ -127,9 +128,12 @@ int sendCommandToServer(int serverSocket, string command) {
     copy(command.begin(),command.end(),commandChar);
     commandChar[command.size()]=0;
 
+    cout<<"[main sendCommandToServer] I am sending this command to server: "<<command<<"|\n";
+
     if (write(serverSocket,commandChar,command.size()) <= 0)
         {
-        perror ("[client]Eroare la write() spre server in autentificare.\n");
+        perror ("[client]Eroare la write() spre server.\n");
+        exit(1);
         return errno;
         }
 
@@ -141,10 +145,15 @@ string getResponseFromServer(int serverSocket) {
     string responseString;
 
     if ( ( responseLength = read (serverSocket, &response,MAX_RESPONSE_LENGTH) ) <= 0)
-            perror ("Eroare la read() de la client la lobby.\n");
+            {
+                perror ("[client]Eroare la read() de la server.\n");
+                exit(1);
+            }
 
     response[responseLength] = 0;
     responseString = string(response);
+
+    cout<<"[main getResponseFromServer()] I have received this response from server: "<<responseString<<'\n';
 
     return responseString;
 }
@@ -152,7 +161,7 @@ string getResponseFromServer(int serverSocket) {
 void mainMenu(){
 
 string command;
-sf::Event event;
+
 
 cout<<"[client: Main Menu]Enter command: ";
 
@@ -162,6 +171,7 @@ gameGUI->getWindow()->display();
 
 while (gameGUI->getWindow()->isOpen())
     {
+        sf::Event event;
         while (gameGUI->getWindow()->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -193,6 +203,7 @@ while (gameGUI->getWindow()->isOpen())
 
         gameGUI->getWindow()->clear(sf::Color::White);
         gameGUI->drawMenu("main");
+        gameGUI->drawTitle();
         gameGUI->getWindow()->display();
         }
 
@@ -205,18 +216,19 @@ int loginMenu(){
 string commandString;
 string response;
 string username, password;
-sf::Event event;
 
 cout<<"Am ajuns in login\n";
 
 gameGUI->getWindow()->clear(sf::Color::White);
 gameGUI->drawMenu("login");
+gameGUI->drawTitle();
 gameGUI->getWindow()->display();
 
 cout<<"[client: login]Enter command: ";
 
 while (gameGUI->getWindow()->isOpen())
     {
+        sf::Event event;
         while (gameGUI->getWindow()->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -373,8 +385,7 @@ string response;
 string hostCommand = string("host");
 string refreshCommand = string("refresh");
 string backCommand = string("exit");
-string playerName = "?";
-sf::Event event;
+string playerName = "?????";
 
 gameGUI->getWindow()->clear(sf::Color::White);
 gameGUI->drawMenu("lobby");
@@ -386,6 +397,7 @@ gameGUI->getMenu("lobby")->setButtonText("gameList",response);
 
 while (gameGUI->getWindow()->isOpen())
     {
+        sf::Event event;
         while (gameGUI->getWindow()->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -422,7 +434,8 @@ while (gameGUI->getWindow()->isOpen())
 
                 if (gameGUI->getMenu("lobby")->isButtonPressed("join",event.mouseButton.x,event.mouseButton.y))
                     {
-                        commandString = string("join ") + playerName;
+                        commandString = string("join ");
+                        commandString.append(playerName);
                         sendCommandToServer(sd,commandString);
                         response = getResponseFromServer(sd);
 
@@ -444,7 +457,7 @@ while (gameGUI->getWindow()->isOpen())
                         if (!response.compare("Exiting lobby. Returned to login screen."))
                                     {
                                         closeConnection();
-                                        mainMenu();
+                                        loginMenu();
                                         return 1;
                                     }
 
@@ -467,11 +480,32 @@ int gameMenu(bool status){
     GameManager* gameManager = new GameManager(sd,gameGUI);
 
     //gameGUI.setGameBoard(gameManager->getGameBoard());
+    cout<<"[main: gameMenu] I am starting the game.\n";
     result = gameManager->playGame(status);
     gameManager->displayEndGameScreen(result);
 
-    //TODO Return to main menu through button
-    mainMenu();
+
+    while (gameGUI->getWindow()->isOpen())
+    {
+        sf::Event event;
+        while (gameGUI->getWindow()->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                {
+                    gameGUI->getWindow()->close();
+                    closeConnection();
+                }
+
+           if (event.mouseButton.button == sf::Mouse::Left)
+                if (gameGUI->getMenu("game")->isButtonPressed("forfeit",event.mouseButton.x,event.mouseButton.y))
+                    {
+                        closeConnection();
+                        mainMenu();
+                        return 1;
+                    }
+        }
+    }
+
     return 1;
 }
 

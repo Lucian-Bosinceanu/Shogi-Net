@@ -13,19 +13,19 @@ GameGUI::GameGUI() {
 
     textFont.loadFromFile("rsc/fonts/arial.ttf");
 
-    Button* exitButton = new Button("exit",1000,600,150,100,"EXIT");
-    Button* playButton = new Button("play",1000,400,150,100,"PLAY" );
+    Button* exitButton = new Button("exit",700,700,200,100,"EXIT");
+    Button* playButton = new Button("play",700,550,200,100,"PLAY" );
 
     Menu* mainMenu = new Menu("main",{exitButton,playButton},&window);
 
-    Button* usernameField = new Button("username",1000,300,300,40,"Enter username");
-    Button* passwordField = new Button("password",1000,400,300,40,"Enter password");
-    Button* confirmPasswordField = new Button("confirmPass",1000,500,300,40,"Re-enter password");
-    Button* loginButton = new Button("login",1000,600,150,100,"LOGIN");
-    Button* registerLoginButton = new Button("registerL",1000,800,150,100,"REGISTER");
-    Button* registerRegisterButton = new Button("registerR",1000,700,150,100,"REGISTER");
+    Button* usernameField = new Button("username",625,300,450,50,"Enter username");
+    Button* passwordField = new Button("password",625,400,450,50,"Enter password");
+    Button* confirmPasswordField = new Button("confirmPass",625,500,450,50,"Re-enter password");
+    Button* loginButton = new Button("login",625,600,200,100,"LOGIN");
+    Button* registerLoginButton = new Button("registerL",875,600,200,100,"REGISTER");
+    Button* registerRegisterButton = new Button("registerR",700,600,200,100,"REGISTER");
     Button* backButton = new Button("back",61,40,200,100,"Back");
-    Button* warnings = new Button("warning",0,200,1600,30,"Please provide your credentials.");
+    Button* warnings = new Button("warning",0,200,1600,50,"Please provide your credentials.");
 
     Menu* loginMenu = new Menu("login",{usernameField,passwordField,loginButton,registerLoginButton,backButton,warnings},&window);
     Menu* registerMenu = new Menu("register",{usernameField,passwordField,confirmPasswordField,registerRegisterButton,warnings,backButton},&window);
@@ -38,41 +38,25 @@ GameGUI::GameGUI() {
 
     Button* refreshButton = new Button("refresh",200,600,150,100,"REFRESH");
     Button* hostButton = new Button("host",400,600,150,100,"HOST");
-    Button* joinButton = new Button("join",600,600,150,100,"JOIN");
+    Button* joinButton = new Button("join",900,600,150,100,"JOIN");
     Button* playerSelectButton =  new Button("playerSelect",200,525,1200,50,"Type here the player name you wish to play against, then click JOIN.");
     Button* gameListButton = new Button("gameList",200,100,1200,400,"");
     Button* lobbyWarning = new Button("warning",0,800,1600,30,"");
     Button* backButtonGame = new Button("back",200,50,50,50,"RETURN TO MENU");
 
 
-    Menu* lobbyMenu = new Menu("lobby",{backButtonGame,refreshButton,hostButton,playerSelectButton,joinButton,gameListButton},&window);
+    Menu* lobbyMenu = new Menu("lobby",{backButtonGame,refreshButton,hostButton,playerSelectButton,joinButton,gameListButton, lobbyWarning},&window);
 
     gameMenus = {mainMenu,loginMenu,registerMenu,lobbyMenu,gameMenu};
 
     loadPiecesSprites();
     loadBoardSprites();
+    loadTitle();
 }
 
 void GameGUI::loadPiecesSprites() {
 
     string path = "rsc/textures/piece/";
-
-    sf::Texture unpromoted;
-    sf::Texture kingTexture;
-    sf::Texture kingGuestTexture;
-    sf::Texture pawnTexture;
-    sf::Texture pawnPromotedTexture;
-    sf::Texture lanceTexture;
-    sf::Texture lancePromotedTexture;
-    sf::Texture knightTexture;
-    sf::Texture knightPromotedTexture;
-    sf::Texture silverTexture;
-    sf::Texture silverPromotedTexture;
-    sf::Texture goldenTexture;
-    sf::Texture bishopTexture;
-    sf::Texture bishopPromotedTexture;
-    sf::Texture rookTexture;
-    sf::Texture rookPromotedTexture;
 
     unpromoted.loadFromFile(path + "no_promo.png");
     kingTexture.loadFromFile(path + "king.png");
@@ -108,22 +92,22 @@ void GameGUI::loadPiecesSprites() {
     sf::Sprite rookSprite;
     sf::Sprite rookPromotedSprite;
 
-    kingSprite.setTexture(kingTexture); //kingSprite.setOrigin(458,50);
-    unpromotedSprite.setTexture(unpromoted); //unpromotedSprite.setOrigin(458,50);
-    kingGuestSprite.setTexture(kingGuestTexture); //kingGuestSprite.setOrigin(458,50);
-    pawnSprite.setTexture(pawnTexture); //pawnSprite.setOrigin(458,50);
-    pawnPromotedSprite.setTexture(pawnPromotedTexture); //pawnPromotedSprite.setOrigin(458,50);
-    lanceSprite.setTexture(lanceTexture); //lanceSprite.setOrigin(458,50);
-    lancePromotedSprite.setTexture(lancePromotedTexture); //lancePromotedSprite.setOrigin(458,50);
-    knightSprite.setTexture(knightTexture); //knightSprite.setOrigin(458,50);
-    knightPromotedSprite.setTexture(knightPromotedTexture); //knightPromotedSprite.setOrigin(458,50);
-    silverSprite.setTexture(silverTexture); //silverSprite.setOrigin(458,50);
-    silverPromotedSprite.setTexture(silverPromotedTexture); //silverPromotedSprite.setOrigin(458,50);
-    goldenSprite.setTexture(goldenTexture); //goldenSprite.setOrigin(458,50);
-    bishopSprite.setTexture(bishopTexture); //bishopSprite.setOrigin(458,50);
-    bishopPromotedSprite.setTexture(bishopPromotedTexture);
-    rookSprite.setTexture(rookTexture);
-    rookPromotedSprite.setTexture(rookPromotedTexture);
+    kingSprite.setTexture(kingTexture); kingSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    unpromotedSprite.setTexture(unpromoted); unpromotedSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    kingGuestSprite.setTexture(kingGuestTexture); kingGuestSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    pawnSprite.setTexture(pawnTexture); pawnSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    pawnPromotedSprite.setTexture(pawnPromotedTexture); pawnPromotedSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    lanceSprite.setTexture(lanceTexture); lanceSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    lancePromotedSprite.setTexture(lancePromotedTexture); lancePromotedSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    knightSprite.setTexture(knightTexture);  knightSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    knightPromotedSprite.setTexture(knightPromotedTexture);  knightPromotedSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    silverSprite.setTexture(silverTexture);  silverSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    silverPromotedSprite.setTexture(silverPromotedTexture);  silverPromotedSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    goldenSprite.setTexture(goldenTexture);  goldenSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    bishopSprite.setTexture(bishopTexture);  bishopSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    bishopPromotedSprite.setTexture(bishopPromotedTexture); bishopPromotedSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    rookSprite.setTexture(rookTexture); rookSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
+    rookPromotedSprite.setTexture(rookPromotedTexture); rookPromotedSprite.setOrigin(pieceOffsetY/2,pieceOffsetX/2);
 
 
     piecesSprites.insert(pair<string,vector<sf::Sprite>>("king",{kingSprite,kingGuestSprite}));
@@ -142,10 +126,6 @@ void GameGUI::loadBoardSprites() {
 
     string path = "rsc/textures/board/";
 
-    sf::Texture boardT;
-    sf::Texture handT;
-    sf::Texture teMarkerT;
-
     boardT.loadFromFile(path + "table.png");
     handT.loadFromFile(path + "tegoma.jpg");
     teMarkerT.loadFromFile(path + "te.jpg");
@@ -153,7 +133,6 @@ void GameGUI::loadBoardSprites() {
     board.setTexture(boardT);
     upHand.setTexture(handT);
     downHand.setTexture(handT);
-    downHand.rotate(180);
     teMarker.setTexture(teMarkerT);
 
 
@@ -165,6 +144,7 @@ void GameGUI::loadBoardSprites() {
 
 void GameGUI::drawBoard() {
 
+    //cout<<"[GameGUI::drawBoard()] I am drawing the board.\n";
     window.draw(board);
     window.draw(upHand);
     window.draw(downHand);
@@ -309,3 +289,26 @@ int GameGUI::getBoardClickedPositionY(int x,int y) {
 
     return result;
 }
+
+void GameGUI::loadTitle() {
+
+    string path = "rsc/textures/title.png";
+    titleT.loadFromFile(path);
+    title.setTexture(titleT);
+}
+
+void GameGUI::drawTitle() {
+
+    window.draw(title);
+}
+
+void GameGUI::drawGameScreen() {
+
+    window.clear(sf::Color::White);
+    drawMenu("game");
+    drawBoard();
+    //drawPieces();
+}
+
+
+

@@ -22,12 +22,38 @@ class GameGUI {
     sf::Sprite upHand;
     sf::Sprite downHand;
     sf::Sprite teMarker;
+    sf::Sprite title;
+
+
+    sf::Texture unpromoted;
+    sf::Texture kingTexture;
+    sf::Texture kingGuestTexture;
+    sf::Texture pawnTexture;
+    sf::Texture pawnPromotedTexture;
+    sf::Texture lanceTexture;
+    sf::Texture lancePromotedTexture;
+    sf::Texture knightTexture;
+    sf::Texture knightPromotedTexture;
+    sf::Texture silverTexture;
+    sf::Texture silverPromotedTexture;
+    sf::Texture goldenTexture;
+    sf::Texture bishopTexture;
+    sf::Texture bishopPromotedTexture;
+    sf::Texture rookTexture;
+    sf::Texture rookPromotedTexture;
+
+    sf::Texture boardT;
+    sf::Texture handT;
+    sf::Texture teMarkerT;
+
+    sf::Texture titleT;
 
     int pieceOffsetX;
     int pieceOffsetY;
 
     void loadPiecesSprites();
     void loadBoardSprites();
+    void loadTitle();
 
     public:
     GameGUI();
@@ -36,7 +62,12 @@ class GameGUI {
     sf::RenderWindow* getWindow() {return &window;};
     Menu* getMenu(string menuName);
     string getInputFromClient(Menu* menu,Button* field,int type);
+
     void drawBoard();
+    void drawTitle();
+    void drawGameScreen();
+
+
     map< string,vector<sf::Sprite> > getPiecesSprites() { return piecesSprites;};
 
     int getPieceOffsetX() {return pieceOffsetX;};

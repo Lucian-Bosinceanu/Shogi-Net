@@ -46,6 +46,7 @@ class GameManager {
     int serverSocket;
     bool playerStatus;
     bool whoMovesNow;
+    bool isKingInCheck;
 
     void sendMoveToServer(string moveString);
     string getResponseFromServer();
@@ -58,7 +59,8 @@ class GameManager {
 
     void drawPieces();
     void drawPlayerHand(short int orientation);
-    void highlightPositions(int where,vector<Position*> positions);
+    void highlightPositions(int where,unordered_set<Position*> positions);
+    void drawGameScreen();
 
     public:
     GameManager(int serverSocket,GameGUI* gameGUI);

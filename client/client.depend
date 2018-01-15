@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1515784725 source:/home/lucian/Desktop/proiect/shogi-net/client/main.cpp
+1516014577 source:/home/lucian/Desktop/proiect/shogi-net/client/main.cpp
 	<sys/types.h>
 	<sys/socket.h>
 	<netinet/in.h>
@@ -15,20 +15,21 @@
 	"GameAPI.h"
 	<SFML/Graphics.hpp>
 
-1515795184 source:/home/lucian/Desktop/proiect/shogi-net/client/GameAPI.cpp
+1516028227 source:/home/lucian/Desktop/proiect/shogi-net/client/GameAPI.cpp
 	"GameAPI.h"
 	<iostream>
 	<SFML/Graphics.hpp>
+	<cstdlib>
 
-1515794715 /home/lucian/Desktop/proiect/shogi-net/client/GameAPI.h
+1516019592 /home/lucian/Desktop/proiect/shogi-net/client/GameAPI.h
 	"GameLogic.h"
 	<unistd.h>
 	"GameGUI.h"
 
-1515700319 /home/lucian/Desktop/proiect/shogi-net/client/GameLogic.h
+1516023159 /home/lucian/Desktop/proiect/shogi-net/client/GameLogic.h
 	"GameBoard.h"
 
-1515529991 /home/lucian/Desktop/proiect/shogi-net/client/GameBoard.h
+1516023113 /home/lucian/Desktop/proiect/shogi-net/client/GameBoard.h
 	"ShogiPiece.h"
 	<map>
 	<vector>
@@ -38,26 +39,28 @@
 	<vector>
 	<string>
 
-1515533574 source:/home/lucian/Desktop/proiect/shogi-net/client/GameBoard.cpp
+1516018088 source:/home/lucian/Desktop/proiect/shogi-net/client/GameBoard.cpp
 	"GameBoard.h"
 	<unordered_set>
+	<iostream>
 
-1515701015 source:/home/lucian/Desktop/proiect/shogi-net/client/GameLogic.cpp
+1516033454 source:/home/lucian/Desktop/proiect/shogi-net/client/GameLogic.cpp
 	"GameLogic.h"
+	<iostream>
 
 1515498545 source:/home/lucian/Desktop/proiect/shogi-net/client/ShogiPiece.cpp
 	"ShogiPiece.h"
 
-1515768347 source:/home/lucian/Desktop/proiect/shogi-net/client/Menu.cpp
+1515803731 source:/home/lucian/Desktop/proiect/shogi-net/client/Menu.cpp
 	"Menu.h"
 	<iostream>
 
-1515768431 source:/home/lucian/Desktop/proiect/shogi-net/client/Button.cpp
+1515801590 source:/home/lucian/Desktop/proiect/shogi-net/client/Button.cpp
 	"Button.h"
 	<SFML/Graphics.hpp>
 	<iostream>
 
-1515768364 /home/lucian/Desktop/proiect/shogi-net/client/Button.h
+1515954471 /home/lucian/Desktop/proiect/shogi-net/client/Button.h
 	<SFML/Graphics.hpp>
 	<string>
 	"ColorScheme.h"
@@ -69,11 +72,11 @@
 	<vector>
 	"Button.h"
 
-1515795567 source:/home/lucian/Desktop/proiect/shogi-net/client/GameGUI.cpp
+1515950523 source:/home/lucian/Desktop/proiect/shogi-net/client/GameGUI.cpp
 	"GameGUI.h"
 	<iostream>
 
-1515794739 /home/lucian/Desktop/proiect/shogi-net/client/GameGUI.h
+1515877054 /home/lucian/Desktop/proiect/shogi-net/client/GameGUI.h
 	<SFML/Graphics.hpp>
 	"Menu.h"
 	<map>

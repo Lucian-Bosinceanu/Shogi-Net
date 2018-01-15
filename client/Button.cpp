@@ -19,9 +19,9 @@ Button::Button(string name,int x,int y,int width, int height, string text) {
 
     textSf.setFillColor(textButtonColor);
 
-     buttonColor = sf::Color(255,0,0);
+     buttonColor = sf::Color(255,255,255);
      buttonOutlineColor = sf::Color(0,0,0);
-     textButtonColor = sf::Color(100,100,100);
+     textButtonColor = sf::Color(0,0,0);
 
 }
 

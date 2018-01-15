@@ -30,7 +30,7 @@ class GameBoard {
     ShogiPiece* getPieceAtPosition(Position position);
     void dropPiece(ShogiPiece* piece, Position dropPosition);
 
-    vector<Position*> getDropablePositions(string pieceName,short int orientation);
+    unordered_set<Position*> getDropablePositions(string pieceName,short int orientation);
     vector<string> getHandPiecesOfPlayer(short int playerOrientation);
     unordered_set<Position*> getAllPossibleMovementLocationsForPieceFrom(Position piecePosition);
     unordered_set<ShogiPiece*> getPiecesOfPlayer(short int orientation);

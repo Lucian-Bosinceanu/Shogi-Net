@@ -27,4 +27,5 @@ class Button {
     void draw(sf::RenderWindow* windowWhereToDraw);
     string getName();
     void setText(string text);
+    string getText() { return textSf.getString();};
 };

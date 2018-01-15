@@ -1,5 +1,6 @@
 #include "GameBoard.h"
 #include <unordered_set>
+#include <iostream>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ GameBoard::GameBoard() {
     int i,j;
     vector<Position> pawnMovement = { {-1,0}};
     vector<Position> goldenGeneralMovement = { {-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,0} };
-    vector<Position> lanceMovement = { {1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}, {7,0}, {8,0} };
+    vector<Position> lanceMovement = { {-1,0}, {-2,0}, {-3,0}, {-4,0}, {-5,0}, {-6,0}, {-7,0}, {-8,0} };
     vector<Position> knightMovement = { {-2,-1}, {-2,1} };
     vector<Position> silverGeneralMovement = { {-1,-1}, {-1,0}, {-1,1}, {1,-1}, {1,1} };
     vector<Position> kingMovement = { {-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1} };
@@ -48,10 +49,10 @@ GameBoard::GameBoard() {
             board[7][i] = new ShogiPiece("pawn",pawnMovement,goldenGeneralMovement,7,i,UP);
         }
 
-    board[1][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{0,7},1,1,DOWN);
-    board[1][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{0,7},1,9,DOWN);
-    board[9][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{0,7},9,1,UP);
-    board[9][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{0,7},9,9,UP);
+    board[1][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},1,1,DOWN);
+    board[1][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},1,9,DOWN);
+    board[9][1] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},9,1,UP);
+    board[9][9] = new ShogiPiece("lance",lanceMovement,goldenGeneralMovement,{3,0,7},9,9,UP);
 
     board[1][2] = new ShogiPiece("knight",knightMovement,goldenGeneralMovement,1,2,DOWN);
     board[1][8] = new ShogiPiece("knight",knightMovement,goldenGeneralMovement,1,8,DOWN);
@@ -158,9 +159,9 @@ ShogiPiece* GameBoard::getPieceAtPosition(Position position) {
 bool GameBoard::isPromotionZone(Position position, short int side){
 
 if (side == UP)
-    return position.col <= 3;
+    return position.lin <= 3;
     else
-    return position.col >= 7;
+    return position.lin >= 7;
 }
 
 void GameBoard::movePiece(Position from, Position to) {
@@ -181,6 +182,8 @@ void GameBoard::movePiece(Position from, Position to) {
 
  unordered_set<Position*> GameBoard::getAllPossibleMovementLocationsForPieceFrom(Position piecePosition) {
 
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom()] I am getting all possible movements.\n";
+
     unordered_set<Position*> result;
     ShogiPiece* piece = board[piecePosition.lin][piecePosition.col];
     Position possiblePosition;
@@ -191,35 +194,32 @@ void GameBoard::movePiece(Position from, Position to) {
     int flagLowerBound = 0, flagUpperBound = 0;
     Position* elementToInsert;
 
-    unordered_set<ShogiPiece*> enemyPieces;
-    unordered_set<Position*> attackedPositions;
-    unordered_set<Position*> currentPieceAttackingPositions;
-    if (piece->getName() == "king")
+    if (!piece->isRangedPiece() || (piece->getName() == "lance" && piece->getPromotionStatus() == PROMOTED))
         {
-            enemyPieces = getPiecesOfPlayer(-1*pieceOrientation);
+            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a non-ranged piece or for a promoted lance. \n";
 
-            for (auto it : enemyPieces)
-                if (it->getName() != "king")
-                    {
-                        currentPieceAttackingPositions = getAllPossibleMovementLocationsForPieceFrom(it->getPosition());
-                        attackedPositions.insert(currentPieceAttackingPositions.begin(),currentPieceAttackingPositions.end());
-                        currentPieceAttackingPositions.clear();
-                    }
+            for (i = 0; i < movementRules.size();i++)
+                {
+                    possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
+                    possiblePosition.col = piecePosition.col + pieceOrientation*movementRules[i].col;
+                    if (isPositionOnBoard(possiblePosition))
+                        if (getPieceAtPosition(possiblePosition) == NULL ||
+                           ( (getPieceAtPosition(possiblePosition) != NULL) && (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) /*&& (getPieceAtPosition(possiblePosition)->getName() != "king" )*/ )
+                           )
+                            {
+                            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+                            elementToInsert = new Position{possiblePosition.lin,possiblePosition.col};
+                            result.insert(elementToInsert);
+                            }
+                }
 
-            for (auto it : movementRules)
-                if (attackedPositions.find(&it) == attackedPositions.end() )
-                    {
-                    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
-                    elementToInsert = new Position{it.lin,it.col};
-                    result.insert(elementToInsert);
-                    }
-
+            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
             return result;
         }
 
     vector<int> directions = piece->getDirectionFlags();
 
-    if (!piece->isRangedPiece() || (piece->getName() == "lance" && piece->getPromotionStatus() == PROMOTED))
+    if ( (piece->getName() == "rook" || piece->getName() == "bishop") && piece->getPromotionStatus() == PROMOTED )
         {
             //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Which is also promoted. \n";
             for (i = 0; i<= 4;i++)
@@ -228,7 +228,7 @@ void GameBoard::movePiece(Position from, Position to) {
                         possiblePosition.col = piecePosition.col + pieceOrientation*movementRules[i].col;
                         if (isPositionOnBoard(possiblePosition))
                             if (getPieceAtPosition(possiblePosition) == NULL ||
-                               ( (getPieceAtPosition(possiblePosition) != NULL) && (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) )
+                               ( (getPieceAtPosition(possiblePosition) != NULL) && (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) /*&& (getPieceAtPosition(possiblePosition)->getName() != "king" )*/ )
                                )
                                 {
                                 //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
@@ -247,24 +247,10 @@ void GameBoard::movePiece(Position from, Position to) {
         flagUpperBound = directions[0]-1;
         }
 
-    if ( (piece->getName() == "rook" || piece->getName() == "bishop") && piece->getPromotionStatus() == PROMOTED )
-        for (i = 0; i<= 4;i++)
-                {
-                    possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
-                    possiblePosition.col = piecePosition.col + pieceOrientation*movementRules[i].col;
-                    if (isPositionOnBoard(possiblePosition))
-                        if (getPieceAtPosition(possiblePosition) == NULL ||
-                           ( (getPieceAtPosition(possiblePosition) != NULL) && (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) )
-                           )
-                            {
-                            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
-                            elementToInsert = new Position{possiblePosition.lin,possiblePosition.col};
-                            result.insert(elementToInsert);
-                            }
-                }
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] At this point, I am calculating ranged movement.\n";
+    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Flag bounds: "<<flagLowerBound<<' '<<flagUpperBound<<".\n";
 
-
-    for (dir=0; dir<directions.size()-1;dir++)
+    for (dir=flagLowerBound; dir<flagUpperBound;dir++)
         for (i= directions[dir]; i<= directions[dir+1]; i++)
             {
                 possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
@@ -278,7 +264,7 @@ void GameBoard::movePiece(Position from, Position to) {
                             result.insert(elementToInsert);
                         }
                         else
-                        {if (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation)
+                        {if ( (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) /*&& (getPieceAtPosition(possiblePosition)->getName() != "king" )*/)
                             {
                             //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
                             elementToInsert = new Position{possiblePosition.lin,possiblePosition.col};
@@ -300,8 +286,9 @@ void GameBoard::movePiece(Position from, Position to) {
     int i,j;
     for (i=1;i<=9;i++)
         for (j=1;j<=9;j++)
-            if (board[i][j]->getOrientation() == orientation )
-                result.insert(board[i][j]);
+            if ( board[i][j] != NULL)
+                if (board[i][j]->getOrientation() == orientation )
+                    result.insert(board[i][j]);
     return result;
  }
 
@@ -320,19 +307,26 @@ void GameBoard::movePiece(Position from, Position to) {
 
  bool GameBoard::columnHasPawn(int column, short int orientation) {
 
+    cout<<"[GameBoard::columnHasPawn] I am checking to see if column "<<column<<" has a pawn with orientation "<<orientation<<'\n';
+
+    int i;
     for (i=1;i<=9;i++)
         if (board[i][column]!=NULL)
             if ( board[i][column]->getName()=="pawn" && board[i][column]->getOrientation() == orientation )
-                return true;
+                {
+                    cout<<"[GameBoard::columnHasPawn] There is one at position "<<i<<' '<<column<<'\n';
+                    return true;
+                }
 
+    cout<<"[GameBoard::columnHasPawn] There are none.\n";
     return false;
  }
 
- vector<Position*> GameBoard::getDropablePositions(string pieceName,short int orientation) {
+unordered_set<Position*> GameBoard::getDropablePositions(string pieceName,short int orientation) {
 
     int i,j;
     Position* position;
-    vector<Position*> result;
+    unordered_set<Position*> result;
 
     if (pieceName!="pawn")
         {
@@ -340,22 +334,25 @@ void GameBoard::movePiece(Position from, Position to) {
                 for (j=1;j<=9;j++)
                     if (board[i][j] == NULL)
                         {
-                        position = new position{i,j};
-                        result.push_back(position);
+                        position = new Position{i,j};
+                        result.insert(position);
                         }
 
             return result;
         }
 
+    cout<<"[GameBoard::getDropablePositions] I am getting dropable positions for a pawn with orientation "<<orientation<<".\n";
     for (j=1;j<=9;j++)
         if (!columnHasPawn(j,orientation))
             {
-            for (i=i;i<=9;i++)
-                if (board[i][j] == NULL)
-                        {
-                        position = new position{i,j};
-                        result.push_back(position);
-                        }
+                cout<<"[GameBoard::getDropablePositions] Column "<<j<<" has no pawn.\n";
+                for (i=1;i<=9;i++)
+                    if (board[i][j] == NULL)
+                            {
+                                cout<<"[GameBoard::getDropablePositions] It is possible to drop the pawn at this position: "<<i<<' '<<j<<'\n';
+                                position = new Position{i,j};
+                                result.insert(position);
+                            }
             }
 
     return result;
