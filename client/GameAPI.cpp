@@ -22,14 +22,14 @@ bool GameManager::playGame(bool status) {
 
     if (status == HOST)
         {
-            cout<<"[GameManager::playGame()] The game has started. I am the host. I move first.\n";
+            //cout<<"[GameManager::playGame()] The game has started. I am the host. I move first.\n";
             playerStatus = HOST;
             gameGUI->getMenu("game")->setButtonText("status","Move");
         }
         else
         {
             playerStatus= GUEST;
-            cout<<"[GameManager::playGame()] The game has started. I am the host. I move second.\n";
+            //cout<<"[GameManager::playGame()] The game has started. I am the host. I move second.\n";
             gameGUI->getMenu("game")->setButtonText("status","Wait");
         }
 
@@ -70,6 +70,14 @@ bool GameManager::playGame(bool status) {
             whoMovesNow = playerStatus;
             updateGameState(moveString);
 
+            if ( gameLogic->isKingInCheck(gameLogic->getKingPosition(UP)) )
+                {
+                    //cout<<"[GameManager::getMoveFromUser()] King was in check and not moved. I am sending a lose command.\n";
+                    gameStatus = DONE;
+                    gameResult = DEFEAT;
+                    moveString.append(" lose ");
+                }
+
             sendMoveToServer(moveString);
 
             /*if (moveString == "quit")
@@ -100,14 +108,14 @@ string GameManager::getResponseFromServer() {
 
     result = string(response);
 
-    cout<<"[GameManager::getResponseFromServer()] I have received this response from server: "<<result<<" with length "<<responseLength<<'\n';
+    //cout<<"[GameManager::getResponseFromServer()] I have received this response from server: "<<result<<" with length "<<responseLength<<'\n';
 
     return result;
 }
 
 string GameManager::getMoveFromUser() {
 
-    cout<<"[GameManager::getMoveFromUser()] I am about to receive a move from the player.\n";
+    //cout<<"[GameManager::getMoveFromUser()] I am about to receive a move from the player.\n";
 
     string result;
     //char userInput[MAX_COMMAND_LENGTH];
@@ -129,7 +137,7 @@ string GameManager::getMoveFromUser() {
     gameGUI->clearEventQueue();
 
     drawGameScreen();
-    cout<<"[GameManager::getMoveFromUser()] Am ajuns aici.\n";
+    //cout<<"[GameManager::getMoveFromUser()] Am ajuns aici.\n";
 
     while (window->isOpen())
         {
@@ -160,7 +168,7 @@ string GameManager::getMoveFromUser() {
                                 //result = "move ";
                                 col = gameGUI->getBoardClickedPositionX(event.mouseButton.x,event.mouseButton.y);
                                 lin = gameGUI->getBoardClickedPositionY(event.mouseButton.x,event.mouseButton.y);
-                                cout<<"[GameManager::getMoveFromUser()] Board is clicked at this position "<<lin<<' '<<col<<'\n';
+                                //cout<<"[GameManager::getMoveFromUser()] Board is clicked at this position "<<lin<<' '<<col<<'\n';
 
                                 if (
                                         gameBoard->getPieceAtPosition(lin,col) == NULL /*||
@@ -187,13 +195,13 @@ string GameManager::getMoveFromUser() {
 
                                 isPieceClicked = true;
                                 //highlightPositions(BOARD,{ {lin,col} });
-                                cout<<"[GameManager::getMoveFromUser()] I am about to highlight positions.\n";
+                                //cout<<"[GameManager::getMoveFromUser()] I am about to highlight positions.\n";
                                 highlightedPositions = gameLogic->getAllPossibleMovementLocationsForPieceFrom({lin,col});
                                 //highlightedPositions.insert(&selectedPiecePosition);
                                 highlightPositions(BOARD,highlightedPositions);
                                 shouldHighlight = true;
 
-                                cout<<"[GameManager::getMoveFromUser()] I am done highlighting positions.\n";
+                                //cout<<"[GameManager::getMoveFromUser()] I am done highlighting positions.\n";
 
                                 //cout<<"[GameManager::getMoveFromUser()] I am done treating the second click.\n";
 
@@ -230,7 +238,6 @@ string GameManager::getMoveFromUser() {
                                 }
 
                             highlightedPositions = gameBoard->getDropablePositions(pieceName,UP);
-                            //highlightPositions(HAND,{ {lin,col} });
                             highlightPositions(BOARD,highlightedPositions);
                             shouldHighlight = true;
                             isHandPieceClicked = true;
@@ -258,11 +265,11 @@ string GameManager::getMoveFromUser() {
                                 //cout<<"[GameManager::getMoveFromUser()] Second click detected.\n";
                                 if (gameGUI->isBoardClicked(event.mouseButton.x,event.mouseButton.y))
                                     {
-                                        cout<<"[GameManager::getMoveFromUser()] Board was clicked a second time.\n";
+                                        //cout<<"[GameManager::getMoveFromUser()] Board was clicked a second time.\n";
                                         col2 = gameGUI->getBoardClickedPositionX(event.mouseButton.x,event.mouseButton.y);
                                         lin2 = gameGUI->getBoardClickedPositionY(event.mouseButton.x,event.mouseButton.y);
 
-                                         cout<<"[GameManager::getMoveFromUser()] Board is clicked at this position "<<lin2<<' '<<col2<<'\n';
+                                         //cout<<"[GameManager::getMoveFromUser()] Board is clicked at this position "<<lin2<<' '<<col2<<'\n';
 
                                         if (lin == lin2 && col == col2) /*||
                                              (getGameBoard()->getPieceAtPosition(lin2,col2) != NULL && getGameBoard()->getPieceAtPosition(lin2,col2)->getName() == "king"*/
@@ -272,7 +279,7 @@ string GameManager::getMoveFromUser() {
                                             continue;
                                             }
 
-                                        if ( gameLogic->isKingInCheck(gameLogic->getKingPosition(UP)) )
+                                        /*if ( gameLogic->isKingInCheck(gameLogic->getKingPosition(UP)) )
                                             {
                                                 cout<<"[GameManager::getMoveFromUser()] King was in check and not moved. I am sending a lose command.\n";
                                                 gameStatus = DONE;
@@ -281,14 +288,14 @@ string GameManager::getMoveFromUser() {
                                                 result.append(" lose ");
                                                 return result;
                                                 break;
-                                            }
+                                            }*/
 
                                         for (auto it : highlightedPositions)
                                             if (it->lin == lin2 && it->col == col2)
                                                 {
                                                     result = string("move ") + to_string(lin) + " " + to_string(col) + " " + to_string(lin2) + " " + to_string(col2);
 
-                                                    cout<<"[GameManager::getMoveFromUser()] I am returning this result: "<<result<<'\n';
+                                                    //cout<<"[GameManager::getMoveFromUser()] I am returning this result: "<<result<<'\n';
                                                     if (gameLogic->getGameBoard()->isPromotionZone({lin2,col2},gameLogic->getGameBoard()->getPieceAtPosition(lin,col)->getOrientation()) &&
                                                         gameLogic->getGameBoard()->getPieceAtPosition(lin,col)->getPromotionStatus() == UNPROMOTED
                                                         )
@@ -318,7 +325,7 @@ string GameManager::getMoveFromUser() {
                                     if (it->lin == lin2 && it->col == col2)
                                         {
                                             result = string("drop ") + pieceName + " " + to_string(lin2) + " " + to_string(col2);
-                                            cout<<"[GameManager::getMoveFromUser()] I am returning this result: "<<result<<'\n';
+                                            //cout<<"[GameManager::getMoveFromUser()] I am returning this result: "<<result<<'\n';
                                             return result;
                                         }
                             }
@@ -347,7 +354,7 @@ void GameManager::sendMoveToServer(string moveString) {
     copy(moveString.begin(),moveString.end(),moveToServer);
     moveToServer[moveString.size()]=0;
 
-    cout<<"[GameManager::sendMoveToServer()] I am sending my move to the server: "<<moveToServer<<" with length "<<moveString.size()<<'\n';
+    //cout<<"[GameManager::sendMoveToServer()] I am sending my move to the server: "<<moveToServer<<" with length "<<moveString.size()<<'\n';
 
     if (write (serverSocket, moveToServer, moveString.size()) <= 0)
         {
@@ -414,7 +421,7 @@ void GameManager::solveCommand(CommandData* command) {
 
     if (command->moveType == "move")
         {
-            cout<<"[GameManager::solveCommand()] I am solving a move command.\n";
+            //cout<<"[GameManager::solveCommand()] I am solving a move command.\n";
             gameLogic->movePiece(command->from,command->to,whoMovesNow);
 
             if (command->isPromotion)
@@ -423,7 +430,7 @@ void GameManager::solveCommand(CommandData* command) {
 
     if (command->moveType == "drop")
         {
-         cout<<"[GameManager::solveCommand()] I am solving a drop command.\n";
+         //cout<<"[GameManager::solveCommand()] I am solving a drop command.\n";
          gameLogic->dropPiece(command->droppedPieceName,command->to,playerStatus,whoMovesNow);
         }
 
@@ -431,7 +438,7 @@ void GameManager::solveCommand(CommandData* command) {
 
 void GameManager::updateGameState(string command) {
 
-    cout<<"[GameManager::updateGameState()] I am updating game state using command from server: "<<command<<'\n';
+    //cout<<"[GameManager::updateGameState()] I am updating game state using command from server: "<<command<<'\n';
     CommandData* commandData = extractDataFromCommand(command);
     solveCommand(commandData);
 

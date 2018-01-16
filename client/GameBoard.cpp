@@ -307,18 +307,18 @@ void GameBoard::movePiece(Position from, Position to) {
 
  bool GameBoard::columnHasPawn(int column, short int orientation) {
 
-    cout<<"[GameBoard::columnHasPawn] I am checking to see if column "<<column<<" has a pawn with orientation "<<orientation<<'\n';
+    //cout<<"[GameBoard::columnHasPawn] I am checking to see if column "<<column<<" has a pawn with orientation "<<orientation<<'\n';
 
     int i;
     for (i=1;i<=9;i++)
         if (board[i][column]!=NULL)
             if ( board[i][column]->getName()=="pawn" && board[i][column]->getOrientation() == orientation )
                 {
-                    cout<<"[GameBoard::columnHasPawn] There is one at position "<<i<<' '<<column<<'\n';
+                    //cout<<"[GameBoard::columnHasPawn] There is one at position "<<i<<' '<<column<<'\n';
                     return true;
                 }
 
-    cout<<"[GameBoard::columnHasPawn] There are none.\n";
+    //cout<<"[GameBoard::columnHasPawn] There are none.\n";
     return false;
  }
 
@@ -341,15 +341,15 @@ unordered_set<Position*> GameBoard::getDropablePositions(string pieceName,short 
             return result;
         }
 
-    cout<<"[GameBoard::getDropablePositions] I am getting dropable positions for a pawn with orientation "<<orientation<<".\n";
+    //cout<<"[GameBoard::getDropablePositions] I am getting dropable positions for a pawn with orientation "<<orientation<<".\n";
     for (j=1;j<=9;j++)
         if (!columnHasPawn(j,orientation))
             {
-                cout<<"[GameBoard::getDropablePositions] Column "<<j<<" has no pawn.\n";
+                //cout<<"[GameBoard::getDropablePositions] Column "<<j<<" has no pawn.\n";
                 for (i=1;i<=9;i++)
                     if (board[i][j] == NULL)
                             {
-                                cout<<"[GameBoard::getDropablePositions] It is possible to drop the pawn at this position: "<<i<<' '<<j<<'\n';
+                                //cout<<"[GameBoard::getDropablePositions] It is possible to drop the pawn at this position: "<<i<<' '<<j<<'\n';
                                 position = new Position{i,j};
                                 result.insert(position);
                             }

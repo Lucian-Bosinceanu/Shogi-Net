@@ -133,7 +133,7 @@ int sendCommandToServer(int serverSocket, string command) {
     copy(command.begin(),command.end(),commandChar);
     commandChar[command.size()]=0;
 
-    cout<<"[main sendCommandToServer] I am sending this command to server: "<<command<<"|\n";
+    //cout<<"[main sendCommandToServer] I am sending this command to server: "<<command<<"|\n";
 
     if (write(serverSocket,commandChar,command.size()) <= 0)
         {
@@ -158,7 +158,7 @@ string getResponseFromServer(int serverSocket) {
     response[responseLength] = 0;
     responseString = string(response);
 
-    cout<<"[main getResponseFromServer()] I have received this response from server: "<<responseString<<'\n';
+    //cout<<"[main getResponseFromServer()] I have received this response from server: "<<responseString<<'\n';
 
     return responseString;
 }
@@ -229,7 +229,7 @@ gameGUI->getMenu("login")->getButtonByName("warning")->setText("Please provide y
 gameGUI->drawMenu("login");
 gameGUI->getWindow()->display();
 
-cout<<"[client: login]Enter command: ";
+//cout<<"[client: login]Enter command: ";
 
 while (gameGUI->getWindow()->isOpen())
     {
@@ -319,7 +319,7 @@ gameGUI->getMenu("register")->getButtonByName("warning")->setText("Please provid
 gameGUI->drawMenu("register");
 gameGUI->getWindow()->display();
 
-cout<<"[client: login]Enter command: ";
+//cout<<"[client: login]Enter command: ";
 
 while (gameGUI->getWindow()->isOpen())
     {
@@ -497,7 +497,7 @@ int gameMenu(bool status){
     GameManager* gameManager = new GameManager(sd,gameGUI);
 
     //gameGUI.setGameBoard(gameManager->getGameBoard());
-    cout<<"[main: gameMenu] I am starting the game.\n";
+    //cout<<"[main: gameMenu] I am starting the game.\n";
 
     gameGUI->getMenu("game")->getButtonByName("forfeit")->setText("FORFEIT");
     gameGUI->getMenu("game")->getButtonByName("forfeit")->setText("FORFEIT");

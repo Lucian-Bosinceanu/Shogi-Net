@@ -28,11 +28,11 @@ void GameLogic::dropPiece(string pieceName, Position dropPosition, bool playerSt
 
 void GameLogic::movePiece(Position from, Position to, bool playerStatus) {
 
-cout<<"[GameLogic::movePiece()] I am trying to move the piece from "<<from.lin<<' '<<from.col<<" to "<<to.lin<<' '<<to.col<<'\n';
+//cout<<"[GameLogic::movePiece()] I am trying to move the piece from "<<from.lin<<' '<<from.col<<" to "<<to.lin<<' '<<to.col<<'\n';
 
 //short int side = playerOrientation;
 
-cout<<"[GameLogic::movePiece()] I am about to move a "<<gameBoard->getPieceAtPosition(from)->getName()<<" with orientation "<<playerStatus<<'\n';
+//cout<<"[GameLogic::movePiece()] I am about to move a "<<gameBoard->getPieceAtPosition(from)->getName()<<" with orientation "<<playerStatus<<'\n';
 
 
     if (gameBoard->getPieceAtPosition(to) == NULL)
@@ -51,12 +51,12 @@ cout<<"[GameLogic::movePiece()] I am about to move a "<<gameBoard->getPieceAtPos
         if (gameBoard->getPieceAtPosition(to)->getOrientation() == UP)
             {
             upKingPosition = to;
-            cout<<"[GameLogic::movePiece] I am setting the Up king position to: "<<to.lin<<' '<<to.col<<'\n';
+            //cout<<"[GameLogic::movePiece] I am setting the Up king position to: "<<to.lin<<' '<<to.col<<'\n';
             }
             else
             {
             downKingPosition = to;
-            cout<<"[GameLogic::movePiece] I am setting the Down king position to: "<<to.lin<<' '<<to.col<<'\n';
+            //cout<<"[GameLogic::movePiece] I am setting the Down king position to: "<<to.lin<<' '<<to.col<<'\n';
             }
     }
 
@@ -179,7 +179,7 @@ unordered_set<Position*> GameLogic::getAllPossibleMovementLocationsForPieceFrom(
                     kingChecked = false;
                     isPromoted = false;
 
-                    cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] Analysing position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+                    //cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] Analysing position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
                     if (possibleCapture != NULL && possibleCapture->getOrientation() != kingOrientation)
                         {
                         if (possibleCapture->getPromotionStatus() == PROMOTED)
@@ -187,17 +187,17 @@ unordered_set<Position*> GameLogic::getAllPossibleMovementLocationsForPieceFrom(
                         possibleCapturedPieceName= possibleCapture->getName();
                         reverseMove = true;
                         enemyPieces.erase(possibleCapture);
-                        cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] There is an enemy "<<possibleCapturedPieceName<<" there.\n";
+                        //cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] There is an enemy "<<possibleCapturedPieceName<<" there.\n";
                         }
 
-                    cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] I am moving the king to the position from above.\n";
+                    //cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] I am moving the king to the position from above.\n";
                     movePiece(initialKingPosition,possiblePosition,kingOrientation);
 
                     for (auto piece : enemyPieces)
                         if ( isCheckFromPiece(piece,possiblePosition) )
                             {
-                             cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] The king is checked here by a "<<piece->getName()<<" from position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<'\n';
-                             cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] The king is at position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+                             //cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] The king is checked here by a "<<piece->getName()<<" from position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<'\n';
+                             //cout<<"[GameLogic::getAllPossibleMovementLocationsForPieceFrom] The king is at position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
                              kingChecked = true;
                              break;
                             }
@@ -228,16 +228,16 @@ unordered_set<Position*> GameLogic::getAllPossibleMovementLocationsForPieceFrom(
 
 Position GameLogic::getKingPosition(short int orientation) {
 
-    cout<<"[GameLogic::getKingPosition] I am getting king position with orientation: "<<orientation<<'\n';
+    //cout<<"[GameLogic::getKingPosition] I am getting king position with orientation: "<<orientation<<'\n';
 
     if (orientation == UP)
         {
-            cout<<"[GameLogic::getKingPosition] I am returning position: "<<upKingPosition.lin<<' '<<upKingPosition.col<<'\n';
+            //cout<<"[GameLogic::getKingPosition] I am returning position: "<<upKingPosition.lin<<' '<<upKingPosition.col<<'\n';
             return upKingPosition;
         }
         else
         {
-            cout<<"[GameLogic::getKingPosition] I am returning position: "<<downKingPosition.lin<<' '<<downKingPosition.col<<'\n';
+            //cout<<"[GameLogic::getKingPosition] I am returning position: "<<downKingPosition.lin<<' '<<downKingPosition.col<<'\n';
             return downKingPosition;
         }
 }
@@ -269,76 +269,80 @@ bool GameLogic::isKingInCheck(Position kingPosition) {
 
     friendPieces.erase( friendPieces.find(gameBoard->getPieceAtPosition(initialKingPosition)) );
 
-    for (auto it : friendPieces)
+    /*for (auto it : friendPieces)
         {
             whereCurrentFriendlyPieceCanMove = getAllPossibleMovementLocationsForPieceFrom(it->getPosition());
             whereFriendsCanMove.insert( whereCurrentFriendlyPieceCanMove.begin(), whereCurrentFriendlyPieceCanMove.end() );
             whereCurrentFriendlyPieceCanMove.clear();
         }
 
-for (i = 0; i < movementRules.size();i++)
-    {
-        possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
-        possiblePosition.col = piecePosition.col + pieceOrientation*movementRules[i].col;
+    for (i = 0; i < movementRules.size();i++)
+        {
+            possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
+            possiblePosition.col = piecePosition.col + pieceOrientation*movementRules[i].col;
 
-        if (!gameBoard->isPositionOnBoard(possiblePosition))
-            continue;
+            if (!gameBoard->isPositionOnBoard(possiblePosition))
+                continue;
 
-        possibleCapture = gameBoard->getPieceAtPosition(possiblePosition);
+            possibleCapture = gameBoard->getPieceAtPosition(possiblePosition);
 
-        if (possibleCapture != NULL && possibleCapture->getOrientation() == kingOrientation)
-            continue;
+            if (possibleCapture != NULL && possibleCapture->getOrientation() == kingOrientation)
+                continue;
 
-        reverseMove = false;
-        kingChecked = false;
-        isPromoted = false;
+            reverseMove = false;
+            kingChecked = false;
+            isPromoted = false;
 
-        cout<<"[GameLogic::isKingInCheck] Analysing position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
-        if (possibleCapture != NULL && possibleCapture->getOrientation() != kingOrientation)
-            {
-            if (possibleCapture->getPromotionStatus() == PROMOTED)
-                isPromoted = true;
-            possibleCapturedPieceName= possibleCapture->getName();
-            reverseMove = true;
-            enemyPieces.erase(possibleCapture);
-            cout<<"[GameLogic::isKingCheckMated] There is an enemy "<<possibleCapturedPieceName<<" there.\n";
-            }
-
-        cout<<"[GameLogic::isKingInCheck] I am moving the king to the position from above.\n";
-        movePiece(initialKingPosition,possiblePosition,kingOrientation);
-
-        for (auto piece : enemyPieces)
-            if ( isCheckFromPiece(piece,possiblePosition) )
+            cout<<"[GameLogic::isKingInCheck] Analysing position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+            if (possibleCapture != NULL && possibleCapture->getOrientation() != kingOrientation)
                 {
-                 kingChecked = true;
-                 break;
+                if (possibleCapture->getPromotionStatus() == PROMOTED)
+                    isPromoted = true;
+                possibleCapturedPieceName= possibleCapture->getName();
+                reverseMove = true;
+                enemyPieces.erase(possibleCapture);
+                cout<<"[GameLogic::isKingCheckMated] There is an enemy "<<possibleCapturedPieceName<<" there.\n";
                 }
 
-        cout<<"[GameLogic::isKingInCheck] Am ajuns aici.\n";
-        movePiece(possiblePosition,initialKingPosition,kingOrientation);
+            //cout<<"[GameLogic::isKingInCheck] I am moving the king to the position from above.\n";
+            movePiece(initialKingPosition,possiblePosition,kingOrientation);
 
-        if (reverseMove)
-            {
-                dropPiece(possibleCapturedPieceName,possiblePosition,kingOrientation, kingOrientation);
-                possibleCapture->switchOrientation();
-                enemyPieces.insert(possibleCapture);
-                if (isPromoted)
-                    possibleCapture->promote();
-            }
+            for (auto piece : enemyPieces)
+                if ( isCheckFromPiece(piece,possiblePosition) )
+                    {
+                     kingChecked = true;
+                     break;
+                    }
 
-        if (!kingChecked)
-            {
-                currentPieceAttackingPositions.clear(); attackedPositions.clear(); whereCurrentFriendlyPieceCanMove.clear(); whereFriendsCanMove.clear(); friendPieces.clear(); enemyPieces.clear(); movementRules.clear();
-                return false;
-            }
+            //cout<<"[GameLogic::isKingInCheck] Am ajuns aici.\n";
+            movePiece(possiblePosition,initialKingPosition,kingOrientation);
 
-    }
+            if (reverseMove)
+                {
+                    dropPiece(possibleCapturedPieceName,possiblePosition,kingOrientation, kingOrientation);
+                    possibleCapture->switchOrientation();
+                    enemyPieces.insert(possibleCapture);
+                    if (isPromoted)
+                        possibleCapture->promote();
+                }
+
+            if (!kingChecked)
+                {
+                    currentPieceAttackingPositions.clear(); attackedPositions.clear(); whereCurrentFriendlyPieceCanMove.clear(); whereFriendsCanMove.clear(); friendPieces.clear(); enemyPieces.clear(); movementRules.clear();
+                    return false;
+                }
+
+        }*/
 
     for (auto piece : enemyPieces)
+        if ( isCheckFromPiece(piece,kingPosition) )
+            return true;
+
+    /*for (auto piece : enemyPieces)
         if ( isCheckFromPiece(piece,possiblePosition) )
             {
-             cout<<"[GameLogic::isKingInCheck] The king is checked here by a "<<piece->getName()<<" from position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<'\n';
-             cout<<"[GameLogic::isKingCheck] The king is at position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+             //cout<<"[GameLogic::isKingInCheck] The king is checked here by a "<<piece->getName()<<" from position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<'\n';
+             //cout<<"[GameLogic::isKingCheck] The king is at position "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
              kingChecked = true;
 
              for (auto it : whereFriendsCanMove)
@@ -349,7 +353,7 @@ for (i = 0; i < movementRules.size();i++)
 
             if (kingChecked)
                 return true;
-            }
+            }*/
     currentPieceAttackingPositions.clear(); attackedPositions.clear(); whereCurrentFriendlyPieceCanMove.clear(); whereFriendsCanMove.clear(); friendPieces.clear(); enemyPieces.clear(); movementRules.clear();
     return false;
 

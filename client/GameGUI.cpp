@@ -202,7 +202,10 @@ string GameGUI::getInputFromClient(Menu* menu,Button* field,int type) {
 
                 if (event.type == sf::Event::TextEntered)
                     {
-                        if (event.text.unicode < 128 && event.text.unicode > 32)
+                        if ( (event.text.unicode >= 48 && event.text.unicode <= 57) ||
+                             (event.text.unicode >= 65 && event.text.unicode <= 90) ||
+                             (event.text.unicode >= 97 && event.text.unicode <= 122)
+                           )
                             {
                                 letter = static_cast<char>(event.text.unicode);
                                 input.push_back(letter);

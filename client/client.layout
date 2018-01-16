@@ -2,29 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="GameGUI.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="GameLogic.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="482" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="16327" topLine="490" />
-		</Cursor>
-	</File>
-	<File name="GameGUI.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="225" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="Menu.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="545" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Button.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="569" topLine="0" />
+			<Cursor1 position="13905" topLine="327" />
 		</Cursor>
 	</File>
 	<File name="GameBoard.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -32,25 +12,15 @@
 			<Cursor1 position="999" topLine="7" />
 		</Cursor>
 	</File>
-	<File name="GameLogic.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Menu.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="13905" topLine="327" />
+			<Cursor1 position="545" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="GameAPI.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="GameGUI.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="10906" topLine="6" />
+			<Cursor1 position="180" topLine="0" />
 		</Cursor>
-		<Folding>
-			<Collapse line="85" />
-			<Collapse line="107" />
-			<Collapse line="342" />
-			<Collapse line="357" />
-			<Collapse line="411" />
-			<Collapse line="430" />
-			<Collapse line="467" />
-			<Collapse line="474" />
-		</Folding>
 	</File>
 	<File name="GameBoard.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -62,9 +32,9 @@
 			<Cursor1 position="177" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="GameLogic.h" open="0" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Button.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="937" topLine="4" />
+			<Cursor1 position="569" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="GameAPI.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -72,9 +42,29 @@
 			<Cursor1 position="63" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Button.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="GameGUI.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1723" topLine="52" />
+			<Cursor1 position="226" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="16327" topLine="464" />
+		</Cursor>
+	</File>
+	<File name="Button.cpp" open="1" top="1" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="344" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="GameLogic.h" open="0" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="937" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="GameAPI.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10906" topLine="6" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

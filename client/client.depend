@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1516095766 source:/home/lucian/Desktop/proiect/shogi-net/client/main.cpp
+1516107807 source:/home/lucian/Desktop/proiect/shogi-net/client/main.cpp
 	<sys/types.h>
 	<sys/socket.h>
 	<netinet/in.h>
@@ -15,7 +15,7 @@
 	"GameAPI.h"
 	<SFML/Graphics.hpp>
 
-1516095877 source:/home/lucian/Desktop/proiect/shogi-net/client/GameAPI.cpp
+1516107805 source:/home/lucian/Desktop/proiect/shogi-net/client/GameAPI.cpp
 	"GameAPI.h"
 	<iostream>
 	<SFML/Graphics.hpp>
@@ -39,12 +39,12 @@
 	<vector>
 	<string>
 
-1516018088 source:/home/lucian/Desktop/proiect/shogi-net/client/GameBoard.cpp
+1516105261 source:/home/lucian/Desktop/proiect/shogi-net/client/GameBoard.cpp
 	"GameBoard.h"
 	<unordered_set>
 	<iostream>
 
-1516033454 source:/home/lucian/Desktop/proiect/shogi-net/client/GameLogic.cpp
+1516106990 source:/home/lucian/Desktop/proiect/shogi-net/client/GameLogic.cpp
 	"GameLogic.h"
 	<iostream>
 
@@ -72,7 +72,7 @@
 	<vector>
 	"Button.h"
 
-1516098308 source:/home/lucian/Desktop/proiect/shogi-net/client/GameGUI.cpp
+1516101516 source:/home/lucian/Desktop/proiect/shogi-net/client/GameGUI.cpp
 	"GameGUI.h"
 	<iostream>
 
