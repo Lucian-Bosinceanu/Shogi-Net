@@ -1,0 +1,11 @@
+<map id="GameGUI::getWindow" name="GameGUI::getWindow">
+<area shape="rect" id="node2" href="$class_game_manager.html#ac4c16aefa2228448a4058903e98278fc" title="GameManager::playGame" alt="" coords="222,68,397,95"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a3a3075ec9d974800ba28323abb240caa" title="gameMenu" alt="" coords="459,68,545,95"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ae8bee903326f60d015d802ea4933e0b5" title="lobby" alt="" coords="593,169,647,196"/>
+<area shape="rect" id="node6" href="$main_8cpp.html#ab4db1ec623445cdc1372a150991d5d0d" title="loginMenu" alt="" coords="695,119,776,145"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#ab3002fe8e0074c9e2ecb5b835e5e819f" title="mainMenu" alt="" coords="824,93,907,120"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#a723844d1e594724b7ee6fd47e76b5b0b" title="registerMenu" alt="" coords="955,195,1052,221"/>
+<area shape="rect" id="node10" href="$class_game_manager.html#a62e930351ee3810500d62a48a7336633" title="GameManager::getGameBoard" alt="" coords="208,321,411,348"/>
+<area shape="rect" id="node4" href="$class_game_g_u_i.html#a4b4406f45de31c648a9df7f9db3d2959" title="GameGUI::GameGUI" alt="" coords="1100,68,1248,95"/>
+<area shape="rect" id="node8" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="978,144,1029,171"/>
+</map>

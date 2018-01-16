@@ -1,0 +1,10 @@
+<map id="UserData.h" name="UserData.h">
+<area shape="rect" id="node2" href="$login_component_8h.html" title="loginComponent.h" alt="" coords="159,80,285,107"/>
+<area shape="rect" id="node9" href="$_user_data_8cpp.html" title="UserData.cpp" alt="" coords="309,80,412,107"/>
+<area shape="rect" id="node3" href="$_game_manager_8h.html" title="GameManager.h" alt="" coords="87,155,205,181"/>
+<area shape="rect" id="node8" href="$login_component_8cpp.html" title="loginComponent.cpp" alt="" coords="229,155,370,181"/>
+<area shape="rect" id="node4" href="$_game_manager_8cpp.html" title="GameManager.cpp" alt="" coords="5,229,137,256"/>
+<area shape="rect" id="node5" href="$_lobby_manager_8h.html" title="LobbyManager.h" alt="" coords="161,229,280,256"/>
+<area shape="rect" id="node6" href="$_lobby_manager_8cpp.html" title="LobbyManager.cpp" alt="" coords="91,304,223,331"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="main.cpp" alt="" coords="247,304,322,331"/>
+</map>

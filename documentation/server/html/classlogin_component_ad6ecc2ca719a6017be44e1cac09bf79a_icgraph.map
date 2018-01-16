@@ -1,0 +1,7 @@
+<map id="loginComponent::findUserByClient" name="loginComponent::findUserByClient">
+<area shape="rect" id="node2" href="$class_game_manager.html#ad1e492b1682b9429bc87428f31ba88b5" title="GameManager::joinGameByUsername" alt="" coords="227,5,473,32"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a7bf77765d1cef8de7e11a011952a54b4" title="endGame" alt="" coords="311,56,389,83"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#aae41621f990da470011daaad414e9dc2" title="serveGame" alt="" coords="521,56,611,83"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="659,56,748,83"/>
+<area shape="rect" id="node6" href="$main_8cpp.html#af4dd127242d1a5e2f86dbe9d0db533a2" title="serveAuthentication" alt="" coords="796,56,933,83"/>
+</map>

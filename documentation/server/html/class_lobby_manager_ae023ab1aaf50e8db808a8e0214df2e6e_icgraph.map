@@ -1,0 +1,4 @@
+<map id="LobbyManager::treatClient" name="LobbyManager::treatClient">
+<area shape="rect" id="node2" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="228,5,317,32"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#af4dd127242d1a5e2f86dbe9d0db533a2" title="serveAuthentication" alt="" coords="365,5,503,32"/>
+</map>

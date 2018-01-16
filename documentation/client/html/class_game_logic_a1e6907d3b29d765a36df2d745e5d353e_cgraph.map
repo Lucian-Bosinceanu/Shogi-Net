@@ -1,0 +1,8 @@
+<map id="GameLogic::getAllPossibleMovementLocationsForPieceFrom" name="GameLogic::getAllPossibleMovementLocationsForPieceFrom">
+<area shape="rect" id="node2" href="$class_shogi_piece.html#a4c98e49eb34bcc9b4a3266b564ff8674" title="ShogiPiece::getOrientation" alt="" coords="291,5,468,32"/>
+<area shape="rect" id="node3" href="$class_shogi_piece.html#a5683e029ecc81cc14ab7ff5e4c740114" title="ShogiPiece::getMovementRules" alt="" coords="275,56,484,83"/>
+<area shape="rect" id="node4" href="$class_shogi_piece.html#a9dcc3a446cb0ce64bac0a7e0b176fd72" title="ShogiPiece::getPromotion\lStatus" alt="" coords="293,107,466,149"/>
+<area shape="rect" id="node5" href="$class_shogi_piece.html#aeef34198bb394bee221b1889ec3f4a79" title="ShogiPiece::getName" alt="" coords="305,173,454,200"/>
+<area shape="rect" id="node6" href="$class_shogi_piece.html#ab625375c6f1a00d041853e9d96b6ca6b" title="ShogiPiece::switchOrientation" alt="" coords="281,224,478,251"/>
+<area shape="rect" id="node7" href="$class_shogi_piece.html#ad8e29eb132e5a4a5545babedb97e8fe0" title="ShogiPiece::promote" alt="" coords="308,275,451,301"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="serveAuthentication" name="serveAuthentication">
+<area shape="rect" id="node2" href="$classlogin_component.html#ae965a3a8cb19a013cd087d5cb6afdf73" title="loginComponent::authenticateUser" alt="" coords="191,107,413,133"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="257,157,347,184"/>
+<area shape="rect" id="node4" href="$class_lobby_manager.html#ae023ab1aaf50e8db808a8e0214df2e6e" title="LobbyManager::treatClient" alt="" coords="461,81,636,108"/>
+<area shape="rect" id="node8" href="$classlogin_component.html#aa8b49b03eb41c2aacf6550c09c1ea6e1" title="loginComponent::logoutUser" alt="" coords="940,175,1127,201"/>
+<area shape="rect" id="node12" href="$main_8cpp.html#aae41621f990da470011daaad414e9dc2" title="serveGame" alt="" coords="504,233,593,260"/>
+<area shape="rect" id="node5" href="$class_game.html#a3e7e3caa380ef7cdbc0bb12fb4da16e7" title="Game::host" alt="" coords="741,5,831,32"/>
+<area shape="rect" id="node6" href="$class_game.html#a08c8073e615b69d92250a90f7d2e5a66" title="Game::getGameStatus" alt="" coords="708,56,864,83"/>
+<area shape="rect" id="node7" href="$class_game.html#a34c999070da3877a3fe87eff10e49379" title="Game::getJoiner" alt="" coords="727,107,845,133"/>
+<area shape="rect" id="node9" href="$class_user_data.html#a936465d0dfcadc36b898b38d6c0c6f40" title="UserData::logout" alt="" coords="1179,175,1300,201"/>
+<area shape="rect" id="node10" href="$_user_data_8cpp.html#aa549219a92d9e8a91978d228e1166d29" title="operator\&gt;\&gt;" alt="" coords="1348,149,1433,176"/>
+<area shape="rect" id="node11" href="$_user_data_8cpp.html#a2f0885761f6dfe605d0e6949b0c42aed" title="operator\&lt;\&lt;" alt="" coords="1348,200,1433,227"/>
+<area shape="rect" id="node13" href="$class_game_server.html#abd9c3834da03683949116e25e09fb221" title="GameServer::serve" alt="" coords="719,208,853,235"/>
+<area shape="rect" id="node14" href="$class_lobby_manager.html#ab54977410ea066ea388c7f0056e38162" title="LobbyManager::terminateGame" alt="" coords="684,259,888,285"/>
+<area shape="rect" id="node15" href="$main_8cpp.html#a7bf77765d1cef8de7e11a011952a54b4" title="endGame" alt="" coords="747,309,825,336"/>
+<area shape="rect" id="node16" href="$classlogin_component.html#ad6ecc2ca719a6017be44e1cac09bf79a" title="loginComponent::findUser\lByClient" alt="" coords="947,243,1120,285"/>
+<area shape="rect" id="node17" href="$class_user_data.html#a4b9bce1e2a7beb7c3d1ee882075ecbe5" title="UserData::incrementMatches" alt="" coords="937,309,1130,336"/>
+<area shape="rect" id="node18" href="$class_user_data.html#ad1105af7a9df62026d2527df490fbdd8" title="UserData::incrementVictories" alt="" coords="936,360,1131,387"/>
+</map>

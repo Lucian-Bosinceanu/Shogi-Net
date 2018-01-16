@@ -1,0 +1,10 @@
+<map id="ShogiPiece.h" name="ShogiPiece.h">
+<area shape="rect" id="node2" href="$_game_board_8h.html" title="GameBoard.h" alt="" coords="190,80,293,107"/>
+<area shape="rect" id="node9" href="$_shogi_piece_8cpp.html" title="ShogiPiece.cpp" alt="" coords="317,80,430,107"/>
+<area shape="rect" id="node3" href="$_game_logic_8h.html" title="GameLogic.h" alt="" coords="127,155,225,181"/>
+<area shape="rect" id="node8" href="$_game_board_8cpp.html" title="GameBoard.cpp" alt="" coords="250,155,366,181"/>
+<area shape="rect" id="node4" href="$_game_a_p_i_8h.html" title="GameAPI.h" alt="" coords="68,229,159,256"/>
+<area shape="rect" id="node7" href="$_game_logic_8cpp.html" title="GameLogic.cpp" alt="" coords="183,229,297,256"/>
+<area shape="rect" id="node5" href="$_game_a_p_i_8cpp.html" title="GameAPI.cpp" alt="" coords="5,304,109,331"/>
+<area shape="rect" id="node6" href="$main_8cpp.html" title="main.cpp" alt="" coords="133,304,208,331"/>
+</map>

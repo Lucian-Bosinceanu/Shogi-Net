@@ -1,0 +1,5 @@
+<map id="ShogiPiece::getMovementRules" name="ShogiPiece::getMovementRules">
+<area shape="rect" id="node2" href="$class_game_board.html#a70dbcf04da3d5c1b6a9d8b0b14a54bf4" title="GameBoard::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="263,5,484,47"/>
+<area shape="rect" id="node3" href="$class_game_logic.html#a1e6907d3b29d765a36df2d745e5d353e" title="GameLogic::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="263,71,484,112"/>
+<area shape="rect" id="node4" href="$class_game_logic.html#a30678bb5e1a25bd701d06327441c3b90" title="GameLogic::isKingInCheck" alt="" coords="283,137,464,163"/>
+</map>

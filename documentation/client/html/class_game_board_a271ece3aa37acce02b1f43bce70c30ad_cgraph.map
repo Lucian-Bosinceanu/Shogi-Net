@@ -1,0 +1,3 @@
+<map id="GameBoard::dropPiece" name="GameBoard::dropPiece">
+<area shape="rect" id="node2" href="$class_shogi_piece.html#a67e16da479787983e54fe7d47845e1ad" title="ShogiPiece::moveTo" alt="" coords="211,5,353,32"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="serveGame" name="serveGame">
+<area shape="rect" id="node2" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="143,5,232,32"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#af4dd127242d1a5e2f86dbe9d0db533a2" title="serveAuthentication" alt="" coords="280,5,417,32"/>
+</map>

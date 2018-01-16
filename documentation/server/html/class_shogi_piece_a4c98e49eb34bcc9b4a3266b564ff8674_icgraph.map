@@ -1,0 +1,5 @@
+<map id="ShogiPiece::getOrientation" name="ShogiPiece::getOrientation">
+<area shape="rect" id="node2" href="$class_game_board.html#a70dbcf04da3d5c1b6a9d8b0b14a54bf4" title="GameBoard::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="231,5,452,47"/>
+<area shape="rect" id="node3" href="$class_game_logic.html#a139efd8650182391f9933b3e5f1b403e" title="GameLogic::isCheckFromPiece" alt="" coords="238,71,445,98"/>
+<area shape="rect" id="node4" href="$class_game_logic.html#af4a4af664d0c54a796eaa6e47a0f3b3c" title="GameLogic::isKingCheckMated" alt="" coords="238,122,445,149"/>
+</map>

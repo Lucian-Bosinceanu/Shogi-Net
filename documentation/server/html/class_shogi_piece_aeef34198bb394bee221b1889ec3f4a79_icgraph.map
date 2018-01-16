@@ -1,0 +1,5 @@
+<map id="ShogiPiece::getName" name="ShogiPiece::getName">
+<area shape="rect" id="node2" href="$class_game_board.html#ab1f0ed532d50ccaeef0f78211681ae51" title="GameBoard::addPieceInHand" alt="" coords="216,5,411,32"/>
+<area shape="rect" id="node3" href="$class_game_board.html#a70dbcf04da3d5c1b6a9d8b0b14a54bf4" title="GameBoard::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="203,57,424,98"/>
+<area shape="rect" id="node4" href="$class_game_logic.html#af4a4af664d0c54a796eaa6e47a0f3b3c" title="GameLogic::isKingCheckMated" alt="" coords="210,123,417,149"/>
+</map>

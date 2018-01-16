@@ -1,0 +1,4 @@
+<map id="GameBoard::addPieceInHand" name="GameBoard::addPieceInHand">
+<area shape="rect" id="node2" href="$class_shogi_piece.html#a4c98e49eb34bcc9b4a3266b564ff8674" title="ShogiPiece::getOrientation" alt="" coords="248,5,425,32"/>
+<area shape="rect" id="node3" href="$class_shogi_piece.html#aeef34198bb394bee221b1889ec3f4a79" title="ShogiPiece::getName" alt="" coords="262,56,411,83"/>
+</map>

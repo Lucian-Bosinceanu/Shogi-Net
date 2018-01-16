@@ -1,0 +1,6 @@
+<map id="ShogiPiece::getName" name="ShogiPiece::getName">
+<area shape="rect" id="node2" href="$class_game_manager.html#a62e930351ee3810500d62a48a7336633" title="GameManager::getGameBoard" alt="" coords="212,5,415,32"/>
+<area shape="rect" id="node3" href="$class_game_board.html#a1894125b516a1d4b5d3073e128b12252" title="GameBoard::addPieceInHand" alt="" coords="216,56,411,83"/>
+<area shape="rect" id="node4" href="$class_game_board.html#a70dbcf04da3d5c1b6a9d8b0b14a54bf4" title="GameBoard::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="203,107,424,149"/>
+<area shape="rect" id="node5" href="$class_game_logic.html#a1e6907d3b29d765a36df2d745e5d353e" title="GameLogic::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="203,173,424,214"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="ShogiPiece::getMovementRules" name="ShogiPiece::getMovementRules">
+<area shape="rect" id="node2" href="$class_game_board.html#a70dbcf04da3d5c1b6a9d8b0b14a54bf4" title="GameBoard::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="263,5,484,47"/>
+</map>

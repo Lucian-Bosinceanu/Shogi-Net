@@ -1,0 +1,8 @@
+<map id="GameBoard::getAllPossibleMovementLocationsForPieceFrom" name="GameBoard::getAllPossibleMovementLocationsForPieceFrom">
+<area shape="rect" id="node2" href="$class_shogi_piece.html#a4c98e49eb34bcc9b4a3266b564ff8674" title="ShogiPiece::getOrientation" alt="" coords="291,5,468,32"/>
+<area shape="rect" id="node3" href="$class_shogi_piece.html#a9dcc3a446cb0ce64bac0a7e0b176fd72" title="ShogiPiece::getPromotion\lStatus" alt="" coords="293,57,466,98"/>
+<area shape="rect" id="node4" href="$class_shogi_piece.html#a5683e029ecc81cc14ab7ff5e4c740114" title="ShogiPiece::getMovementRules" alt="" coords="275,123,484,149"/>
+<area shape="rect" id="node5" href="$class_shogi_piece.html#aaf94434193e55cef9b6d4232e00dfb38" title="ShogiPiece::isRangedPiece" alt="" coords="287,173,471,200"/>
+<area shape="rect" id="node6" href="$class_shogi_piece.html#aeef34198bb394bee221b1889ec3f4a79" title="ShogiPiece::getName" alt="" coords="305,224,454,251"/>
+<area shape="rect" id="node7" href="$class_shogi_piece.html#a5531e49e48f166f06f0e3dcc9fe850ca" title="ShogiPiece::getDirection\lFlags" alt="" coords="296,275,463,317"/>
+</map>

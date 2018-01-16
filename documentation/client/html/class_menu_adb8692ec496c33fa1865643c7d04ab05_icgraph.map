@@ -1,0 +1,11 @@
+<map id="Menu::setButtonText" name="Menu::setButtonText">
+<area shape="rect" id="node2" href="$class_game_manager.html#ac4c16aefa2228448a4058903e98278fc" title="GameManager::playGame" alt="" coords="217,95,392,122"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ae8bee903326f60d015d802ea4933e0b5" title="lobby" alt="" coords="595,197,648,223"/>
+<area shape="rect" id="node6" href="$main_8cpp.html#ab4db1ec623445cdc1372a150991d5d0d" title="loginMenu" alt="" coords="696,146,777,173"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#a723844d1e594724b7ee6fd47e76b5b0b" title="registerMenu" alt="" coords="956,197,1053,223"/>
+<area shape="rect" id="node10" href="$class_game_manager.html#a9700e79db7a16f7434a296c86d478f8e" title="GameManager::displayEndGame\lScreen" alt="" coords="197,29,412,71"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a3a3075ec9d974800ba28323abb240caa" title="gameMenu" alt="" coords="460,95,547,122"/>
+<area shape="rect" id="node4" href="$class_game_g_u_i.html#a4b4406f45de31c648a9df7f9db3d2959" title="GameGUI::GameGUI" alt="" coords="1101,121,1249,147"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#ab3002fe8e0074c9e2ecb5b835e5e819f" title="mainMenu" alt="" coords="825,95,908,122"/>
+<area shape="rect" id="node8" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="979,45,1030,71"/>
+</map>

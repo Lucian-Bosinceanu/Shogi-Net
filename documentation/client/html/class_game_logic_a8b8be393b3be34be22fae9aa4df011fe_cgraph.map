@@ -1,0 +1,4 @@
+<map id="GameLogic::isCheckFromPiece" name="GameLogic::isCheckFromPiece">
+<area shape="rect" id="node2" href="$class_shogi_piece.html#a4c98e49eb34bcc9b4a3266b564ff8674" title="ShogiPiece::getOrientation" alt="" coords="260,5,437,32"/>
+<area shape="rect" id="node3" href="$class_shogi_piece.html#ac98c81cbfd844477a1520f460937e8aa" title="ShogiPiece::getPosition" alt="" coords="268,56,429,83"/>
+</map>

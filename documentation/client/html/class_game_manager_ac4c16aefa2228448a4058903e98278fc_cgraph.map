@@ -1,0 +1,21 @@
+<map id="GameManager::playGame" name="GameManager::playGame">
+<area shape="rect" id="node2" href="$class_game_g_u_i.html#a53916f75d279147745aa9556516bd5ce" title="GameGUI::getMenu" alt="" coords="270,5,409,32"/>
+<area shape="rect" id="node3" href="$class_menu.html#adb8692ec496c33fa1865643c7d04ab05" title="Menu::setButtonText" alt="" coords="267,56,411,83"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#a529df30beb5d45a278ba58dfea2eaf90" title="getResponseFromServer" alt="" coords="256,107,423,133"/>
+<area shape="rect" id="node5" href="$class_menu.html#a4932da5fe92fa25c8599bde5b0a0f4e0" title="Menu::getButtonByName" alt="" coords="255,157,424,184"/>
+<area shape="rect" id="node6" href="$class_button.html#a046e6d04b34e085061e505997007a428" title="Button::getText" alt="" coords="283,208,395,235"/>
+<area shape="rect" id="node7" href="$class_game_g_u_i.html#a8317fc534aac08769ccb3421433e42ea" title="GameGUI::getWindow" alt="" coords="262,259,417,285"/>
+<area shape="rect" id="node8" href="$class_game_g_u_i.html#a1764fbaf6202f4086e1d542a0cfeff3e" title="GameGUI::clearEventQueue" alt="" coords="245,309,434,336"/>
+<area shape="rect" id="node9" href="$class_game_g_u_i.html#a85bc9f58e6887206b17b3a06c9582096" title="GameGUI::isBoardClicked" alt="" coords="251,360,428,387"/>
+<area shape="rect" id="node10" href="$class_game_g_u_i.html#aef5489155ecf8062a958ea19b1cdc65e" title="GameGUI::getBoardClicked\lPositionX" alt="" coords="247,411,432,453"/>
+<area shape="rect" id="node11" href="$class_game_g_u_i.html#a810aa5d59efe208c00dea706b9cb32d3" title="GameGUI::getBoardClicked\lPositionY" alt="" coords="247,477,432,518"/>
+<area shape="rect" id="node12" href="$class_game_board.html#a04351e151bddf9a1c676bf6665c51673" title="GameBoard::getPieceAtPosition" alt="" coords="234,543,445,569"/>
+<area shape="rect" id="node13" href="$class_shogi_piece.html#a4c98e49eb34bcc9b4a3266b564ff8674" title="ShogiPiece::getOrientation" alt="" coords="251,593,428,620"/>
+<area shape="rect" id="node14" href="$class_game_g_u_i.html#a2859a7be28abd386d670643550612d34" title="GameGUI::isHandClicked" alt="" coords="252,644,427,671"/>
+<area shape="rect" id="node15" href="$class_game_g_u_i.html#af8053fb1c00c36b4dd12ca963f2fb531" title="GameGUI::getHandClickedPiece\lPosition" alt="" coords="232,695,447,737"/>
+<area shape="rect" id="node16" href="$class_game_board.html#ae87b30dfbd4b1f3aef5be9793ec76608" title="GameBoard::getDropablePositions" alt="" coords="228,761,451,788"/>
+<area shape="rect" id="node17" href="$class_menu.html#aa38e7d95e326180fb3b8848ce04ae0c7" title="Menu::isButtonPressed" alt="" coords="260,812,419,839"/>
+<area shape="rect" id="node19" href="$class_game_g_u_i.html#a59d4af86914a4e9a98b3885ca2f58c71" title="GameGUI::drawGameScreen" alt="" coords="243,863,436,889"/>
+<area shape="rect" id="node20" href="$class_button.html#a8dd63cecffb37fe4fa37cc148142a6de" title="Button::setText" alt="" coords="283,913,395,940"/>
+<area shape="rect" id="node18" href="$class_button.html#aca4da7ac5b066cde245563c8f5398d86" title="Button::isClicked" alt="" coords="499,812,621,839"/>
+</map>

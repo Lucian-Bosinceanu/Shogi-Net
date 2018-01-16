@@ -1,0 +1,5 @@
+<map id="Game::getGameStatus" name="Game::getGameStatus">
+<area shape="rect" id="node2" href="$class_lobby_manager.html#ae023ab1aaf50e8db808a8e0214df2e6e" title="LobbyManager::treatClient" alt="" coords="209,5,384,32"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="432,5,521,32"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#af4dd127242d1a5e2f86dbe9d0db533a2" title="serveAuthentication" alt="" coords="569,5,707,32"/>
+</map>

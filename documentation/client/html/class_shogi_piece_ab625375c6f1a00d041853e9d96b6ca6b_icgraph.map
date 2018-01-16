@@ -1,0 +1,3 @@
+<map id="ShogiPiece::switchOrientation" name="ShogiPiece::switchOrientation">
+<area shape="rect" id="node2" href="$class_game_logic.html#a1e6907d3b29d765a36df2d745e5d353e" title="GameLogic::getAllPossible\lMovementLocationsForPieceFrom" alt="" coords="251,5,472,47"/>
+</map>

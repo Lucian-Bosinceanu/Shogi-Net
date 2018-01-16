@@ -1,0 +1,7 @@
+<map id="UserData::logout" name="UserData::logout">
+<area shape="rect" id="node2" href="$classlogin_component.html#aa8b49b03eb41c2aacf6550c09c1ea6e1" title="loginComponent::logoutUser" alt="" coords="175,5,361,32"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="673,5,763,32"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#a7bf77765d1cef8de7e11a011952a54b4" title="endGame" alt="" coords="409,31,488,57"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#af4dd127242d1a5e2f86dbe9d0db533a2" title="serveAuthentication" alt="" coords="811,5,948,32"/>
+<area shape="rect" id="node6" href="$main_8cpp.html#aae41621f990da470011daaad414e9dc2" title="serveGame" alt="" coords="536,31,625,57"/>
+</map>

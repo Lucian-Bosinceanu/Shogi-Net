@@ -1,0 +1,5 @@
+<map id="LobbyManager::terminateGame" name="LobbyManager::terminateGame">
+<area shape="rect" id="node2" href="$main_8cpp.html#aae41621f990da470011daaad414e9dc2" title="serveGame" alt="" coords="257,5,347,32"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="395,5,484,32"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#af4dd127242d1a5e2f86dbe9d0db533a2" title="serveAuthentication" alt="" coords="532,5,669,32"/>
+</map>

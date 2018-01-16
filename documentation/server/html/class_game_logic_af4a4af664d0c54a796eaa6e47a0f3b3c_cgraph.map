@@ -1,0 +1,7 @@
+<map id="GameLogic::isKingCheckMated" name="GameLogic::isKingCheckMated">
+<area shape="rect" id="node2" href="$class_shogi_piece.html#a4c98e49eb34bcc9b4a3266b564ff8674" title="ShogiPiece::getOrientation" alt="" coords="270,5,447,32"/>
+<area shape="rect" id="node3" href="$class_shogi_piece.html#aeef34198bb394bee221b1889ec3f4a79" title="ShogiPiece::getName" alt="" coords="284,56,433,83"/>
+<area shape="rect" id="node4" href="$class_shogi_piece.html#a9dcc3a446cb0ce64bac0a7e0b176fd72" title="ShogiPiece::getPromotion\lStatus" alt="" coords="272,107,445,149"/>
+<area shape="rect" id="node5" href="$class_shogi_piece.html#ab625375c6f1a00d041853e9d96b6ca6b" title="ShogiPiece::switchOrientation" alt="" coords="260,173,457,200"/>
+<area shape="rect" id="node6" href="$class_shogi_piece.html#ad8e29eb132e5a4a5545babedb97e8fe0" title="ShogiPiece::promote" alt="" coords="287,224,430,251"/>
+</map>

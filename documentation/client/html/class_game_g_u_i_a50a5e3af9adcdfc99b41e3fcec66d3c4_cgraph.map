@@ -1,0 +1,5 @@
+<map id="GameGUI::getInputFromClient" name="GameGUI::getInputFromClient">
+<area shape="rect" id="node2" href="$class_button.html#aca4da7ac5b066cde245563c8f5398d86" title="Button::isClicked" alt="" coords="253,5,376,32"/>
+<area shape="rect" id="node3" href="$class_button.html#a8dd63cecffb37fe4fa37cc148142a6de" title="Button::setText" alt="" coords="259,56,371,83"/>
+<area shape="rect" id="node4" href="$class_menu.html#a9df102abcebc51e69c4728dc3d3c3be0" title="Menu::drawMenu" alt="" coords="253,107,376,133"/>
+</map>

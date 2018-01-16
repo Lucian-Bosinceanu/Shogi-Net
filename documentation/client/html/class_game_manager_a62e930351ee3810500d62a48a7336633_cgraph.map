@@ -1,0 +1,17 @@
+<map id="GameManager::getGameBoard" name="GameManager::getGameBoard">
+<area shape="rect" id="node2" href="$class_game_g_u_i.html#a01809610fcc10ab8ea0790ffe62baa48" title="GameGUI::getPieceOffsetX" alt="" coords="277,5,463,32"/>
+<area shape="rect" id="node3" href="$class_game_g_u_i.html#a12a22a0e73afab635f1f3699653dd22d" title="GameGUI::getPieceOffsetY" alt="" coords="277,56,463,83"/>
+<area shape="rect" id="node4" href="$class_game_g_u_i.html#acb3a026de0c26352198d91c4dd31e35f" title="GameGUI::getBoardPositionX" alt="" coords="271,107,469,133"/>
+<area shape="rect" id="node5" href="$class_game_g_u_i.html#a318b12235a86c1e410b86dcc4cfb5c55" title="GameGUI::getBoardPositionY" alt="" coords="271,157,469,184"/>
+<area shape="rect" id="node6" href="$class_game_g_u_i.html#a313519ed95479e62d6eedd2bf26a70dc" title="GameGUI::getPiecesSprites" alt="" coords="276,208,464,235"/>
+<area shape="rect" id="node7" href="$class_game_board.html#a04351e151bddf9a1c676bf6665c51673" title="GameBoard::getPieceAtPosition" alt="" coords="265,259,475,285"/>
+<area shape="rect" id="node8" href="$class_shogi_piece.html#aeef34198bb394bee221b1889ec3f4a79" title="ShogiPiece::getName" alt="" coords="295,309,445,336"/>
+<area shape="rect" id="node9" href="$class_shogi_piece.html#a9dcc3a446cb0ce64bac0a7e0b176fd72" title="ShogiPiece::getPromotion\lStatus" alt="" coords="283,361,457,402"/>
+<area shape="rect" id="node10" href="$class_shogi_piece.html#a4c98e49eb34bcc9b4a3266b564ff8674" title="ShogiPiece::getOrientation" alt="" coords="281,427,459,453"/>
+<area shape="rect" id="node11" href="$class_game_g_u_i.html#a8317fc534aac08769ccb3421433e42ea" title="GameGUI::getWindow" alt="" coords="293,477,447,504"/>
+<area shape="rect" id="node12" href="$class_game_g_u_i.html#a416ff376d409210b400985ac5077dbaa" title="GameGUI::getUpHandPositionX" alt="" coords="265,528,475,555"/>
+<area shape="rect" id="node13" href="$class_game_g_u_i.html#a8c90d3f94b9ab65ed47623f44973dcf6" title="GameGUI::getUpHandPositionY" alt="" coords="265,579,475,605"/>
+<area shape="rect" id="node14" href="$class_game_g_u_i.html#acf96ddc4ffeeba1787283576d820f058" title="GameGUI::getDownHandPositionX" alt="" coords="256,629,484,656"/>
+<area shape="rect" id="node15" href="$class_game_g_u_i.html#aa4a8930877b72d451f4573b04ec93c7d" title="GameGUI::getDownHandPositionY" alt="" coords="256,680,484,707"/>
+<area shape="rect" id="node16" href="$class_game_g_u_i.html#a59d4af86914a4e9a98b3885ca2f58c71" title="GameGUI::drawGameScreen" alt="" coords="273,731,467,757"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="endGame" name="endGame">
+<area shape="rect" id="node2" href="$classlogin_component.html#ad6ecc2ca719a6017be44e1cac09bf79a" title="loginComponent::findUser\lByClient" alt="" coords="143,5,316,47"/>
+<area shape="rect" id="node3" href="$class_user_data.html#a4b9bce1e2a7beb7c3d1ee882075ecbe5" title="UserData::incrementMatches" alt="" coords="133,71,326,98"/>
+<area shape="rect" id="node4" href="$class_user_data.html#ad1105af7a9df62026d2527df490fbdd8" title="UserData::incrementVictories" alt="" coords="132,122,327,149"/>
+<area shape="rect" id="node5" href="$classlogin_component.html#aa8b49b03eb41c2aacf6550c09c1ea6e1" title="loginComponent::logoutUser" alt="" coords="136,173,323,199"/>
+<area shape="rect" id="node6" href="$class_user_data.html#a936465d0dfcadc36b898b38d6c0c6f40" title="UserData::logout" alt="" coords="375,173,496,199"/>
+<area shape="rect" id="node7" href="$_user_data_8cpp.html#aa549219a92d9e8a91978d228e1166d29" title="operator\&gt;\&gt;" alt="" coords="544,147,629,174"/>
+<area shape="rect" id="node8" href="$_user_data_8cpp.html#a2f0885761f6dfe605d0e6949b0c42aed" title="operator\&lt;\&lt;" alt="" coords="544,198,629,225"/>
+</map>

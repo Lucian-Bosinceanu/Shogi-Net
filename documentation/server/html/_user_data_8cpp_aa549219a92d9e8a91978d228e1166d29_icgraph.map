@@ -1,0 +1,8 @@
+<map id="operator&gt;&gt;" name="operator&gt;&gt;">
+<area shape="rect" id="node2" href="$class_user_data.html#a936465d0dfcadc36b898b38d6c0c6f40" title="UserData::logout" alt="" coords="139,5,260,32"/>
+<area shape="rect" id="node3" href="$classlogin_component.html#aa8b49b03eb41c2aacf6550c09c1ea6e1" title="loginComponent::logoutUser" alt="" coords="308,5,495,32"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#a7936ce44138e479aa2f497c7707ca39d" title="serveLobby" alt="" coords="807,5,896,32"/>
+<area shape="rect" id="node6" href="$main_8cpp.html#a7bf77765d1cef8de7e11a011952a54b4" title="endGame" alt="" coords="543,31,621,57"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#af4dd127242d1a5e2f86dbe9d0db533a2" title="serveAuthentication" alt="" coords="944,5,1081,32"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#aae41621f990da470011daaad414e9dc2" title="serveGame" alt="" coords="669,31,759,57"/>
+</map>

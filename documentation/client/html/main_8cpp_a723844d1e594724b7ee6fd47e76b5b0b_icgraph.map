@@ -1,0 +1,8 @@
+<map id="registerMenu" name="registerMenu">
+<area shape="rect" id="node2" href="$class_game_g_u_i.html#a4b4406f45de31c648a9df7f9db3d2959" title="GameGUI::GameGUI" alt="" coords="545,102,693,128"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#ab4db1ec623445cdc1372a150991d5d0d" title="loginMenu" alt="" coords="151,178,232,204"/>
+<area shape="rect" id="node4" href="$main_8cpp.html#ab3002fe8e0074c9e2ecb5b835e5e819f" title="mainMenu" alt="" coords="280,127,363,154"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#ae8bee903326f60d015d802ea4933e0b5" title="lobby" alt="" coords="593,240,646,267"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="429,26,479,52"/>
+<area shape="rect" id="node6" href="$main_8cpp.html#a3a3075ec9d974800ba28323abb240caa" title="gameMenu" alt="" coords="411,127,497,154"/>
+</map>

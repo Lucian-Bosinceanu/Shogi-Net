@@ -1,0 +1,5 @@
+<map id="LobbyManager::treatClient" name="LobbyManager::treatClient">
+<area shape="rect" id="node2" href="$class_game.html#a3e7e3caa380ef7cdbc0bb12fb4da16e7" title="Game::host" alt="" coords="261,5,351,32"/>
+<area shape="rect" id="node3" href="$class_game.html#a08c8073e615b69d92250a90f7d2e5a66" title="Game::getGameStatus" alt="" coords="228,56,384,83"/>
+<area shape="rect" id="node4" href="$class_game.html#a34c999070da3877a3fe87eff10e49379" title="Game::getJoiner" alt="" coords="247,107,365,133"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="GameAPI.h" name="GameAPI.h">
+<area shape="rect" id="node2" href="$_game_logic_8h.html" title="GameLogic.h" alt="" coords="208,80,307,107"/>
+<area shape="rect" id="node10" href="$_game_g_u_i_8h.html" title="GameGUI.h" alt="" coords="343,80,435,107"/>
+<area shape="rect" id="node3" href="$_game_board_8h.html" title="GameBoard.h" alt="" coords="182,155,285,181"/>
+<area shape="rect" id="node4" href="$_shogi_piece_8h.html" title="ShogiPiece.h" alt="" coords="184,229,283,256"/>
+<area shape="rect" id="node12" href="$_menu_8h.html" title="Menu.h" alt="" coords="369,155,434,181"/>
+<area shape="rect" id="node13" href="$_button_8h.html" title="Button.h" alt="" coords="430,229,501,256"/>
+<area shape="rect" id="node14" href="$_color_scheme_8h.html" title="ColorScheme.h" alt="" coords="352,304,464,331"/>
+</map>

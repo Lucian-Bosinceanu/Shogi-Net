@@ -1,0 +1,6 @@
+<map id="GameManager::displayEndGameScreen" name="GameManager::displayEndGameScreen">
+<area shape="rect" id="node2" href="$class_game_g_u_i.html#a53916f75d279147745aa9556516bd5ce" title="GameGUI::getMenu" alt="" coords="283,5,422,32"/>
+<area shape="rect" id="node3" href="$class_menu.html#a4932da5fe92fa25c8599bde5b0a0f4e0" title="Menu::getButtonByName" alt="" coords="268,56,437,83"/>
+<area shape="rect" id="node4" href="$class_button.html#a8dd63cecffb37fe4fa37cc148142a6de" title="Button::setText" alt="" coords="297,107,409,133"/>
+<area shape="rect" id="node5" href="$class_menu.html#adb8692ec496c33fa1865643c7d04ab05" title="Menu::setButtonText" alt="" coords="281,157,425,184"/>
+</map>

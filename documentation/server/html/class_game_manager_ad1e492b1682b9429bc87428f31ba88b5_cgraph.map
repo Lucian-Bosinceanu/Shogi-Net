@@ -1,0 +1,4 @@
+<map id="GameManager::joinGameByUsername" name="GameManager::joinGameByUsername">
+<area shape="rect" id="node2" href="$classlogin_component.html#ad6ecc2ca719a6017be44e1cac09bf79a" title="loginComponent::findUser\lByClient" alt="" coords="300,5,473,47"/>
+<area shape="rect" id="node3" href="$class_user_data.html#aca97a9b11743d7a240fc223a49d9993d" title="UserData::getUsername" alt="" coords="305,71,469,98"/>
+</map>
