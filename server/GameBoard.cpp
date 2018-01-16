@@ -75,7 +75,7 @@ GameBoard::GameBoard() {
     board[2][8] = new ShogiPiece("bishop",bishopMovement,promotedBishopMovement,{6,0,8,16,24,31,4,12,20,28,35},2,8,DOWN);
     board[8][2] = new ShogiPiece("bishop",bishopMovement,promotedBishopMovement,{6,0,8,16,24,31,4,12,20,28,35},8,2,UP);
 
-    cout<<"[Game] GameBoard instance created!\n";
+    //cout<<"[Game] GameBoard instance created!\n";
 }
 
 GameBoard::~GameBoard() {
@@ -86,33 +86,33 @@ GameBoard::~GameBoard() {
         for (j=1;j<=9;j++)
              delete board[i][j];
 
-    cout<<"[Game] GameBoard instance deleted!\n";
+    //cout<<"[Game] GameBoard instance deleted!\n";
 }
 
 void GameBoard::addPieceInHand(short int player,ShogiPiece* piece) {
 
     if (player==UPPLAYER)
         {
-        cout<<"[GameBoard::addPieceInHand()] The "<<piece->getName()<<" at position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<" has been added to the hand of the HOST player.\n";
+        //cout<<"[GameBoard::addPieceInHand()] The "<<piece->getName()<<" at position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<" has been added to the hand of the HOST player.\n";
         upHandPieces.insert(pair<string,ShogiPiece*>(piece->getName(), piece));
 
         }
         else
         {
-        cout<<"The "<<piece->getName()<<" at position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<" has been added to the hand of the GUEST player.\n";
+        //cout<<"The "<<piece->getName()<<" at position "<<piece->getPosition().lin<<' '<<piece->getPosition().col<<" has been added to the hand of the GUEST player.\n";
         downHandPieces.insert(pair<string,ShogiPiece*>(piece->getName(), piece));
         }
 
 
-    cout<<"[GameBoard::addPieceInHand] The HOST hand has: ";
-    for (auto it : upHandPieces )
-            cout<<it.first<<' ';
-    cout<<'\n';
+    //cout<<"[GameBoard::addPieceInHand] The HOST hand has: ";
+    //for (auto it : upHandPieces )
+            //cout<<it.first<<' ';
+    //cout<<'\n';
 
-    cout<<"[GameBoard::addPieceInHand] The GUEST hand has: ";
-    for (auto it : downHandPieces )
-        cout<<it.first<<' ';
-    cout<<'\n';
+    //cout<<"[GameBoard::addPieceInHand] The GUEST hand has: ";
+    //for (auto it : downHandPieces )
+        //cout<<it.first<<' ';
+    //cout<<'\n';
 }
 
 ShogiPiece* GameBoard::removePieceFromHand(short int player, string pieceName) {
@@ -176,7 +176,7 @@ void GameBoard::movePiece(Position from, Position to) {
 
  unordered_set<ShogiPiece*> GameBoard::getPiecesOfPlayer(short int orientation) {
 
-    cout<<"[GameBoard::getPiecesOfPlayer] I am trying to find all pieces of the player with orientation "<<orientation<<'\n';
+    //cout<<"[GameBoard::getPiecesOfPlayer] I am trying to find all pieces of the player with orientation "<<orientation<<'\n';
     unordered_set<ShogiPiece*> result;
     int i,j;
     for (i=1;i<=9;i++)
@@ -185,17 +185,17 @@ void GameBoard::movePiece(Position from, Position to) {
                 if (board[i][j]->getOrientation() == orientation )
                     result.insert(board[i][j]);
 
-    cout<<"[GameBoard::getPiecesOfPlayer] I am done.\n";
+    //cout<<"[GameBoard::getPiecesOfPlayer] I am done.\n";
     return result;
  }
 
  unordered_set<Position*> GameBoard::getAllPossibleMovementLocationsForPieceFrom(Position piecePosition) {
 
-    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am here.\n";
+    ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am here.\n";
     unordered_set<Position*> result;
     ShogiPiece* piece = board[piecePosition.lin][piecePosition.col];
 
-    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for piece from "<<piecePosition.lin<<' '<<piecePosition.col<<", which is a "
+    ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for piece from "<<piecePosition.lin<<' '<<piecePosition.col<<", which is a "
     //piece->getName()<<" oriented "<<piece->getOrientation()<<'\n';
 
     Position possiblePosition;
@@ -203,9 +203,9 @@ void GameBoard::movePiece(Position from, Position to) {
     short int pieceOrientation = piece->getOrientation();
     bool promotionStatus = piece->getPromotionStatus();
 
-    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am loading movement rules. \n";
+    ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am loading movement rules. \n";
     vector<Position> movementRules = piece->getMovementRules(promotionStatus);
-    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Movement rules loaded. \n";
+    ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Movement rules loaded. \n";
 
     int i,dir;
     int flagLowerBound = 0, flagUpperBound = 0;
@@ -215,7 +215,7 @@ void GameBoard::movePiece(Position from, Position to) {
 
     if (!piece->isRangedPiece() || (piece->getName() == "lance" && piece->getPromotionStatus() == PROMOTED))
         {
-            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a non-ranged piece or for a promoted lance. \n";
+            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a non-ranged piece or for a promoted lance. \n";
 
             for (i = 0; i < movementRules.size();i++)
                 {
@@ -226,23 +226,23 @@ void GameBoard::movePiece(Position from, Position to) {
                            ( (getPieceAtPosition(possiblePosition) != NULL) && (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) )
                            )
                             {
-                            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+                            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
                             elementToInsert = new Position{possiblePosition.lin,possiblePosition.col};
                             result.insert(elementToInsert);
                             }
                 }
 
-            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
+            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
             return result;
         }
 
-    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a rook or a bishop. \n";
+    ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am calculating for a rook or a bishop. \n";
 
     vector<int> directions = piece->getDirectionFlags();
 
     if ( (piece->getName() == "rook" || piece->getName() == "bishop") && piece->getPromotionStatus() == PROMOTED )
         {
-            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Which is also promoted. \n";
+            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] Which is also promoted. \n";
             for (i = 0; i<= 4;i++)
                     {
                         possiblePosition.lin = piecePosition.lin + pieceOrientation*movementRules[i].lin;
@@ -252,7 +252,7 @@ void GameBoard::movePiece(Position from, Position to) {
                                ( (getPieceAtPosition(possiblePosition) != NULL) && (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation) )
                                )
                                 {
-                            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+                            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
                             elementToInsert = new Position{possiblePosition.lin,possiblePosition.col};
                             result.insert(elementToInsert);
                             }
@@ -277,15 +277,15 @@ void GameBoard::movePiece(Position from, Position to) {
                     {
                     if (getPieceAtPosition(possiblePosition) == NULL)
                         {
-                            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+                            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
                             elementToInsert = new Position{possiblePosition.lin,possiblePosition.col};
                             result.insert(elementToInsert);
                         }
                         else
                         {if (getPieceAtPosition(possiblePosition)->getOrientation() != pieceOrientation)
                             {
-                            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
-                            //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] at this position there is a "<<getPieceAtPosition(possiblePosition)->getName()<<" with orientation "<<getPieceAtPosition(possiblePosition)->getOrientation()<<'\n';
+                            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am inserting this position to results: "<<possiblePosition.lin<<' '<<possiblePosition.col<<'\n';
+                            ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] at this position there is a "<<getPieceAtPosition(possiblePosition)->getName()<<" with orientation "<<getPieceAtPosition(possiblePosition)->getOrientation()<<'\n';
                             elementToInsert = new Position{possiblePosition.lin,possiblePosition.col};
                             result.insert(elementToInsert);
                             break;
@@ -296,6 +296,6 @@ void GameBoard::movePiece(Position from, Position to) {
                     }
             }
 
-    //cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
+    ////cout<<"[GameBoard::getAllPossibleMovementLocationsForPieceFrom] I am done. \n";
     return result;
  }

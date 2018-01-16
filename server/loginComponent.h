@@ -19,7 +19,7 @@ class loginComponent {
 
     bool isUserLoggedIn(UserData* user)
         {
-        cout<<"User login status checked\n";
+        //cout<<"User login status checked\n";
         return user->getLoginStatus();
         };
 

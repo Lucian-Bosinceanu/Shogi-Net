@@ -43,7 +43,7 @@ while (1) {
         {
             Game* game = new Game();
             game->host(clientDescriptor);
-            cout<<clientDescriptor<<" is hosting a game!"<<'\n';
+            //cout<<clientDescriptor<<" is hosting a game!"<<'\n';
             gameManager->addGame(game);
 
             while (1) {
@@ -107,7 +107,7 @@ void LobbyManager::terminateGame(int client1,int client2){
 
 Game* gameToTerminate = gameManager->findGameByClientDescriptors(client1,client2);
 gameManager->removeGame(gameToTerminate);
-cout<<"[LobbyManager::terminateGame()] The game between "<<client1<<" and "<<client2<<" has been terminated!\n";
+//cout<<"[LobbyManager::terminateGame()] The game between "<<client1<<" and "<<client2<<" has been terminated!\n";
 }
 
 void LobbyManager::sendGameList(int clientDescriptor){
@@ -130,10 +130,10 @@ char* responseToClient = new char[response.size()+1];
 copy(response.begin(),response.end(),responseToClient);
 responseToClient[response.size()+1]=0;
 
-cout<<responseToClient<<'\n';
-cout<<response.size()<<'\n';
+//cout<<responseToClient<<'\n';
+//cout<<response.size()<<'\n';
 if (write (clientDescriptor, responseToClient, response.size()) <= 0)
     perror ("[Thread]Eroare la write() catre client.\n");
-cout<<"Game list sent\n";
+//cout<<"Game list sent\n";
 delete responseToClient;
 }

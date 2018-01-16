@@ -10,7 +10,7 @@ ofstream fout("userDatabase1.txt");
 
 loginComponent::loginComponent(){
 
-cout<<"New loginComponent instance!\n";
+//cout<<"New loginComponent instance!\n";
 
 int i, userCount;
 UserData* user;
@@ -30,14 +30,14 @@ fin.close();
 
 void loginComponent::updateDatabase(){
 
-cout<<"Updating User Database\n";
+//cout<<"Updating User Database\n";
 fout<<userDatabase.size()<<'\n';
-cout<<userDatabase.size()<<'\n';
+//cout<<userDatabase.size()<<'\n';
 
 for (auto it : userDatabase)
     {
         fout<<*it<<'\n';
-        cout<<*it<<'\n';
+        //cout<<*it<<'\n';
     }
 }
 
@@ -83,7 +83,7 @@ UserData* loginComponent::findUser(string username){
 for (auto it : userDatabase)
     if ( username.compare(it->getUsername()) == 0 )
         {
-        cout<<"User has been found!\n";
+        //cout<<"User has been found!\n";
         return it;
         }
 return NULL;
@@ -91,14 +91,14 @@ return NULL;
 
 UserData* loginComponent::findUserByClient(int clientDescriptor){
 
-cout<<"I'm trying to find the client with client descriptor = "<<clientDescriptor<<'\n';
-cout<<"Number of clients = "<<userDatabase.size()<<'\n';
+//cout<<"I'm trying to find the client with client descriptor = "<<clientDescriptor<<'\n';
+//cout<<"Number of clients = "<<userDatabase.size()<<'\n';
 for (auto it : userDatabase)
     {
-    cout<<"Client "<<it->getClientDescriptor()<<" has been found."<<'\n';
+    //cout<<"Client "<<it->getClientDescriptor()<<" has been found."<<'\n';
     if ( clientDescriptor == it->getClientDescriptor() )
         {
-        cout<<"User has been found by Client Descriptor!\n";
+        //cout<<"User has been found by Client Descriptor!\n";
         return it;
         }
     }
@@ -113,7 +113,7 @@ for (auto it : userDatabase)
     {
     if ( (username.compare(it->getUsername()) == 0) && ( password.compare(it->getPassword()) == 0) )
         {
-        cout<<"User exists in the database\n";
+        //cout<<"User exists in the database\n";
         return true;
         }
     }
@@ -140,7 +140,7 @@ if (command.find(loginCommand) != std::string::npos){
             if (!isUserLoggedIn(findUser(username)))
                 {
                 findUser(username)->login(clientDescriptor);
-                cout<<"When I login current user, the received CD is "<<clientDescriptor<<" and his UserData CD is "<<findUser(username)->getClientDescriptor()<<'\n';
+                //cout<<"When I login current user, the received CD is "<<clientDescriptor<<" and his UserData CD is "<<findUser(username)->getClientDescriptor()<<'\n';
                 return "ok";
                 }
                 else
@@ -158,7 +158,7 @@ if (command.find(registerCommand) != std::string::npos) {
     password = passwords.substr(passwords.find(" ")+1);
     confirmPassword = passwords.substr(passwords.find(" ")+1);
 
-    cout<<username<<'|'<<password<<' '<<confirmPassword<<'\n';
+    //cout<<username<<'|'<<password<<' '<<confirmPassword<<'\n';
 
     if ( areValidCredentials(username,password,confirmPassword) )
         {
@@ -198,8 +198,8 @@ while (1)
 
     command[commandLength] = 0;
     response = interpret(string(command),clientDescriptor);
-    cout<<"[Server: Authentication] Proccessing command "<<command<<'\n';
-    cout<<response<<'\n';
+    //<<"[Server: Authentication] Proccessing command "<<command<<'\n';
+    //cout<<response<<'\n';
     //cout<<"Am ajuns aici";
     if (!response.compare("back"))
         {

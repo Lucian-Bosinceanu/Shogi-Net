@@ -27,7 +27,7 @@ vector<string> results;
 for ( auto it : gameInstances)
     if (it->getGameStatus() == WAITING)
         {
-        cout<<"Game found!\n";
+        //cout<<"Game found!\n";
         results.push_back(getHostInfo(it));
         }
 
@@ -38,7 +38,7 @@ bool GameManager::joinGameByUsername(string username,int joinerDescriptor){
 
 UserData* user;
 
-cout<<joinerDescriptor<<" wants to join the game of "<<username<<'\n';
+//cout<<joinerDescriptor<<" wants to join the game of "<<username<<'\n';
 
 for ( auto it : gameInstances )
     {
@@ -47,7 +47,7 @@ for ( auto it : gameInstances )
         {
             if (it->getGameStatus() == WAITING)
                 {
-                cout<<"It was possible for "<<joinerDescriptor<<" to join the game of "<<username<<'\n';
+                //cout<<"It was possible for "<<joinerDescriptor<<" to join the game of "<<username<<'\n';
                 it->join(joinerDescriptor);
                 return true;
                 }

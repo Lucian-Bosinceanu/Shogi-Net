@@ -13,7 +13,7 @@ ShogiPiece::ShogiPiece(string pieceName, vector<Position> movement, vector<Posit
     this->orientation = orientation;
     this->promotionStatus = UNPROMOTED;
 
-    cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
+    //cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
 }
 
 ShogiPiece::ShogiPiece(string pieceName, vector<Position> movement, short int lin, short int col, short int orientation) {
@@ -25,7 +25,7 @@ ShogiPiece::ShogiPiece(string pieceName, vector<Position> movement, short int li
     this->orientation = orientation;
     this->promotionStatus = UNPROMOTED;
 
-    cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
+    //cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
 }
 
 ShogiPiece::ShogiPiece(string pieceName, vector<Position> movement, vector<Position> promotedMovement, Position place, short int orientation) {
@@ -37,7 +37,7 @@ ShogiPiece::ShogiPiece(string pieceName, vector<Position> movement, vector<Posit
     this->orientation = orientation;
     this->promotionStatus = UNPROMOTED;
 
-    cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
+    //cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
 }
 
 ShogiPiece::ShogiPiece(string pieceName, vector<Position> movement, vector<Position> promotedMovement, vector<int> directionFlags, short int lin, short int col, short int orientation) {
@@ -51,16 +51,16 @@ ShogiPiece::ShogiPiece(string pieceName, vector<Position> movement, vector<Posit
     this->promotionStatus = UNPROMOTED;
     this->directionFlags = directionFlags;
 
-    cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
+    //cout<<"I have created a "<<pieceName<<" at position "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<'\n';
 }
 
 void ShogiPiece::setCaptured() {
 
-    cout<<"[ShogiPiece::setCaptured()] The "<<pieceName<< " from "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<" has been captured.\n";
+    //cout<<"[ShogiPiece::setCaptured()] The "<<pieceName<< " from "<<position.lin<<' '<<position.col<<" with orientation "<<orientation<<" has been captured.\n";
     this->position = CAPTURED;
     this->promotionStatus = UNPROMOTED;
     this->orientation = -1*orientation;
-    cout<<"[ShogiPiece::setCaptured()] It is now at position "<<position.lin<<' '<<position.col<<", in the hand of the player: "<<orientation<<'\n';
+    //cout<<"[ShogiPiece::setCaptured()] It is now at position "<<position.lin<<' '<<position.col<<", in the hand of the player: "<<orientation<<'\n';
 }
 
 
@@ -77,7 +77,7 @@ void ShogiPiece::moveTo(Position place) {
 
 Position ShogiPiece::getPosition() {
 
-    cout<<"[ShogiPiece::getPosition()] Position "<<position.lin<<' '<<position.col<<" sent.\n";
+    //cout<<"[ShogiPiece::getPosition()] Position "<<position.lin<<' '<<position.col<<" sent.\n";
     return position;
 }
 

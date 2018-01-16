@@ -32,12 +32,12 @@ int GameServer::serve(){
     opponent = client2;
     short int orientation=UPPLAYER;
 
-    cout<<"[GameServer::serve()] I have started to serve the game between "<<client1<<" and "<<client2<<'\n';
+    //cout<<"[GameServer::serve()] I have started to serve the game between "<<client1<<" and "<<client2<<'\n';
 
     while (gameStatus == PROGRESS) {
 
-        cout<<"-------------------------------------------------------------------------------\n";
-        cout<<"[GameServer::serve()] I am waiting for "<<movingPlayer<<" to make a move.\n";
+        //cout<<"-------------------------------------------------------------------------------\n";
+        //cout<<"[GameServer::serve()] I am waiting for "<<movingPlayer<<" to make a move.\n";
         command = getMoveFromCurrentPlayer(movingPlayer);
         result = interpret(command,orientation);
         sendResponseToOpponent(opponent,result);
@@ -45,7 +45,7 @@ int GameServer::serve(){
         orientation = -1*orientation;
     }
 
-    cout<<"[GameServer::serve()] The game is over. Client "<<winner<<" has won the game!\n";
+    //cout<<"[GameServer::serve()] The game is over. Client "<<winner<<" has won the game!\n";
     //sendResponseToOpponent(winner ^ client1 ^ client2,"lose");
     sendLastResponse();
     return this->winner;
@@ -56,25 +56,25 @@ void GameServer::sendLastResponse(){
 
     int lastMessageReceiver = lastSender ^ client1 ^ client2;
 
-    cout<<"[GameServer::sendLastResponse()] I am sending the last response to client: "<<lastMessageReceiver<<'\n';
+    //cout<<"[GameServer::sendLastResponse()] I am sending the last response to client: "<<lastMessageReceiver<<'\n';
 
     if (isWinByCheckmate)
         {
-        cout<<"[GameServer::sendLastResponse()] The game is over due to checkmate. I am sending the winner a win command.\n";
+        //cout<<"[GameServer::sendLastResponse()] The game is over due to checkmate. I am sending the winner a win command.\n";
         sendResponseToOpponent(winner,string("win"));
         return;
         }
 
     if (winCommandSent)
         {
-        cout<<"[GameServer::sendLastResponse()] Client "<<lastSender<<" has received a win command. Thus, I am sending a lose command to client "<<lastMessageReceiver<<'\n';
+        //cout<<"[GameServer::sendLastResponse()] Client "<<lastSender<<" has received a win command. Thus, I am sending a lose command to client "<<lastMessageReceiver<<'\n';
         sendResponseToOpponent(lastMessageReceiver,string("lose"));
         return;
         }
 
     if (loseCommandSent)
         {
-        cout<<"[GameServer::sendLastResponse()] Client "<<lastSender<<" has received a lose command. Thus, I am sending a win command to client "<<lastMessageReceiver<<'\n';
+        //cout<<"[GameServer::sendLastResponse()] Client "<<lastSender<<" has received a lose command. Thus, I am sending a win command to client "<<lastMessageReceiver<<'\n';
         sendResponseToOpponent(lastMessageReceiver,string("win"));
         }
 }
@@ -83,7 +83,7 @@ string GameServer::interpret(string command, short int orientation) {
 
     CommandData* commandData = extractDataFromCommand(command, orientation);
 
-    cout<<"[GameServer::interpret()] I am interpreting command: "<<command<<'\n';
+    //cout<<"[GameServer::interpret()] I am interpreting command: "<<command<<'\n';
 
     if (command == "quit")
         {
@@ -118,7 +118,7 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
     string piecePosition;
     CommandData* result = new CommandData;
 
-    cout<<"[GameServer::extractDataFromCommand] I am extracting data from command "<<command<<'\n';
+    //cout<<"[GameServer::extractDataFromCommand] I am extracting data from command "<<command<<'\n';
 
     result->orientation = orientation;
     result->isCheck = false;
@@ -143,15 +143,15 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
             pieceName = pieceNameAndPosition.substr(0,pieceNameAndPosition.find(" "));
             piecePosition = pieceNameAndPosition.substr(pieceName.length()+1);
 
-            cout<<"[GameServer::extractDataFromCommand] pieceNameAndPosition:"<<pieceNameAndPosition<<'\n';
-            cout<<"[GameServer::extractDataFromCommand] pieceName:"<<pieceName<<'\n';
-            cout<<"[GameServer::extractDataFromCommand] piecePosition:"<<piecePosition<<'\n';
+            //cout<<"[GameServer::extractDataFromCommand] pieceNameAndPosition:"<<pieceNameAndPosition<<'\n';
+            //cout<<"[GameServer::extractDataFromCommand] pieceName:"<<pieceName<<'\n';
+            //cout<<"[GameServer::extractDataFromCommand] piecePosition:"<<piecePosition<<'\n';
 
             result->to.lin = piecePosition[0] - '0';
             result->to.col = piecePosition[2] - '0';
             result->droppedPieceName = pieceName;
 
-            cout<<"[GameServer::extractDataFromCommand] Result position= "<<result->to.lin<<' '<<result->to.col<<'\n';
+            //cout<<"[GameServer::extractDataFromCommand] Result position= "<<result->to.lin<<' '<<result->to.col<<'\n';
 
         }
 
@@ -166,10 +166,10 @@ CommandData* GameServer::extractDataFromCommand(string command, short int orient
 
 void GameServer::solveCommand(CommandData* command) {
 
-    cout<<"[GameServer::solveCommand] I am solving the command above.\n";
+    //cout<<"[GameServer::solveCommand] I am solving the command above.\n";
     if (command->moveType == "move")
         {
-            cout<<"[GameServer::solveCommand] I am solving a move command.\n";
+            //cout<<"[GameServer::solveCommand] I am solving a move command.\n";
             gameLogic->movePiece(command->from,command->to,command->orientation);
 
             if (command->isPromotion)
@@ -178,10 +178,10 @@ void GameServer::solveCommand(CommandData* command) {
 
     if (command->moveType == "drop")
         {
-            cout<<"[GameServer::solveCommand] I am solving a drop command.\n";
+            //cout<<"[GameServer::solveCommand] I am solving a drop command.\n";
             if (gameLogic->dropPiece(command->droppedPieceName,command->to,command->orientation) == INVALID_DROP)
                 {
-                cout<<"[GameServer::solveCommand] The game is over due to illegal pawn drop.\n";
+                //cout<<"[GameServer::solveCommand] The game is over due to illegal pawn drop.\n";
                 command->isWin = true;
                 gameStatus = DONE;
                 setWinner(-1*command->orientation);
@@ -190,10 +190,10 @@ void GameServer::solveCommand(CommandData* command) {
 
         }
 
-    cout<<"[GameServer::solveCommand] I am checking if this move has cheked the opposing king.\n";
+    //cout<<"[GameServer::solveCommand] I am checking if this move has cheked the opposing king.\n";
     if (gameLogic->isCheckFromPiece(command->to))
                 {
-                cout<<"[GameServer::solveCommand] The king is checked. I am verifying if the king is checkmated.\n";
+                //cout<<"[GameServer::solveCommand] The king is checked. I am verifying if the king is checkmated.\n";
                 command->isCheck = true;
                 if (gameLogic->isKingCheckMated(-1*command->orientation))
                     {
@@ -204,18 +204,18 @@ void GameServer::solveCommand(CommandData* command) {
                     }
                 }
 
-    cout<<"[GameServer::solveCommand] I am done solving this move.\n";
+    //cout<<"[GameServer::solveCommand] I am done solving this move.\n";
 }
 
 void GameServer::mirrorCommandPositions(CommandData* command) {
 
-    cout<<"[GameServer::mirrorCommandPositions] I am mirroring position "<<command->from.lin<<' '<<command->from.col<<" -> ";
+    //cout<<"[GameServer::mirrorCommandPositions] I am mirroring position "<<command->from.lin<<' '<<command->from.col<<" -> ";
     command->from = gameLogic->getMirroredPosition(command->from);
-    cout<<command->from.lin<<' '<<command->from.col<<'\n';
+    //cout<<command->from.lin<<' '<<command->from.col<<'\n';
 
-    cout<<"[GameServer::mirrorCommandPositions] I am mirroring position "<<command->to.lin<<' '<<command->to.col<<" -> ";
+    //cout<<"[GameServer::mirrorCommandPositions] I am mirroring position "<<command->to.lin<<' '<<command->to.col<<" -> ";
     command->to = gameLogic->getMirroredPosition(command->to);
-    cout<<command->to.lin<<' '<<command->to.col<<'\n';
+    //cout<<command->to.lin<<' '<<command->to.col<<'\n';
 }
 
 string GameServer::getCommandFromCommandData(CommandData* command) {
@@ -225,7 +225,7 @@ string GameServer::getCommandFromCommandData(CommandData* command) {
     result.append(command->moveType);
     result.append(" ");
 
-    cout<<"[GameServer::getCommandFromCommandData()] I am trying to obtain a string from the command above\n.";
+    //cout<<"[GameServer::getCommandFromCommandData()] I am trying to obtain a string from the command above\n.";
 
     if (command->moveType == "move")
         {
@@ -283,7 +283,7 @@ string GameServer::getCommandFromCommandData(CommandData* command) {
         result.append("lose ");
         loseCommandSent = true;
         }
-    cout<<"[GameServer::getCommandFromCommandData()] My output is: "<<result<<'\n';
+    //cout<<"[GameServer::getCommandFromCommandData()] My output is: "<<result<<'\n';
     return result;
 }
 
@@ -303,7 +303,7 @@ string GameServer::getMoveFromCurrentPlayer(int clientDescriptor) {
     command[commandLength] = 0;
     commandString = string(command);
 
-    cout<<"[GameServer::getMoveFromCurrentPlayer()] I have received move: "<<command<<" from client "<<clientDescriptor<<" with length "<<commandString.size()<<'\n';
+    //cout<<"[GameServer::getMoveFromCurrentPlayer()] I have received move: "<<command<<" from client "<<clientDescriptor<<" with length "<<commandString.size()<<'\n';
 
     return commandString;
 }
@@ -314,7 +314,7 @@ char* responseToClient = new char[response.size()+1];
 copy(response.begin(),response.end(),responseToClient);
 responseToClient[response.size()]=0;
 
-cout<<"[GameServer::sendResponseToOpponent()] I am sending this move "<<responseToClient<<" to client "<<clientDescriptor<<'\n';
+//cout<<"[GameServer::sendResponseToOpponent()] I am sending this move "<<responseToClient<<" to client "<<clientDescriptor<<'\n';
 
 if (write (clientDescriptor, responseToClient, response.size()) <= 0)
     {

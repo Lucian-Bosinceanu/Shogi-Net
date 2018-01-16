@@ -13,7 +13,7 @@ class LobbyManager {
     GameManager* gameManager;
 
     public:
-    LobbyManager(loginComponent* loginComp) {gameManager = new GameManager(loginComp); cout<<"New LobbyManager instance!\n";};
+    LobbyManager(loginComponent* loginComp) {gameManager = new GameManager(loginComp); /*cout<<"New LobbyManager instance!\n";*/};
     int treatClient(int clientDescriptor);
     void sendGameList(int clientDescriptor);
     void terminateGame(int client1,int client2);
