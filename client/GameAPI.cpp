@@ -126,8 +126,9 @@ string GameManager::getMoveFromUser() {
     unordered_set<Position*> highlightedPositions;
     vector<string> handPieces = gameLogic->getUpHandPieces();
 
-    drawGameScreen();
+    gameGUI->clearEventQueue();
 
+    drawGameScreen();
     cout<<"[GameManager::getMoveFromUser()] Am ajuns aici.\n";
 
     while (window->isOpen())
@@ -142,7 +143,7 @@ string GameManager::getMoveFromUser() {
                                 return "quit";
                             }
 
-                if (event.mouseButton.button == sf::Mouse::Right)
+                if (event.mouseButton.button == sf::Mouse::Right && (gameGUI->getMenu("game")->getButtonByName("status")->getText() != "Wait"))
                     {
 
                         //cout<<"[GameManager::getMoveFromUser()] First click detected.\n";
@@ -239,7 +240,7 @@ string GameManager::getMoveFromUser() {
                         }
                     }
 
-                if (event.mouseButton.button == sf::Mouse::Left)
+                if (event.mouseButton.button == sf::Mouse::Left && (gameGUI->getMenu("game")->getButtonByName("status")->getText() != "Wait"))
                     {
 
                         if(gameGUI->getMenu("game")->isButtonPressed("forfeit",event.mouseButton.x,event.mouseButton.y))

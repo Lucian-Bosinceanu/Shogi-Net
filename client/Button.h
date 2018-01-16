@@ -19,7 +19,10 @@ class Button {
     sf::Color buttonOutlineColor;
     sf::Color textButtonColor;
 
+    sf::Texture buttonT;
+
     void centerTextInButtonBox();
+    void findOptimalTextSize();
 
     public:
     Button(string name, int x,int y,int width, int height, string text);

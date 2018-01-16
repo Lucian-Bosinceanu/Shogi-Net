@@ -15,13 +15,14 @@ Button::Button(string name,int x,int y,int width, int height, string text) {
     textSf.setFont(textFont);
     textSf.setString(text);
 
-    textFont.loadFromFile("rsc/fonts/arial.ttf");
+    textFont.loadFromFile("rsc/fonts/merge_light.otf");
+    buttonT.loadFromFile("rsc/textures/button.jpg");
 
     textSf.setFillColor(textButtonColor);
 
-     buttonColor = sf::Color(255,255,255);
-     buttonOutlineColor = sf::Color(0,0,0);
-     textButtonColor = sf::Color(0,0,0);
+     buttonColor = sf::Color(248,251,248);
+     buttonOutlineColor = sf::Color(5,0,8);
+     textButtonColor = sf::Color(5,0,8);
 
 }
 
@@ -37,9 +38,11 @@ void Button::draw(sf::RenderWindow* windowWhereToDraw){
     sf::RectangleShape button;
     button.setPosition(x,y);
     button.setSize(sf::Vector2f(width,height));
-    button.setFillColor(buttonColor);
-    button.setOutlineThickness(5);
+    //button.setFillColor(buttonColor);
+    button.setOutlineThickness(3);
     button.setOutlineColor(buttonOutlineColor);
+    button.setTexture(&buttonT);
+    textSf.setColor(textButtonColor);
 
     centerTextInButtonBox();
 
@@ -51,7 +54,8 @@ void Button::centerTextInButtonBox() {
 
     int textWidth, textHeight;
     int textX, textY;
-    textSf.setCharacterSize(height/3);
+
+    findOptimalTextSize();
 
     textWidth = textSf.getGlobalBounds().width;
     textHeight = textSf.getGlobalBounds().height;
@@ -78,4 +82,13 @@ string Button::getName() {
 void Button::setText(string text) {
 
     textSf.setString(text);
+}
+
+void Button::findOptimalTextSize()  {
+
+    textSf.setCharacterSize(height/3);
+    int characterSize = textSf.getCharacterSize();
+
+    while (textSf.getGlobalBounds().width > width-(width*0.1))
+        textSf.setCharacterSize(--characterSize);
 }

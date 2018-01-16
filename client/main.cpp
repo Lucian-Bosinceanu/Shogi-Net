@@ -86,11 +86,16 @@ server.sin_addr.s_addr = inet_addr(argv[1]);
 server.sin_port = htons (port);
 /* ne conectam la server */
 
+isConnectionClosed = true;
+
 }
 
 int connectToServer(){
 
 cout<<"Connected to server.\n";
+
+if (!isConnectionClosed)
+    return 1;
 
 if ((sd = socket (AF_INET, SOCK_STREAM, 0)) == -1)
 {
@@ -162,12 +167,9 @@ void mainMenu(){
 
 string command;
 
-
-cout<<"[client: Main Menu]Enter command: ";
-
-gameGUI->getWindow()->clear(sf::Color::White);
 gameGUI->drawMenu("main");
-gameGUI->getWindow()->display();
+
+gameGUI->clearEventQueue();
 
 while (gameGUI->getWindow()->isOpen())
     {
@@ -186,8 +188,8 @@ while (gameGUI->getWindow()->isOpen())
                     {
                         if (gameGUI->getMenu("main")->isButtonPressed("play",event.mouseButton.x,event.mouseButton.y))
                             {
-                            connectToServer();
-                            cout<<"\n";
+                            //connectToServer();
+                            //cout<<"\n";
                             loginMenu();
                             return;
                             }
@@ -201,10 +203,8 @@ while (gameGUI->getWindow()->isOpen())
                     }
                 }
 
-        gameGUI->getWindow()->clear(sf::Color::White);
         gameGUI->drawMenu("main");
         gameGUI->drawTitle();
-        gameGUI->getWindow()->display();
         }
 
     }
@@ -217,11 +217,16 @@ string commandString;
 string response;
 string username, password;
 
-cout<<"Am ajuns in login\n";
+//cout<<"Am ajuns in login\n";
+connectToServer();
 
-gameGUI->getWindow()->clear(sf::Color::White);
+gameGUI->clearEventQueue();
+
+gameGUI->getMenu("login")->getButtonByName("username")->setText("Enter username");
+gameGUI->getMenu("login")->getButtonByName("password")->setText("Enter password");
+gameGUI->getMenu("login")->getButtonByName("warning")->setText("Please provide your credentials.");
+
 gameGUI->drawMenu("login");
-gameGUI->drawTitle();
 gameGUI->getWindow()->display();
 
 cout<<"[client: login]Enter command: ";
@@ -289,9 +294,9 @@ while (gameGUI->getWindow()->isOpen())
                     }
                 }
 
-        gameGUI->getWindow()->clear(sf::Color::White);
         gameGUI->drawMenu("login");
         gameGUI->getWindow()->display();
+
         }
 
     }
@@ -304,8 +309,13 @@ string commandString;
 string response;
 string username, password, confirmPassword;
 
+gameGUI->clearEventQueue();
 
-gameGUI->getWindow()->clear(sf::Color::White);
+gameGUI->getMenu("register")->getButtonByName("username")->setText("Enter username");
+gameGUI->getMenu("register")->getButtonByName("password")->setText("Enter password");
+gameGUI->getMenu("register")->getButtonByName("confirmPass")->setText("Re-enter password");
+gameGUI->getMenu("register")->getButtonByName("warning")->setText("Please provide your credentials.");
+
 gameGUI->drawMenu("register");
 gameGUI->getWindow()->display();
 
@@ -369,7 +379,6 @@ while (gameGUI->getWindow()->isOpen())
                     }
                 }
 
-        gameGUI->getWindow()->clear(sf::Color::White);
         gameGUI->drawMenu("register");
         gameGUI->getWindow()->display();
         }
@@ -387,13 +396,18 @@ string refreshCommand = string("refresh");
 string backCommand = string("exit");
 string playerName = "?????";
 
-gameGUI->getWindow()->clear(sf::Color::White);
-gameGUI->drawMenu("lobby");
-gameGUI->getWindow()->display();
+gameGUI->clearEventQueue();
+
+//gameGUI->getMenu("lobby")->getButtonByName("warning")->setText("");
+gameGUI->getMenu("lobby")->getButtonByName("playerSelect")->setText("Type here the player name you wish to play against, then click JOIN.");
+gameGUI->getMenu("lobby")->getButtonByName("gameList")->setText("");
 
 sendCommandToServer(sd,refreshCommand);
 response = getResponseFromServer(sd);
 gameGUI->getMenu("lobby")->setButtonText("gameList",response);
+
+gameGUI->drawMenu("lobby");
+gameGUI->getWindow()->display();
 
 while (gameGUI->getWindow()->isOpen())
     {
@@ -411,6 +425,10 @@ while (gameGUI->getWindow()->isOpen())
 
                 if (gameGUI->getMenu("lobby")->isButtonPressed("host",event.mouseButton.x,event.mouseButton.y))
                     {
+                        gameGUI->getMenu("lobby")->getButtonByName("playerSelect")->setText("You are hosting a game. Please wait for someone to join.");
+                        gameGUI->drawMenu("lobby");
+                        gameGUI->getWindow()->display();
+
                         sendCommandToServer(sd,hostCommand);
                         response = getResponseFromServer(sd);
 
@@ -430,7 +448,7 @@ while (gameGUI->getWindow()->isOpen())
                     }
 
                 if(gameGUI->getMenu("lobby")->isButtonPressed("playerSelect",event.mouseButton.x,event.mouseButton.y))
-                    playerName = gameGUI->getInputFromClient(gameGUI->getMenu("lobby"),gameGUI->getMenu("lobby")->getButtonByName("playerSelect"),VISIBLE);
+                        playerName = gameGUI->getInputFromClient(gameGUI->getMenu("lobby"),gameGUI->getMenu("lobby")->getButtonByName("playerSelect"),VISIBLE);
 
                 if (gameGUI->getMenu("lobby")->isButtonPressed("join",event.mouseButton.x,event.mouseButton.y))
                     {
@@ -445,7 +463,7 @@ while (gameGUI->getWindow()->isOpen())
                              return 1;
                             }
                             else
-                            gameGUI->getMenu("lobby")->getButtonByName("warning")->setText(response);
+                            gameGUI->getMenu("lobby")->getButtonByName("playerSelect")->setText(response);
 
                     }
 
@@ -465,7 +483,6 @@ while (gameGUI->getWindow()->isOpen())
 
                 }
 
-        gameGUI->getWindow()->clear(sf::Color::White);
         gameGUI->drawMenu("lobby");
         gameGUI->getWindow()->display();
 
@@ -481,9 +498,16 @@ int gameMenu(bool status){
 
     //gameGUI.setGameBoard(gameManager->getGameBoard());
     cout<<"[main: gameMenu] I am starting the game.\n";
+
+    gameGUI->getMenu("game")->getButtonByName("forfeit")->setText("FORFEIT");
+    gameGUI->getMenu("game")->getButtonByName("forfeit")->setText("FORFEIT");
+    gameGUI->getMenu("game")->getButtonByName("status")->setText("");
+
     result = gameManager->playGame(status);
     gameManager->displayEndGameScreen(result);
 
+
+    gameGUI->clearEventQueue();
 
     while (gameGUI->getWindow()->isOpen())
     {

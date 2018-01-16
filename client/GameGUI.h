@@ -12,7 +12,6 @@ class GameGUI {
     private:
 
     sf::RenderWindow window;
-    sf::Font textFont;
 
     //GameBoard* gameBoard;
     vector<Menu*> gameMenus;
@@ -21,8 +20,8 @@ class GameGUI {
     sf::Sprite board;
     sf::Sprite upHand;
     sf::Sprite downHand;
-    sf::Sprite teMarker;
     sf::Sprite title;
+    sf::Sprite background;
 
 
     sf::Texture unpromoted;
@@ -45,6 +44,7 @@ class GameGUI {
     sf::Texture boardT;
     sf::Texture handT;
     sf::Texture teMarkerT;
+    sf::Texture backgroundT;
 
     sf::Texture titleT;
 
@@ -63,6 +63,8 @@ class GameGUI {
     Menu* getMenu(string menuName);
     string getInputFromClient(Menu* menu,Button* field,int type);
 
+    void clearEventQueue();
+
     void drawBoard();
     void drawTitle();
     void drawGameScreen();
@@ -73,14 +75,14 @@ class GameGUI {
     int getPieceOffsetX() {return pieceOffsetX;};
     int getPieceOffsetY() {return pieceOffsetY;};
 
-    int getBoardPositionX() {return board.getPosition().x + 10;};
-    int getBoardPositionY() {return board.getPosition().y + 10;};
+    int getBoardPositionX() {return 458;/*board.getPosition().x + 10;*/};
+    int getBoardPositionY() {return 50;/*board.getPosition().y + 10;*/};
 
-    int getUpHandPositionX() {return upHand.getPosition().x + 10;};
-    int getUpHandPositionY() {return upHand.getPosition().y + 10;};
+    int getUpHandPositionX() {return upHand.getPosition().x + 20;};
+    int getUpHandPositionY() {return upHand.getPosition().y + 20;};
 
-    int getDownHandPositionX() {return downHand.getPosition().x + 10;};
-    int getDownHandPositionY() {return downHand.getPosition().y + 10;};
+    int getDownHandPositionX() {return downHand.getPosition().x + 20;};
+    int getDownHandPositionY() {return downHand.getPosition().y + 20;};
 
     bool isBoardClicked(int x, int y);
     bool isHandClicked(int x, int y);

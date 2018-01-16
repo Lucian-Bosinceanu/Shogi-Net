@@ -11,20 +11,19 @@ GameGUI::GameGUI() {
     window.create(sf::VideoMode(1600,900),"Shogi Net Client");
     //this->window = &window;
 
-    textFont.loadFromFile("rsc/fonts/arial.ttf");
 
     Button* exitButton = new Button("exit",700,700,200,100,"EXIT");
     Button* playButton = new Button("play",700,550,200,100,"PLAY" );
 
     Menu* mainMenu = new Menu("main",{exitButton,playButton},&window);
 
-    Button* usernameField = new Button("username",625,300,450,50,"Enter username");
-    Button* passwordField = new Button("password",625,400,450,50,"Enter password");
-    Button* confirmPasswordField = new Button("confirmPass",625,500,450,50,"Re-enter password");
-    Button* loginButton = new Button("login",625,600,200,100,"LOGIN");
-    Button* registerLoginButton = new Button("registerL",875,600,200,100,"REGISTER");
+    Button* usernameField = new Button("username",575,300,450,50,"Enter username");
+    Button* passwordField = new Button("password",575,400,450,50,"Enter password");
+    Button* confirmPasswordField = new Button("confirmPass",575,500,450,50,"Re-enter password");
+    Button* loginButton = new Button("login",575,600,200,100,"LOGIN");
+    Button* registerLoginButton = new Button("registerL",825,600,200,100,"REGISTER");
     Button* registerRegisterButton = new Button("registerR",700,600,200,100,"REGISTER");
-    Button* backButton = new Button("back",61,40,200,100,"Back");
+    Button* backButton = new Button("back",61,40,200,100,"BACK");
     Button* warnings = new Button("warning",0,200,1600,50,"Please provide your credentials.");
 
     Menu* loginMenu = new Menu("login",{usernameField,passwordField,loginButton,registerLoginButton,backButton,warnings},&window);
@@ -36,16 +35,16 @@ GameGUI::GameGUI() {
     Menu* gameMenu = new Menu("game",{forfeitButton,statusButton},&window);
 
 
-    Button* refreshButton = new Button("refresh",200,600,150,100,"REFRESH");
-    Button* hostButton = new Button("host",400,600,150,100,"HOST");
-    Button* joinButton = new Button("join",900,600,150,100,"JOIN");
-    Button* playerSelectButton =  new Button("playerSelect",200,525,1200,50,"Type here the player name you wish to play against, then click JOIN.");
-    Button* gameListButton = new Button("gameList",200,100,1200,400,"");
-    Button* lobbyWarning = new Button("warning",0,800,1600,30,"");
-    Button* backButtonGame = new Button("back",200,50,50,50,"RETURN TO MENU");
+    Button* refreshButton = new Button("refresh",1000,675,200,100,"REFRESH");
+    Button* hostButton = new Button("host",400,675,200,100,"HOST");
+    Button* joinButton = new Button("join",700,675,200,100,"JOIN");
+    Button* playerSelectButton =  new Button("playerSelect",400,600,800,50,"Type here the player name you wish to play against, then click JOIN.");
+    Button* gameListButton = new Button("gameList",61,175,1478,400,"");
+    //Button* lobbyWarning = new Button("warning",0,800,1600,30,"");
+    Button* backButtonGame = new Button("back",61,40,200,100,"BACK");
 
 
-    Menu* lobbyMenu = new Menu("lobby",{backButtonGame,refreshButton,hostButton,playerSelectButton,joinButton,gameListButton, lobbyWarning},&window);
+    Menu* lobbyMenu = new Menu("lobby",{backButtonGame,refreshButton,hostButton,playerSelectButton,joinButton,gameListButton, /*lobbyWarning*/},&window);
 
     gameMenus = {mainMenu,loginMenu,registerMenu,lobbyMenu,gameMenu};
 
@@ -127,24 +126,27 @@ void GameGUI::loadBoardSprites() {
     string path = "rsc/textures/board/";
 
     boardT.loadFromFile(path + "table.png");
-    handT.loadFromFile(path + "tegoma.jpg");
-    teMarkerT.loadFromFile(path + "te.jpg");
+    handT.loadFromFile(path + "tegoma.png");
+    backgroundT.loadFromFile(path + "background.png");
 
     board.setTexture(boardT);
     upHand.setTexture(handT);
     downHand.setTexture(handT);
-    teMarker.setTexture(teMarkerT);
+    background.setTexture(backgroundT);
+
+    background.setPosition(0,0);
 
 
-    board.setPosition(448,40);
-    upHand.setPosition(61,486);
-    downHand.setPosition(1214,40);
+    board.setPosition(0,0);
+    upHand.setPosition(47,475);
+    downHand.setPosition(1199,30);
 
 }
 
 void GameGUI::drawBoard() {
 
     //cout<<"[GameGUI::drawBoard()] I am drawing the board.\n";
+    //window.draw(background);
     window.draw(board);
     window.draw(upHand);
     window.draw(downHand);
@@ -154,6 +156,9 @@ void GameGUI::drawMenu(string name) {
 
     //cout<<"[GameGUI::drawMenu] I am about to draw menu: "<<name<<'\n';
 
+    window.clear(sf::Color::White);
+    window.draw(background);
+
     for (auto it : gameMenus)
         if (it->getName() == name)
             {
@@ -161,6 +166,8 @@ void GameGUI::drawMenu(string name) {
             it->drawMenu();
             return;
             }
+
+    window.display();
 }
 
 Menu* GameGUI::getMenu(string menuName){
@@ -176,54 +183,58 @@ string GameGUI::getInputFromClient(Menu* menu,Button* field,int type) {
 
     string input = "";
     string hiddenInput;
-    window.clear(sf::Color::White);
-    menu->drawMenu();
-    window.display();
+    //window.clear(sf::Color::White);
+    //menu->drawMenu();
+    //window.display();
     char letter;
 
-while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
+    clearEventQueue();
+
+    while (window.isOpen())
         {
+            sf::Event event;
+            while (window.pollEvent(event))
+            {
 
-            if (event.type == sf::Event::MouseMoved)
-                return input;
+                if (event.type == sf::Event::MouseMoved)
+                    if (!field->isClicked(sf::Mouse::getPosition().x,sf::Mouse::getPosition().y))
+                        return input;
 
-            if (event.type == sf::Event::TextEntered)
-                {
-                    if (event.text.unicode < 128 && event.text.unicode > 32)
-                        {
-                            letter = static_cast<char>(event.text.unicode);
-                            input.push_back(letter);
-                            hiddenInput.push_back('*');
+                if (event.type == sf::Event::TextEntered)
+                    {
+                        if (event.text.unicode < 128 && event.text.unicode > 32)
+                            {
+                                letter = static_cast<char>(event.text.unicode);
+                                input.push_back(letter);
+                                hiddenInput.push_back('*');
 
-                            if (type == VISIBLE)
-                                field->setText(input);
-                                else
-                                field->setText(hiddenInput);
+                                if (type == VISIBLE)
+                                    field->setText(input);
+                                    else
+                                    field->setText(hiddenInput);
 
-                        }
+                            }
 
-                    if (event.text.unicode == '\b' && input.size()>0) //backspace
-                        {
-                            input.pop_back();
-                            hiddenInput.pop_back();
+                        if (event.text.unicode == '\b' && input.size()>0) //backspace
+                            {
+                                input.pop_back();
+                                hiddenInput.pop_back();
 
-                            if (type == VISIBLE)
-                                field->setText(input);
-                                else
-                                field->setText(hiddenInput);
+                                if (type == VISIBLE)
+                                    field->setText(input);
+                                    else
+                                    field->setText(hiddenInput);
 
-                        }
-                }
+                            }
+                    }
 
-        window.clear(sf::Color::White);
-        menu->drawMenu();
-        window.display();
+            window.clear(sf::Color::White);
+            window.draw(background);
+            menu->drawMenu();
+            window.display();
+            }
+
         }
-
-    }
 
 }
 
@@ -300,6 +311,7 @@ void GameGUI::loadTitle() {
 void GameGUI::drawTitle() {
 
     window.draw(title);
+    window.display();
 }
 
 void GameGUI::drawGameScreen() {
@@ -310,5 +322,10 @@ void GameGUI::drawGameScreen() {
     //drawPieces();
 }
 
+void GameGUI::clearEventQueue() {
 
+    sf::Event eventConsumer;
+
+    while (window.pollEvent(eventConsumer));
+}
 
